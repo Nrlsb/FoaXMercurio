@@ -581,36 +581,14 @@ export default function HomePage() {
         <div className="logo-bar z-10 mb-10 flex items-center gap-8 flex-wrap animate-fade-in opacity-0">
           <div className="logo-svg-wrap flex flex-col gap-1">
             <span className="logo-label text-[10px] tracking-widest text-mercu-muted uppercase">Pinturerías</span>
-            <svg className="h-11 w-auto block" viewBox="0 0 240 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-              {/* Tipografía estilizada cursiva sans geométrica pesada */}
-              <text x="5" y="32" fontFamily="var(--font-sans)" fontWeight="900" fontStyle="italic" fontSize="34" fill="#f5f0e8" letterSpacing="-1.5">mercurio</text>
-              {/* Script cursivo para 'pinturerías' */}
-              <text x="5" y="46" fontFamily="var(--font-serif)" fontWeight="500" fontStyle="italic" fontSize="16" fill="#ffcd28" letterSpacing="1.5">pinturerías</text>
-              {/* Curvas fluidas oficiales del logotipo de Mercurio */}
-              {/* Curva Amarilla */}
-              <path d="M 15,50 Q 80,59 145,47 C 190,39 218,29 230,22" stroke="#ffcd28" strokeWidth="4" strokeLinecap="round" fill="none"/>
-              {/* Curva Rosa */}
-              <path d="M 115,42 Q 165,33 205,37 C 220,38 228,42 232,45" stroke="#eb2891" strokeWidth="3" strokeLinecap="round" fill="none"/>
-              {/* Curva Verde */}
-              <path d="M 125,46 Q 168,39 200,43 C 215,45 222,48 226,50" stroke="#aacd46" strokeWidth="3.5" strokeLinecap="round" fill="none"/>
-            </svg>
+            <img src="/logomercurioblanco.png" alt="Pinturerías Mercurio" className="h-10 w-auto block object-contain" />
           </div>
           
           <div className="logo-separator h-8 w-[1px] bg-mercu-border"></div>
           
           <div className="logo-svg-wrap flex flex-col gap-1">
             <span className="logo-label text-[10px] tracking-widest text-mercu-muted uppercase">con</span>
-            <svg className="h-9 w-auto block" viewBox="0 0 180 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10,25 Q25,10 40,25 T70,25" stroke="url(#albaWave)" strokeWidth="4" strokeLinecap="round" fill="none"/>
-              <defs>
-                <linearGradient id="albaWave" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stop-color="#eb2891" />
-                  <stop offset="50%" stop-color="#1e3773" />
-                  <stop offset="100%" stop-color="#ffcd28" />
-                </linearGradient>
-              </defs>
-              <text x="52" y="28" fontFamily="var(--font-sans)" fontWeight="700" fontSize="26" fill="#f5f0e8" letterSpacing="-1">Alba</text>
-            </svg>
+            <img src="/alba_blanco.png" alt="Alba" className="h-9 w-auto block object-contain" />
           </div>
         </div>
 
