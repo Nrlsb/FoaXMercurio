@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --c-dark: #05070f;
+    --c-dark-card: #0c0f1d;
+    --c-cream: #f5f0e8;
+    --c-warm: #ffcd28; /* Amarillo Oficial Mercurio */
+    --c-accent: #eb2891; /* Rosa Oficial Mercurio (Acento principal) */
+    --c-accent-rgb: 235, 40, 145;
+    --c-accent2: #1e3773; /* Azul Rey Oficial Mercurio */
+    --c-green: #aacd46; /* Verde Oficial Mercurio */
+    --c-muted: #7d859d;
+    --c-border: rgba(125, 133, 157, 0.15);
+  }
+
+  body {
+    background-color: var(--c-dark);
+    color: var(--c-cream);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer utilities {
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--c-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--c-accent);
+  border-radius: 3px;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(32px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.9) translateX(-50%); }
+  50% { opacity: 1; transform: scaleY(1.1) translateX(-50%); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
