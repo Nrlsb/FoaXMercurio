@@ -15,7 +15,12 @@ import {
   Users,
   Search,
   SlidersHorizontal,
-  ChevronUp
+  ChevronUp,
+  Image as ImageIcon,
+  Film,
+  Maximize2,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 // Tipos de datos
@@ -27,58 +32,121 @@ interface Track {
   type: 'synth' | 'ocean' | 'chime';
 }
 
-interface ColorPalette {
-  hex: string;
-  name: string;
-  desc: string;
-  summary: string;
+interface GalleryItem {
+  id?: string;
+  slot_type: 'image' | 'video';
+  slot_index: number;
+  url: string;
+  title: string;
+  description: string;
 }
+
+const DEFAULT_GALLERY_ITEMS: GalleryItem[] = [
+  // 7 Imágenes
+  {
+    slot_type: 'image',
+    slot_index: 0,
+    url: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200',
+    title: 'Lobby Principal Pocito',
+    description: 'El espacio de bienvenida de Casa FOA Córdoba 2026. Un diseño minimalista que fusiona mármol pulido con iluminación indirecta de alta temperatura.'
+  },
+  {
+    slot_type: 'image',
+    slot_index: 1,
+    url: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=800',
+    title: 'Muro de Tendencias Alba',
+    description: 'Estudio de texturas y colores donde se destaca "Lugar de Afecto", el color del año 2026 de Alba. Calidez, cobijo y serenidad.'
+  },
+  {
+    slot_type: 'image',
+    slot_index: 2,
+    url: 'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?q=80&w=800',
+    title: 'Cocina de Habitar Mínimo',
+    description: 'Concepto de habitabilidad optimizada. Superficies lisas, electrodomésticos empotrados y una isla flotante revestida de piedra sinterizada.'
+  },
+  {
+    slot_type: 'image',
+    slot_index: 3,
+    url: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=800',
+    title: 'Espacio de Luz y Sombras',
+    description: 'Intervención lumínica en pasillos interactivos. Diseñado para mostrar cómo el ángulo de luz altera la percepción cromática de los muros.'
+  },
+  {
+    slot_type: 'image',
+    slot_index: 4,
+    url: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=800',
+    title: 'Fachada Interior Pocito',
+    description: 'La transición entre el patrimonio histórico y la modernidad de Nueva Córdoba. Integración de acero corten y hormigón visto.'
+  },
+  {
+    slot_type: 'image',
+    slot_index: 5,
+    url: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?q=80&w=800',
+    title: 'Dormitorio de Descanso Profundo',
+    description: 'Un santuario de bienestar biofílico. Maderas claras, linos orgánicos y tonalidades verdes Mercurio que inducen a la calma.'
+  },
+  {
+    slot_type: 'image',
+    slot_index: 6,
+    url: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=800',
+    title: 'Estudio Creativo Mercurio',
+    description: 'Un espacio flexible diseñado para el teletrabajo. Colores vibrantes como el Amarillo y Rosa Mercurio para estimular el enfoque intelectual.'
+  },
+  // 5 Videos
+  {
+    slot_type: 'video',
+    slot_index: 0,
+    url: 'https://www.youtube.com/embed/Z67_1kP_yqY',
+    title: 'Thomas Heatherwick - Building the Soul of Cities',
+    description: 'Por qué el aburrimiento arquitectónico genera problemas de salud mental urbana y cómo diseñar fachadas con emociones.'
+  },
+  {
+    slot_type: 'video',
+    slot_index: 1,
+    url: 'https://www.youtube.com/embed/5_dKzT6TsmA',
+    title: 'Ingrid Fetell Lee - Where Joy Hides',
+    description: 'El impacto neurológico del color vibrante y las formas curvas en el hogar como antídotos directos al estrés diario.'
+  },
+  {
+    slot_type: 'video',
+    slot_index: 2,
+    url: 'https://www.youtube.com/embed/fAifF2nZ_1Q',
+    title: 'Francis Kéré - How to Build with Clay',
+    description: 'El ganador del Premio Pritzker demuestra cómo la arquitectura ancestral con barro genera espacios más eficientes y democráticos.'
+  },
+  {
+    slot_type: 'video',
+    slot_index: 3,
+    url: 'https://www.youtube.com/embed/cZ34GqRyhpc',
+    title: 'Bjarke Ingels - Floating Cities of the Future',
+    description: 'Una visión audaz sobre cómo la arquitectura sostenible y las comunidades flotantes pueden responder al cambio climático.'
+  },
+  {
+    slot_type: 'video',
+    slot_index: 4,
+    url: 'https://www.youtube.com/embed/rV58K0l9L4k',
+    title: 'Kelly Wearstler - Interior Design Masterclass',
+    description: 'La célebre diseñadora comparte sus secretos sobre cómo mezclar texturas, patrones e iluminación para crear espacios memorables.'
+  }
+];
 
 export default function HomePage() {
   /* ── 1. ESTADOS DE INTERACCIÓN GENERAL ── */
   const [activeSection, setActiveSection] = useState('inicio');
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  /* ── 2. ESTADOS DEL VISUALIZADOR CROMÁTICO ── */
-  const colors: ColorPalette[] = [
-    {
-      hex: "#1e3773",
-      name: "Azul Rey (King Blue)",
-      summary: "El tono base de Pinturerías Mercurio. Aporta elegancia corporativa, aplomo y serenidad intelectual.",
-      desc: "Azul profundo y señorial extraído del manual de identidad de Mercurio. Simboliza confianza, precisión y armonía estructural."
-    },
-    {
-      hex: "#ffcd28",
-      name: "Amarillo Mercurio",
-      summary: "Un tono vibrante que irradia luz, creatividad, optimismo y estímulo cognitivo.",
-      desc: "Amarillo sol característico del logotipo institucional de Mercurio. Ideal para puntos focales que requieran vitalidad y luz."
-    },
-    {
-      hex: "#eb2891",
-      name: "Rosa Mercurio (Pink)",
-      summary: "Acento dinámico y disruptivo. Perfecto para espacios lúdicos y de vanguardia.",
-      desc: "Rosa magenta de alta energía e impacto. Transmite audacia, pasión y un compromiso inquebrantable con el diseño contemporáneo."
-    },
-    {
-      hex: "#aacd46",
-      name: "Verde Mercurio (Lime)",
-      summary: "Toque orgánico de gran frescura que conecta los espacios con el bienestar biofílico.",
-      desc: "Verde lima-limón suave. Trae frescor natural y equilibrio, reduciendo los niveles de estrés e invitando a la renovación."
-    },
-    {
-      hex: "#dfc3b5",
-      name: "Lugar de Afecto",
-      summary: "Rosa empolvado, suave y neutro. La base ideal para ambientes de paz y relajación.",
-      desc: "Color del Año Alba. Un rosa pluma sutil que actúa como lienzo de calidez, ternura y cobijo familiar."
-    },
-    {
-      hex: "#7d859d",
-      name: "Gris Bruma",
-      summary: "Un gris neutro mineral que unifica las texturas y actúa como cimiento cromático.",
-      desc: "Gris azulado premium balanceado que actúa como mediador perfecto, destacando la fuerza de los acentos del manual."
-    }
-  ];
-  const [selectedColor, setSelectedColor] = useState<ColorPalette>(colors[0]);
+  /* ── 2. ESTADOS DE LA GALERÍA MULTIMEDIA ── */
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(DEFAULT_GALLERY_ITEMS);
+  const [loadingGallery, setLoadingGallery] = useState(true);
+  const [galleryFilter, setGalleryFilter] = useState<'all' | 'image' | 'video'>('all');
+  
+  // Estados para Lightbox interactivo
+  const [lightboxActive, setLightboxActive] = useState(false);
+  const [lightboxType, setLightboxType] = useState<'image' | 'video'>('image');
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+
+  // Espacio favorito seleccionado en el formulario de acreditación
+  const [selectedSpace, setSelectedSpace] = useState(DEFAULT_GALLERY_ITEMS[0].title);
 
   /* ── 3. ESTADOS DEL REPRODUCTOR DE MÚSICA SINTÉTICA (WEB AUDIO) ── */
   const tracks: Track[] = [
@@ -169,6 +237,90 @@ export default function HomePage() {
       clearInterval(progressIntervalRef.current!);
     };
   }, []);
+
+  /* ── 6.5. EFECTO: CARGA DE GALERÍA MULTIMEDIA ── */
+  useEffect(() => {
+    async function fetchGallery() {
+      try {
+        const { data, error } = await supabase
+          .from('gallery_items')
+          .select('*')
+          .order('slot_type', { ascending: true })
+          .order('slot_index', { ascending: true });
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          const merged = [...DEFAULT_GALLERY_ITEMS];
+          data.forEach((dbItem: any) => {
+            const idx = merged.findIndex(
+              item => item.slot_type === dbItem.slot_type && item.slot_index === dbItem.slot_index
+            );
+            if (idx !== -1) {
+              merged[idx] = {
+                slot_type: dbItem.slot_type,
+                slot_index: dbItem.slot_index,
+                url: dbItem.url,
+                title: dbItem.title || '',
+                description: dbItem.description || ''
+              };
+            }
+          });
+          setGalleryItems(merged);
+          // Actualizar el espacio favorito seleccionado al cargar las imágenes reales
+          const firstImg = merged.find(i => i.slot_type === 'image');
+          if (firstImg) setSelectedSpace(firstImg.title);
+        } else {
+          const local = localStorage.getItem('casafoa_gallery_items');
+          if (local) {
+            const parsed = JSON.parse(local);
+            setGalleryItems(parsed);
+            const firstImg = parsed.find((i: any) => i.slot_type === 'image');
+            if (firstImg) setSelectedSpace(firstImg.title);
+          }
+        }
+      } catch (err) {
+        console.warn('Conexión a base de datos de galería no disponible. Usando local/defaults.');
+        const local = localStorage.getItem('casafoa_gallery_items');
+        if (local) {
+          const parsed = JSON.parse(local);
+          setGalleryItems(parsed);
+          const firstImg = parsed.find((i: any) => i.slot_type === 'image');
+          if (firstImg) setSelectedSpace(firstImg.title);
+        }
+      } finally {
+        setLoadingGallery(false);
+      }
+    }
+
+    fetchGallery();
+  }, []);
+
+  const openLightbox = (type: 'image' | 'video', index: number) => {
+    setLightboxType(type);
+    setLightboxIndex(index);
+    setLightboxActive(true);
+  };
+
+  const handleLightboxPrev = () => {
+    const filtered = galleryItems.filter(item => item.slot_type === lightboxType);
+    setLightboxIndex(prev => (prev === 0 ? filtered.length - 1 : prev - 1));
+  };
+
+  const handleLightboxNext = () => {
+    const filtered = galleryItems.filter(item => item.slot_type === lightboxType);
+    setLightboxIndex(prev => (prev === filtered.length - 1 ? 0 : prev + 1));
+  };
+
+  const getYouTubeThumbnail = (url: string) => {
+    if (!url) return '';
+    let regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+    let match = url.match(regExp);
+    if (match && match[2].length === 11) {
+      return `https://img.youtube.com/vi/${match[2]}/maxresdefault.jpg`;
+    }
+    return 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800';
+  };
 
   /* ── 7. LÓGICA DE SÍNTESIS DE AUDIO (WEB AUDIO API) ── */
   const initAudio = () => {
@@ -377,7 +529,7 @@ export default function HomePage() {
       email,
       profesion,
       matricula: profesion === 'Arquitecto/a' || profesion === 'Diseñador/a de Interiores' ? matricula : null,
-      color_favorito: selectedColor.name
+      color_favorito: selectedSpace
     };
 
     try {
@@ -388,7 +540,6 @@ export default function HomePage() {
         .select();
 
       if (error) {
-        // Si el correo ya existe
         if (error.code === '23505') {
           throw new Error('Este correo electrónico ya está acreditado.');
         }
@@ -400,7 +551,6 @@ export default function HomePage() {
     } catch (error: any) {
       console.warn('Error en conexión Supabase, activando modo simulación:', error.message);
       
-      // Fallback robusto si Supabase no está configurada o falla la red
       setRegisteredUser({
         ...userData,
         created_at: new Date().toISOString(),
@@ -487,7 +637,7 @@ export default function HomePage() {
           </div>
           <div className="flex gap-2 overflow-x-auto scrollbar-none">
             <a href="#casa-foa" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'casa-foa' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Casa FOA</a>
-            <a href="#colores" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'colores' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Colores</a>
+            <a href="#galeria" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'galeria' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Galería</a>
             <a href="#musica" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'musica' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Música</a>
             <a href="#acreditar" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'acreditar' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Acreditación</a>
             <a href="#videos" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'videos' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Charlas</a>
@@ -587,82 +737,248 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── SECCIÓN COLORES ── */}
-      <section id="colores" className="py-24 px-8 max-w-4xl mx-auto">
+      {/* ── SECCIÓN GALERÍA MULTIMEDIA ── */}
+      <section id="galeria" className="py-24 px-8 max-w-6xl mx-auto">
         <div className="reveal">
           <div className="mercu-tag inline-flex items-center gap-2 text-xs font-semibold tracking-wider text-mercu-muted uppercase border border-mercu-border rounded px-4 py-2 mb-8 bg-mercu-dark-card/40">
             <span className="mercu-dot w-2 h-2 bg-mercu-accent rounded-full animate-pulse"></span>
-            Curado por Mercurio × Alba
+            Galería Casa FOA 2026
           </div>
-          <div className="section-header mb-16">
-            <div className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-4">El poder de la paleta</div>
-            <h2 className="section-title font-serif text-4xl md:text-6xl font-light leading-tight text-mercu-cream">Colores que<br/><em>definen un espacio.</em></h2>
-            <p className="section-lead text-base md:text-lg leading-relaxed text-mercu-cream/70 mt-6 max-w-2xl">
-              El color altera la percepción espacial, la luz y el estado de ánimo. Te invitamos a interactuar con nuestra selección curada de tendencias Alba 2026. Haz clic en las tarjetas para pintar el muro de nuestro ambiente.
+          <div className="section-header mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+              <div className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-4">Experiencia Visual</div>
+              <h2 className="section-title font-serif text-4xl md:text-6xl font-light leading-tight text-mercu-cream">Galería de Espacios e<br/><em>Inspiración y Diseño.</em></h2>
+              <p className="section-lead text-base md:text-lg leading-relaxed text-mercu-cream/70 mt-6 max-w-2xl">
+                Un recorrido interactivo por el interiorismo y la arquitectura de vanguardia en Pocito Córdoba 2026. Disfrutá de nuestras 7 postales curadas de diseño y 5 conferencias magistrales.
+              </p>
+            </div>
+            
+            {/* Controles de Filtro */}
+            <div className="flex gap-2 bg-mercu-dark-card border border-mercu-border p-1.5 rounded-full text-xs self-start md:self-end">
+              <button 
+                onClick={() => setGalleryFilter('all')}
+                className={`px-4 py-2 rounded-full font-medium tracking-wider uppercase transition-all duration-300 ${galleryFilter === 'all' ? 'bg-mercu-accent text-mercu-dark shadow-md' : 'text-mercu-muted hover:text-mercu-cream'}`}
+              >
+                Todo
+              </button>
+              <button 
+                onClick={() => setGalleryFilter('image')}
+                className={`px-4 py-2 rounded-full font-medium tracking-wider uppercase transition-all duration-300 ${galleryFilter === 'image' ? 'bg-mercu-accent text-mercu-dark shadow-md' : 'text-mercu-muted hover:text-mercu-cream'}`}
+              >
+                Imágenes (7)
+              </button>
+              <button 
+                onClick={() => setGalleryFilter('video')}
+                className={`px-4 py-2 rounded-full font-medium tracking-wider uppercase transition-all duration-300 ${galleryFilter === 'video' ? 'bg-mercu-accent text-mercu-dark shadow-md' : 'text-mercu-muted hover:text-mercu-cream'}`}
+              >
+                Videos (5)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {loadingGallery ? (
+          <div className="text-center py-20 text-sm text-mercu-muted">Cargando la galería de Casa FOA...</div>
+        ) : (
+          <div className="reveal">
+            {/* VISTA DE IMÁGENES (Asymmetrical Premium Grid) */}
+            {(galleryFilter === 'all' || galleryFilter === 'image') && (
+              <div className="mb-16">
+                {galleryFilter === 'all' && (
+                  <div className="text-xs font-semibold tracking-widest text-mercu-muted uppercase mb-6 border-b border-mercu-border pb-2 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 bg-mercu-accent rounded-full"></span>
+                    Postales de Arquitectura y Espacio
+                  </div>
+                )}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+                  {galleryItems.filter(item => item.slot_type === 'image').map((img, idx) => {
+                    let gridClass = "col-span-1 row-span-1";
+                    if (idx === 0) gridClass = "sm:col-span-2 sm:row-span-2 aspect-[4/3] sm:aspect-auto";
+                    else if (idx === 1) gridClass = "sm:col-span-2 col-span-1";
+                    else if (idx === 6) gridClass = "sm:col-span-2 col-span-1";
+                    
+                    return (
+                      <div 
+                        key={`img-${idx}`}
+                        onClick={() => openLightbox('image', idx)}
+                        className={`group relative overflow-hidden rounded-lg bg-mercu-dark-card border border-mercu-border cursor-pointer transition-all duration-500 hover:border-mercu-accent shadow-md ${gridClass}`}
+                      >
+                        <div className="w-full h-full min-h-[220px] aspect-[4/3] sm:aspect-auto overflow-hidden relative">
+                          <img 
+                            src={img.url || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800'} 
+                            alt={img.title}
+                            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 group-hover:brightness-90"
+                            loading="lazy"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-85 transition-opacity duration-300"></div>
+                          
+                          <div className="absolute bottom-0 left-0 right-0 p-5 flex flex-col justify-end translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                            <span className="text-[9px] tracking-widest text-mercu-accent font-semibold uppercase mb-1">
+                              Imagen #{idx + 1}
+                            </span>
+                            <h3 className="font-serif text-lg md:text-xl text-mercu-cream leading-snug group-hover:text-mercu-warm transition-colors duration-300">
+                              {img.title || `Espacio ${idx + 1}`}
+                            </h3>
+                            <p className="text-xs text-mercu-muted mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 line-clamp-2 font-light leading-relaxed">
+                              {img.description}
+                            </p>
+                          </div>
+                          
+                          <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 backdrop-blur-md border border-mercu-border flex items-center justify-center text-mercu-cream opacity-0 group-hover:opacity-100 transition-all duration-300 scale-90 group-hover:scale-100">
+                            <span className="text-xs">🔍</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* VISTA DE VIDEOS (Modern Curated Row/Grid) */}
+            {(galleryFilter === 'all' || galleryFilter === 'video') && (
+              <div className="mb-12">
+                {galleryFilter === 'all' && (
+                  <div className="text-xs font-semibold tracking-widest text-mercu-muted uppercase mb-6 border-b border-mercu-border pb-2 flex items-center gap-2 mt-8">
+                    <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span>
+                    Charlas y Conferencias en Video
+                  </div>
+                )}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {galleryItems.filter(item => item.slot_type === 'video').map((vid, idx) => {
+                    let gridClass = "col-span-1";
+                    if (idx === 0) gridClass = "md:col-span-2";
+                    
+                    const isLocal = vid.url && (vid.url.startsWith('data:video/') || vid.url.endsWith('.mp4') || vid.url.includes('.webm'));
+                    const thumbUrl = isLocal ? '' : getYouTubeThumbnail(vid.url);
+                    
+                    return (
+                      <div 
+                        key={`vid-${idx}`}
+                        onClick={() => openLightbox('video', idx)}
+                        className={`group relative overflow-hidden rounded-lg bg-mercu-dark-card border border-mercu-border cursor-pointer transition-all duration-500 hover:border-emerald-400 shadow-md ${gridClass}`}
+                      >
+                        <div className="w-full aspect-[16/9] overflow-hidden relative bg-black">
+                          {isLocal ? (
+                            <video 
+                              src={vid.url} 
+                              className="w-full h-full object-cover opacity-70 group-hover:opacity-50 transition-opacity duration-300"
+                              muted 
+                              loop 
+                              playsInline
+                              autoPlay
+                            />
+                          ) : (
+                            <img 
+                              src={thumbUrl} 
+                              alt={vid.title}
+                              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 group-hover:brightness-75"
+                              loading="lazy"
+                            />
+                          )}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent opacity-75 group-hover:opacity-90 transition-opacity duration-300"></div>
+                          
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-14 h-14 rounded-full border border-mercu-border/50 bg-black/60 backdrop-blur-md flex items-center justify-center text-mercu-cream shadow-2xl transition-all duration-300 group-hover:scale-110 group-hover:border-emerald-400 group-hover:bg-emerald-400 group-hover:text-mercu-dark">
+                              <span className="text-xl translate-x-[2px]">▶</span>
+                            </div>
+                          </div>
+
+                          <div className="absolute bottom-0 left-0 right-0 p-5 flex flex-col justify-end">
+                            <span className="text-[9px] tracking-widest text-emerald-400 font-semibold uppercase mb-1 flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping"></span>
+                              Video #{idx + 1}
+                            </span>
+                            <h3 className="font-serif text-lg md:text-xl text-mercu-cream leading-snug group-hover:text-emerald-300 transition-colors duration-300 line-clamp-1">
+                              {vid.title || `Conferencia ${idx + 1}`}
+                            </h3>
+                            <p className="text-xs text-mercu-muted mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 line-clamp-2 font-light leading-relaxed">
+                              {vid.description}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </section>
+
+      {/* ── MODAL LIGHTBOX MULTIMEDIA COMPLETO ── */}
+      {lightboxActive && (
+        <div 
+          onClick={() => setLightboxActive(false)}
+          className="fixed inset-0 bg-black/95 backdrop-blur-md z-[1000] flex flex-col justify-between p-4 md:p-8 animate-fade-in"
+        >
+          <div className="flex justify-between items-center w-full max-w-6xl mx-auto z-10 py-2 border-b border-mercu-border/30">
+            <div className="text-left">
+              <span className="text-[10px] tracking-widest text-mercu-accent font-semibold uppercase">
+                {lightboxType === 'image' ? `Postal de Diseño #${lightboxIndex + 1}` : `Conferencia en Video #${lightboxIndex + 1}`}
+              </span>
+              <h4 className="font-serif text-lg md:text-2xl text-mercu-cream">
+                {galleryItems.filter(item => item.slot_type === lightboxType)[lightboxIndex]?.title}
+              </h4>
+            </div>
+            
+            <button 
+              onClick={() => setLightboxActive(false)}
+              className="w-10 h-10 rounded-full bg-neutral-900 border border-mercu-border/50 text-mercu-cream flex items-center justify-center text-sm font-semibold hover:bg-mercu-accent hover:text-mercu-dark hover:border-mercu-accent transition-all"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div className="flex-grow w-full max-w-6xl mx-auto flex items-center justify-between gap-4 py-6">
+            <button 
+              onClick={(e) => { e.stopPropagation(); handleLightboxPrev(); }}
+              className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-neutral-900/80 border border-mercu-border/30 text-mercu-cream flex items-center justify-center hover:bg-mercu-accent hover:text-mercu-dark transition-all duration-300 flex-shrink-0"
+              aria-label="Anterior"
+            >
+              ◀
+            </button>
+
+            <div 
+              onClick={(e) => e.stopPropagation()}
+              className="flex-grow max-h-[65vh] md:max-h-[70vh] aspect-[16/10] bg-black/40 border border-mercu-border/50 rounded-lg overflow-hidden flex items-center justify-center relative shadow-2xl"
+            >
+              {lightboxType === 'image' ? (
+                <img 
+                  src={galleryItems.filter(item => item.slot_type === 'image')[lightboxIndex]?.url} 
+                  alt="Lightbox"
+                  className="w-full h-full object-contain max-h-[65vh] md:max-h-[70vh]"
+                />
+              ) : (
+                <iframe 
+                  className="w-full h-full border-none aspect-[16/9]"
+                  src={galleryItems.filter(item => item.slot_type === 'video')[lightboxIndex]?.url} 
+                  allow="autoplay; encrypted-media" 
+                  allowFullScreen
+                ></iframe>
+              )}
+            </div>
+
+            <button 
+              onClick={(e) => { e.stopPropagation(); handleLightboxNext(); }}
+              className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-neutral-900/80 border border-mercu-border/30 text-mercu-cream flex items-center justify-center hover:bg-mercu-accent hover:text-mercu-dark transition-all duration-300 flex-shrink-0"
+              aria-label="Siguiente"
+            >
+              ▶
+            </button>
+          </div>
+
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-3xl mx-auto text-center z-10 py-4 px-6 bg-neutral-950/70 backdrop-blur-md border border-mercu-border/30 rounded-lg mb-4"
+          >
+            <p className="text-xs md:text-sm leading-relaxed text-mercu-cream/80 font-light">
+              {galleryItems.filter(item => item.slot_type === lightboxType)[lightboxIndex]?.description}
             </p>
           </div>
         </div>
-
-        {/* Visualizador de Color en SVG */}
-        <div className="visualizer-container reveal grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-8 items-center my-16">
-          <div className="visualizer-view bg-black/40 border border-mercu-border rounded aspect-[4/3] relative overflow-hidden flex items-center justify-center">
-            <svg className="room-svg w-full h-full object-cover" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-              <rect width="400" height="300" fill="#181716"/>
-              <polygon points="0,220 400,220 400,300 0,300" fill="#2d2a28"/>
-              <polygon points="0,0 120,50 120,220 0,220" fill="#22201e"/>
-              
-              {/* Muro interactivo */}
-              <polygon id="roomWall" points="120,50 400,0 400,220 120,220" fill={selectedColor.hex} className="transition-all duration-700 ease-in-out"/>
-              
-              <polygon points="20,40 80,60 80,140 20,120" fill="#0c0d10" stroke="#333" strokeWidth="2"/>
-              <line x1="50" y1="50" x2="50" y2="130" stroke="#333" strokeWidth="2"/>
-              <line x1="20" y1="80" x2="80" y2="100" stroke="#333" strokeWidth="2"/>
-              <polygon points="180,80 250,70 250,130 180,140" fill="#111" stroke="#f5f0e8" strokeWidth="1.5"/>
-              <circle cx="215" cy="105" r="15" fill="#f5f0e8" opacity="0.8"/>
-              <path d="M160,200 L280,185 L290,230 L170,245 Z" fill="#e8d9c0"/>
-              <path d="M160,200 L170,245 L170,260 L160,215 Z" fill="#bfae95"/>
-              <path d="M280,185 L290,230 L290,245 L280,200 Z" fill="#8c7d68"/>
-              <line x1="330" y1="230" x2="330" y2="120" stroke="#c8642a" strokeWidth="2"/>
-              <path d="M315,120 Q330,100 345,120 Z" fill="#f5f0e8"/>
-              <polygon points="310,230 350,230 340,235 320,235" fill="#333"/>
-            </svg>
-            <div className="visualizer-caption absolute bottom-4 left-4 right-4 bg-black/75 backdrop-blur-md border border-mercu-border p-4 rounded flex justify-between items-center text-xs">
-              <div>Pared Activa: <strong className="text-mercu-cream">{selectedColor.name}</strong></div>
-              <div style={{ fontFamily: 'monospace', color: 'var(--c-accent)' }}>{selectedColor.hex}</div>
-            </div>
-          </div>
-
-          {/* Tarjetas de Selección de Colores */}
-          <div className="color-cards grid grid-cols-2 gap-[1px] bg-mercu-border border border-mercu-border rounded overflow-hidden">
-            {colors.map((color) => (
-              <div 
-                key={color.name}
-                onClick={() => setSelectedColor(color)}
-                className={`color-card bg-mercu-dark-card p-6 flex flex-col gap-3 cursor-pointer transition-all duration-300 relative border ${selectedColor.name === color.name ? 'border-mercu-accent' : 'border-transparent hover:bg-mercu-border/5'}`}
-              >
-                <div className="color-swatch w-full aspect-[3/2] rounded transition-transform duration-300 shadow-md" style={{ background: color.hex }}></div>
-                <h3 className="color-name font-serif text-lg text-mercu-cream mt-1">{color.name}</h3>
-                <p className="color-desc text-xs text-mercu-muted line-clamp-2 leading-relaxed">{color.summary}</p>
-                <div className="color-meta flex justify-between items-center mt-auto pt-2">
-                  <span className="color-hex text-[10px] tracking-widest text-mercu-accent/40 font-mono">{color.hex}</span>
-                  <span className={`text-[10px] tracking-wider uppercase font-semibold text-mercu-accent transition-all duration-300 ${selectedColor.name === color.name ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-2'}`}>Activo</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="reveal mt-8">
-          <div className="italic text-center text-mercu-muted text-sm max-w-xl mx-auto">
-            "{selectedColor.desc}"
-          </div>
-          <div className="color-strip flex h-2 my-12 overflow-hidden rounded-full">
-            {colors.map((c) => (
-              <div key={c.hex} className="flex-1" style={{ background: c.hex }}></div>
-            ))}
-          </div>
-        </div>
-      </section>
+      )}
 
       {/* ── SECCIÓN MÚSICA ── */}
       <section id="musica" className="py-24 px-8 max-w-4xl mx-auto">
@@ -805,14 +1121,17 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="color_favorito" className="text-[10px] tracking-widest text-mercu-muted uppercase font-semibold">Color Elegido</label>
-                  <input 
-                    type="text" 
+                  <label htmlFor="color_favorito" className="text-[10px] tracking-widest text-mercu-muted uppercase font-semibold">Espacio Favorito</label>
+                  <select 
                     id="color_favorito" 
-                    readOnly
-                    value={selectedColor.name}
-                    className="bg-mercu-dark/40 border border-mercu-border/50 text-mercu-cream/60 p-3 rounded focus:outline-none text-sm cursor-not-allowed"
-                  />
+                    value={selectedSpace}
+                    onChange={(e) => setSelectedSpace(e.target.value)}
+                    className="bg-mercu-dark border border-mercu-border text-mercu-cream p-3 rounded focus:outline-none focus:border-mercu-accent text-sm"
+                  >
+                    {galleryItems.filter(item => item.slot_type === 'image').map(img => (
+                      <option key={img.slot_index} value={img.title}>{img.title}</option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
@@ -871,7 +1190,7 @@ export default function HomePage() {
                     <span className="font-medium text-mercu-cream">{registeredUser?.profesion}</span>
                   </div>
                   <div>
-                    <span className="text-[8px] text-mercu-muted uppercase block">Paleta Elegida</span>
+                    <span className="text-[8px] text-mercu-muted uppercase block">Espacio Favorito</span>
                     <span className="font-medium text-mercu-accent">{registeredUser?.color_favorito}</span>
                   </div>
                 </div>
