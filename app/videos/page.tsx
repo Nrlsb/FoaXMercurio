@@ -224,7 +224,7 @@ function VideoPlayerContent() {
           <span className="text-[10px] tracking-[0.25em] font-semibold text-mercu-accent uppercase mb-4 block">
             Registros Audiovisuales Oficiales
           </span>
-          <h1 className="font-serif text-4xl md:text-6xl font-light tracking-tight text-mercu-cream mb-6">
+          <h1 className="font-serif text-3xl sm:text-4xl md:text-6xl font-light tracking-tight text-mercu-cream mb-6">
             Salón de Proyecciones
           </h1>
           <p className="text-sm md:text-base text-mercu-muted max-w-xl leading-relaxed">
@@ -232,7 +232,7 @@ function VideoPlayerContent() {
           </p>
 
           {/* Selector de Marcas (Pestañas con Logos) */}
-          <div className="flex gap-2 md:gap-4 bg-black/45 border border-mercu-border/60 p-1.5 rounded-full mt-12 overflow-x-auto max-w-full scrollbar-none">
+          <div className="flex w-full sm:w-auto gap-1 sm:gap-2 md:gap-4 bg-black/45 border border-mercu-border/60 p-1 md:p-1.5 rounded-xl sm:rounded-full mt-8 md:mt-12">
             {Object.entries(BRANDS).map(([key, brand]) => (
               <button
                 key={key}
@@ -240,16 +240,16 @@ function VideoPlayerContent() {
                 style={{ 
                   backgroundColor: activeBrand === key ? brand.accentColor : 'transparent',
                 }}
-                className={`px-6 py-2 rounded-full transition-all duration-300 flex items-center justify-center whitespace-nowrap h-11 group ${
+                className={`flex-1 sm:flex-initial px-3 sm:px-6 py-2 rounded-lg sm:rounded-full transition-all duration-300 flex items-center justify-center whitespace-nowrap h-10 md:h-11 group ${
                   activeBrand === key 
-                    ? 'shadow-lg scale-105' 
+                    ? 'shadow-lg scale-[1.02] sm:scale-105' 
                     : 'hover:bg-white/5'
                 }`}
               >
                 <img 
                   src={brand.logo} 
                   alt={brand.name} 
-                  className={`h-5 md:h-6 w-auto object-contain transition-all duration-300 ${
+                  className={`h-4 sm:h-5 md:h-6 w-auto object-contain transition-all duration-300 ${
                     activeBrand === key 
                       ? 'brightness-0' 
                       : 'opacity-50 group-hover:opacity-100'
@@ -286,16 +286,16 @@ function VideoPlayerContent() {
             </div>
 
             {/* Info del Video */}
-            <div className="p-6 md:p-8 bg-gradient-to-t from-black/40 to-transparent">
-              <div className="flex justify-between items-start gap-4 mb-4">
-                <span className="text-[10px] tracking-widest text-mercu-accent font-semibold uppercase px-2 py-1 rounded bg-mercu-accent/10 border border-mercu-accent/20">
+            <div className="p-4 sm:p-6 md:p-8 bg-gradient-to-t from-black/40 to-transparent">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 sm:gap-4 mb-4">
+                <span className="text-[9px] md:text-[10px] tracking-widest text-mercu-accent font-semibold uppercase px-2 py-1 rounded bg-mercu-accent/10 border border-mercu-accent/20">
                   {currentBrand.name} - En Reproducción
                 </span>
                 {selectedVideo && (
-                  <span className="text-xs text-mercu-muted font-mono">{selectedVideo.duration} min</span>
+                  <span className="text-xs text-mercu-muted font-mono self-end sm:self-auto">{selectedVideo.duration} min</span>
                 )}
               </div>
-              <h2 className="font-serif text-2xl md:text-3xl font-light text-mercu-cream leading-snug mb-3">
+              <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-light text-mercu-cream leading-snug mb-3">
                 {selectedVideo?.title}
               </h2>
               <p className="text-sm leading-relaxed text-mercu-cream/80 font-light">
@@ -307,7 +307,7 @@ function VideoPlayerContent() {
 
         {/* LISTA DE VIDEOS LATERAL */}
         <div className="flex flex-col gap-6">
-          <div className="bg-mercu-dark-card border border-mercu-border/50 rounded-xl p-6 md:p-8 flex flex-col gap-6">
+          <div className="bg-mercu-dark-card border border-mercu-border/50 rounded-xl p-4 sm:p-6 md:p-8 flex flex-col gap-6">
             <div>
               <span className="text-[9px] tracking-widest font-semibold text-mercu-muted uppercase block mb-1">
                 Lista de Reproducción
@@ -325,7 +325,7 @@ function VideoPlayerContent() {
                   <div
                     key={video.id}
                     onClick={() => setSelectedVideo(video)}
-                    className={`p-4 rounded-lg border cursor-pointer transition-all duration-300 flex gap-4 ${
+                    className={`p-3 sm:p-4 rounded-lg border cursor-pointer transition-all duration-300 flex gap-3 sm:gap-4 ${
                       isSelected 
                         ? `bg-mercu-accent/5 border-mercu-accent shadow-[0_0_15px_rgba(235,40,145,0.08)]` 
                         : 'bg-black/20 border-mercu-border/40 hover:border-mercu-muted hover:bg-black/30'
@@ -358,7 +358,7 @@ function VideoPlayerContent() {
           </div>
 
           {/* TARJETA INFORMATIVA */}
-          <div className="bg-mercu-dark-card border border-mercu-border/50 rounded-xl p-6 md:p-8 flex flex-col items-center text-center relative overflow-hidden shadow-xl">
+          <div className="bg-mercu-dark-card border border-mercu-border/50 rounded-xl p-6 sm:p-8 flex flex-col items-center text-center relative overflow-hidden shadow-xl">
             <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-mercu-accent via-mercu-warm to-mercu-green"></div>
             
             <img 

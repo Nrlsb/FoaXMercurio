@@ -854,10 +854,10 @@ export default function HomePage() {
 
         {/* Malla de Datos Estadísticos */}
         <div className="dato-grid reveal grid grid-cols-2 md:grid-cols-4 gap-[1px] bg-mercu-border border border-mercu-border rounded overflow-hidden my-16">
-          <div className="dato-item bg-mercu-dark-card p-10 text-center transition-all duration-300 hover:bg-mercu-border/5">
+          <div className="dato-item bg-mercu-dark-card p-6 md:p-10 text-center transition-all duration-300 hover:bg-mercu-border/5">
             <EditableText 
               textKey="stat1_num" 
-              className="dato-num font-serif text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1 block"
+              className="dato-num font-serif text-4xl md:text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1 block"
               as="div"
             />
             <EditableText 
@@ -866,10 +866,10 @@ export default function HomePage() {
               as="div"
             />
           </div>
-          <div className="dato-item bg-mercu-dark-card p-10 text-center transition-all duration-300 hover:bg-mercu-border/5">
+          <div className="dato-item bg-mercu-dark-card p-6 md:p-10 text-center transition-all duration-300 hover:bg-mercu-border/5">
             <EditableText 
               textKey="stat2_num" 
-              className="dato-num font-serif text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1 block"
+              className="dato-num font-serif text-4xl md:text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1 block"
               as="div"
             />
             <EditableText 
@@ -878,10 +878,10 @@ export default function HomePage() {
               as="div"
             />
           </div>
-          <div className="dato-item bg-mercu-dark-card p-10 text-center transition-all duration-300 hover:bg-mercu-border/5">
+          <div className="dato-item bg-mercu-dark-card p-6 md:p-10 text-center transition-all duration-300 hover:bg-mercu-border/5">
             <EditableText 
               textKey="stat3_num" 
-              className="dato-num font-serif text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1 block"
+              className="dato-num font-serif text-4xl md:text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1 block"
               as="div"
             />
             <EditableText 
@@ -890,10 +890,10 @@ export default function HomePage() {
               as="div"
             />
           </div>
-          <div className="dato-item bg-mercu-dark-card p-10 text-center transition-all duration-300 hover:bg-mercu-border/5">
+          <div className="dato-item bg-mercu-dark-card p-6 md:p-10 text-center transition-all duration-300 hover:bg-mercu-border/5">
             <EditableText 
               textKey="stat4_num" 
-              className="dato-num font-serif text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1 block"
+              className="dato-num font-serif text-4xl md:text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1 block"
               as="div"
             />
             <EditableText 
@@ -906,7 +906,7 @@ export default function HomePage() {
 
         {/* Malla de Curiosidades */}
         <div className="curiosity-grid reveal grid grid-cols-1 gap-[1px] bg-mercu-border border border-mercu-border rounded overflow-hidden mb-16">
-          <div className="curiosity-item bg-mercu-dark p-10 flex gap-8 items-start transition-all duration-300 hover:bg-mercu-border/5">
+          <div className="curiosity-item bg-mercu-dark p-6 md:p-10 flex flex-col sm:flex-row gap-4 md:gap-8 items-start transition-all duration-300 hover:bg-mercu-border/5">
             <EditableText 
               textKey="curiosity1_num" 
               className="curiosity-num font-serif text-5xl font-light text-mercu-accent/20 transition-colors duration-300 block"
@@ -927,7 +927,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="curiosity-item bg-mercu-dark p-10 flex gap-8 items-start transition-all duration-300 hover:bg-mercu-border/5">
+          <div className="curiosity-item bg-mercu-dark p-6 md:p-10 flex flex-col sm:flex-row gap-4 md:gap-8 items-start transition-all duration-300 hover:bg-mercu-border/5">
             <EditableText 
               textKey="curiosity2_num" 
               className="curiosity-num font-serif text-5xl font-light text-mercu-accent/20 transition-colors duration-300 block"
@@ -958,38 +958,38 @@ export default function HomePage() {
             as="div"
           />
           <div className="ejes-list flex flex-col gap-[1px] bg-mercu-border border border-mercu-border rounded overflow-hidden mt-8">
-            <div className="eje-item bg-mercu-dark-card p-8 flex gap-6 items-center transition-all duration-300 hover:bg-mercu-border/5">
+            <div className="eje-item bg-mercu-dark-card p-5 md:p-8 flex gap-4 md:gap-6 items-center transition-all duration-300 hover:bg-mercu-border/5">
               <div className="eje-mark w-7 h-7 border border-mercu-accent rounded-full flex items-center justify-center flex-shrink-0"><div className="eje-dot w-2 h-2 bg-mercu-accent rounded-full"></div></div>
               <EditableText 
                 textKey="eje1_text" 
-                className="eje-text font-serif text-lg text-mercu-cream block"
+                className="eje-text font-serif text-base md:text-lg text-mercu-cream block"
                 as="div"
                 allowHtml
               />
             </div>
-            <div className="eje-item bg-mercu-dark-card p-8 flex gap-6 items-center transition-all duration-300 hover:bg-mercu-border/5">
+            <div className="eje-item bg-mercu-dark-card p-5 md:p-8 flex gap-4 md:gap-6 items-center transition-all duration-300 hover:bg-mercu-border/5">
               <div className="eje-mark w-7 h-7 border border-mercu-accent rounded-full flex items-center justify-center flex-shrink-0"><div className="eje-dot w-2 h-2 bg-mercu-accent rounded-full"></div></div>
               <EditableText 
                 textKey="eje2_text" 
-                className="eje-text font-serif text-lg text-mercu-cream block"
+                className="eje-text font-serif text-base md:text-lg text-mercu-cream block"
                 as="div"
                 allowHtml
               />
             </div>
-            <div className="eje-item bg-mercu-dark-card p-8 flex gap-6 items-center transition-all duration-300 hover:bg-mercu-border/5">
+            <div className="eje-item bg-mercu-dark-card p-5 md:p-8 flex gap-4 md:gap-6 items-center transition-all duration-300 hover:bg-mercu-border/5">
               <div className="eje-mark w-7 h-7 border border-mercu-accent rounded-full flex items-center justify-center flex-shrink-0"><div className="eje-dot w-2 h-2 bg-mercu-accent rounded-full"></div></div>
               <EditableText 
                 textKey="eje3_text" 
-                className="eje-text font-serif text-lg text-mercu-cream block"
+                className="eje-text font-serif text-base md:text-lg text-mercu-cream block"
                 as="div"
                 allowHtml
               />
             </div>
-            <div className="eje-item bg-mercu-dark-card p-8 flex gap-6 items-center transition-all duration-300 hover:bg-mercu-border/5">
+            <div className="eje-item bg-mercu-dark-card p-5 md:p-8 flex gap-4 md:gap-6 items-center transition-all duration-300 hover:bg-mercu-border/5">
               <div className="eje-mark w-7 h-7 border border-mercu-accent rounded-full flex items-center justify-center flex-shrink-0"><div className="eje-dot w-2 h-2 bg-mercu-accent rounded-full"></div></div>
               <EditableText 
                 textKey="eje4_text" 
-                className="eje-text font-serif text-lg text-mercu-cream block"
+                className="eje-text font-serif text-base md:text-lg text-mercu-cream block"
                 as="div"
                 allowHtml
               />
@@ -1260,7 +1260,7 @@ export default function HomePage() {
           </div>
 
           {!submitSuccess ? (
-            <form onSubmit={handleAccreditation} className="bg-mercu-dark-card border border-mercu-border rounded-lg p-8 flex flex-col gap-6 shadow-xl relative overflow-hidden">
+            <form onSubmit={handleAccreditation} className="bg-mercu-dark-card border border-mercu-border rounded-lg p-5 sm:p-8 flex flex-col gap-6 shadow-xl relative overflow-hidden">
               <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-mercu-accent to-mercu-accent2"></div>
               
               {formError && (
@@ -1352,7 +1352,7 @@ export default function HomePage() {
             </form>
           ) : (
             /* Credencial Digital Generada */
-            <div className="bg-mercu-dark-card border border-mercu-border rounded-lg p-8 flex flex-col items-center gap-8 shadow-2xl relative overflow-hidden animate-fade-in">
+            <div className="bg-mercu-dark-card border border-mercu-border rounded-lg p-5 sm:p-8 flex flex-col items-center gap-8 shadow-2xl relative overflow-hidden animate-fade-in">
               <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-mercu-accent to-mercu-accent2"></div>
               
               <CheckCircle size={48} className="text-emerald-400 animate-pulse" />
@@ -1363,7 +1363,7 @@ export default function HomePage() {
               </div>
 
               {/* Tarjeta de Acreditación (Visual) */}
-              <div className="w-full max-w-sm bg-neutral-900 border border-mercu-border p-6 rounded-md flex flex-col gap-6 relative shadow-lg">
+              <div className="w-full max-w-sm bg-neutral-900 border border-mercu-border p-4 sm:p-6 rounded-md flex flex-col gap-6 relative shadow-lg">
                 <div className="flex justify-between items-start border-b border-mercu-border pb-4">
                   <div className="flex flex-col gap-1">
                     <span className="text-[9px] tracking-widest text-mercu-accent uppercase font-bold">Invitado de Mercurio</span>
