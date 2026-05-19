@@ -26,7 +26,8 @@ import {
   Undo,
   Download,
   Code,
-  X
+  X,
+  Instagram
 } from 'lucide-react';
 
 // Tipos de datos
@@ -1542,28 +1543,28 @@ export default function HomePage() {
             href="https://www.instagram.com/alba.pinturas/" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="flex items-center gap-2 text-xs text-mercu-muted hover:text-mercu-cream transition-colors"
+            className="flex items-center gap-2.5 text-xs text-mercu-muted hover:text-mercu-cream transition-colors group"
           >
-            <img src="/alba_blanco.png" alt="Alba" className="h-3.5 w-auto object-contain brightness-95 hover:brightness-100 transition-all" />
-            <span>Alba</span>
+            <Instagram size={16} className="text-mercu-muted group-hover:text-mercu-cream transition-colors" />
+            <img src="/alba_blanco.png" alt="Alba" className="w-auto object-contain brightness-95 group-hover:brightness-100 transition-all" style={{ height: '14px' }} />
           </a>
           <div className="w-[1px] h-4 bg-mercu-border"></div>
           <a 
             href="https://www.instagram.com/pint_mercurio/" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="flex items-center gap-2 text-xs text-mercu-muted hover:text-mercu-cream transition-colors"
+            className="flex items-center gap-2.5 text-xs text-mercu-muted hover:text-mercu-cream transition-colors group"
           >
-            <img src="/logomercurioblanco.png" alt="Mercurio" className="h-4 w-auto object-contain brightness-95 hover:brightness-100 transition-all" />
-            <span>Mercurio</span>
+            <Instagram size={16} className="text-mercu-muted group-hover:text-mercu-cream transition-colors" />
+            <img src="/logomercurioblanco.png" alt="Mercurio" className="w-auto object-contain brightness-95 group-hover:brightness-100 transition-all" style={{ height: '16px' }} />
           </a>
         </div>
 
         <div className="flex justify-between items-center flex-wrap gap-6">
-          <div className="footer-logo flex items-center gap-3.5 select-none">
-            <img src="/logomercurioblanco.png" alt="Pinturerías Mercurio" className="h-6.5 w-auto object-contain" />
-            <span className="text-mercu-muted/40 font-light text-sm">×</span>
-            <img src="/logo_casafoa.svg" alt="Casa FOA" className="h-5.5 w-auto object-contain" />
+          <div className="footer-logo flex items-center gap-2.5 select-none">
+            <img src="/logomercurioblanco.png" alt="Pinturerías Mercurio" className="w-auto object-contain" style={{ height: '36px' }} />
+            <span className="text-mercu-muted/50 font-light text-2xl mx-1">×</span>
+            <img src="/logo_casafoa.svg" alt="Casa FOA" className="w-auto object-contain" style={{ height: '32px' }} />
           </div>
           <EditableText 
             textKey="footer_lead" 
