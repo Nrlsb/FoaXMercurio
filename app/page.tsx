@@ -785,12 +785,12 @@ export default function HomePage() {
 
 
         {/* Logotipos */}
-        <div className="logo-bar z-10 mb-10 flex items-center gap-8 flex-wrap animate-fade-in opacity-0">
-          <img src="/logomercurioblanco.png" alt="Pinturerías Mercurio" className="h-10 w-auto block object-contain" />
-          <div className="logo-separator h-8 w-[1px] bg-mercu-border"></div>
-          <img src="/alba_blanco.png" alt="Alba" className="h-9 w-auto block object-contain" />
-          <div className="logo-separator h-8 w-[1px] bg-mercu-border"></div>
-          <img src="/logo_casafoa.svg" alt="Casa FOA" className="h-9 w-auto block object-contain" />
+        <div className="z-10 mb-8 md:mb-10 flex items-center flex-nowrap gap-3 sm:gap-4 md:gap-8 animate-fade-in opacity-0">
+          <img src="/logomercurioblanco.png" alt="Pinturerías Mercurio" className="h-7 sm:h-8 md:h-10 w-auto block object-contain" />
+          <div className="h-5 sm:h-6 md:h-8 w-[1px] bg-mercu-border flex-shrink-0"></div>
+          <img src="/alba_blanco.png" alt="Alba" className="h-6 sm:h-7 md:h-9 w-auto block object-contain" />
+          <div className="h-5 sm:h-6 md:h-8 w-[1px] bg-mercu-border flex-shrink-0"></div>
+          <img src="/logo_casafoa.svg" alt="Casa FOA" className="h-6 sm:h-7 md:h-9 w-auto block object-contain" />
         </div>
 
         <EditableText 
@@ -800,7 +800,7 @@ export default function HomePage() {
         />
         <EditableText 
           textKey="hero_title" 
-          className="hero-title z-10 font-serif text-5xl md:text-8xl font-light leading-[0.95] tracking-tight mb-4 block"
+          className="hero-title z-10 font-serif text-4xl sm:text-5xl md:text-8xl font-light leading-[0.95] tracking-tight mb-4 block"
           as="h1"
           allowHtml
         />
@@ -816,17 +816,17 @@ export default function HomePage() {
       </header>
 
       {/* ── BARRA DE NAVEGACIÓN STICKY ── */}
-      <nav className="sticky top-0 bg-mercu-dark/85 backdrop-blur-xl border-b border-mercu-border z-50 px-8 py-0">
+      <nav className="sticky top-0 bg-mercu-dark/85 backdrop-blur-xl border-b border-mercu-border z-50 px-4 md:px-8 py-0">
         <div className="max-w-6xl mx-auto flex items-center justify-between w-full">
-          <div className="nav-logo font-serif text-sm font-light text-mercu-cream py-5 pr-6 border-r border-mercu-border mr-4 tracking-wider">
+          <div className="nav-logo font-serif text-xs md:text-sm font-light text-mercu-cream py-4 md:py-5 pr-4 md:pr-6 border-r border-mercu-border mr-2 md:mr-4 tracking-wider">
             Mercurio × FOA
           </div>
-          <div className="flex gap-2 overflow-x-auto scrollbar-none">
-            <a href="#casa-foa" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'casa-foa' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Casa FOA</a>
-            <a href="#mercurio" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'mercurio' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Mercurio</a>
-            <a href="#alba" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'alba' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Alba</a>
-            <a href="#musica" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'musica' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Música</a>
-            <a href="#charlas" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'charlas' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Charlas</a>
+          <div className="flex gap-1 sm:gap-2 overflow-x-auto scrollbar-none">
+            <a href="#casa-foa" className={`text-[9px] md:text-xs font-medium tracking-widest uppercase py-4 md:py-5 px-2 md:px-4 transition-all relative ${activeSection === 'casa-foa' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-2 md:after:left-4 after:right-2 md:after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Casa FOA</a>
+            <a href="#mercurio" className={`text-[9px] md:text-xs font-medium tracking-widest uppercase py-4 md:py-5 px-2 md:px-4 transition-all relative ${activeSection === 'mercurio' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-2 md:after:left-4 after:right-2 md:after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Mercurio</a>
+            <a href="#alba" className={`text-[9px] md:text-xs font-medium tracking-widest uppercase py-4 md:py-5 px-2 md:px-4 transition-all relative ${activeSection === 'alba' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-2 md:after:left-4 after:right-2 md:after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Alba</a>
+            <a href="#musica" className={`text-[9px] md:text-xs font-medium tracking-widest uppercase py-4 md:py-5 px-2 md:px-4 transition-all relative ${activeSection === 'musica' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-2 md:after:left-4 after:right-2 md:after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Música</a>
+            <a href="#charlas" className={`text-[9px] md:text-xs font-medium tracking-widest uppercase py-4 md:py-5 px-2 md:px-4 transition-all relative ${activeSection === 'charlas' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-2 md:after:left-4 after:right-2 md:after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Charlas</a>
           </div>
         </div>
       </nav>
