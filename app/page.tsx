@@ -20,7 +20,12 @@ import {
   Film,
   Maximize2,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  Save,
+  Undo,
+  Download,
+  Code,
+  X
 } from 'lucide-react';
 
 // Tipos de datos
@@ -130,10 +135,121 @@ const DEFAULT_GALLERY_ITEMS: GalleryItem[] = [
   }
 ];
 
+const DEFAULT_WEB_TEXTS: Record<string, string> = {
+  hero_eyebrow: 'Pinturerías Mercurio × Casa FOA Córdoba 2026',
+  hero_title: 'Una jornada<br/><em>para ver</em><br/>diferente.',
+  hero_subtitle: 'Edición Pocito Social Life · Nueva Córdoba',
+  
+  section_foa_eyebrow: 'El escenario de hoy',
+  section_foa_title: '40 años transformando<br/><em>arquitectura en</em><br/>experiencias vivas.',
+  section_foa_lead: 'Antes de recorrer, entendamos el espacio. Casa FOA no es una exposición de materiales — es el punto de encuentro definitivo del diseño en el país. Aquí te revelamos curiosidades y datos esenciales que pocos conocen.',
+  
+  stat1_num: '1985',
+  stat1_label: 'Primera edición',
+  stat2_num: '35+',
+  stat2_label: 'Espacios de diseño',
+  stat3_num: '4.400',
+  stat3_label: 'm² de intervención',
+  stat4_num: '180K',
+  stat4_label: 'Visitantes promedio',
+  
+  curiosity1_num: '01',
+  curiosity1_title: 'El origen filantrópico',
+  curiosity1_text: 'Casa FOA nació en 1985 de la mano de Mercedes Malbrán de Campos con un fin solidario: financiar las actividades de la Fundación Oftalmológica Argentina. Lo que comenzó como un té benéfico en una casona hoy es el polo de diseño más relevante de Latinoamérica.',
+  
+  curiosity2_num: '02',
+  curiosity2_title: 'La inspiración internacional',
+  curiosity2_text: 'El modelo de Casa FOA se inspiró en la célebre Kips Bay Decorator Showhouse de Nueva York. Su enorme repercusión local sirvió como modelo directo para la creación de franquicias similares en la región como Casa Cor (Brasil, Uruguay) y Casa Decor (España).',
+  
+  curiosity3_num: '03',
+  curiosity3_title: 'Rescate de patrimonio',
+  curiosity3_text: 'Cada edición recupera un hito arquitectónico en desuso. A lo largo del tiempo ha restaurado palacios históricos, silos de granos, conventos, fábricas textiles abandonadas y muelles. En 2026, desembarca en Pocito Social Life para fundirse con la vitalidad moderna de Nueva Córdoba.',
+  
+  ejes_title: 'Los 4 Ejes del Recorrido',
+  eje1_text: 'Diseñar desde lo auténtico — Materialidad honesta y texturas sin refinar.',
+  eje2_text: 'Rediseñar lo esencial — Redefinir la habitabilidad mínima con máximo confort.',
+  eje3_text: 'Tradición en presente continuo — La herencia artesanal cordobesa adaptada a la vanguardia.',
+  eje4_text: 'Habitar la transformación — Plantas flexibles para hogares inteligentes y cambiantes.',
+  
+  gallery_eyebrow: 'Experiencia Visual',
+  gallery_title: 'Galería de Espacios e<br/><em>Inspiración y Diseño.</em>',
+  gallery_lead: 'Un recorrido interactivo por el interiorismo y la arquitectura de vanguardia en Pocito Córdoba 2026. Disfrutá de nuestras 7 postales curadas de diseño y 5 conferencias magistrales.',
+  
+  music_eyebrow: 'Estimulación sensorial',
+  music_title: 'Música para<br/><em>proyectar y crear.</em>',
+  music_lead: 'Diseñamos paisajes sonoros especiales para sumergirte en el flujo creativo. Clickeá en los tracks para reproducir composiciones ambientales en tiempo real sintetizadas por tu navegador.',
+  
+  acreditar_eyebrow: 'Pase Digital Exclusivo',
+  acreditar_title: 'Registrá tu<br/><em>acreditación online.</em>',
+  acreditar_lead: 'Completá tu registro para formar parte de la jornada especial Mercurio × Alba en Casa FOA. Recibirás tu credencial digital con acceso prioritario.',
+  
+  videos_eyebrow: 'Perspectivas globales',
+  videos_title: 'Charlas que<br/><em>inspiran la mirada.</em>',
+  videos_lead: 'Cuatro pensadores globales discuten la importancia de dotar a los espacios de alma, alegría, sustentabilidad y arraigo local. Haz clic en cualquiera para verla directamente.',
+  
+  footer_lead: 'Una iniciativa diseñada para inspirar la práctica profesional diaria de arquitectos y diseñadores. Desarrollado en alianza por Pinturerías Mercurio y Alba AkzoNobel.',
+  footer_copy: '© 2026 Pinturerías Mercurio S.A. Todos los derechos reservados.'
+};
+
 export default function HomePage() {
   /* ── 1. ESTADOS DE INTERACCIÓN GENERAL ── */
   const [activeSection, setActiveSection] = useState('inicio');
   const [showScrollTop, setShowScrollTop] = useState(false);
+
+  /* ── 1.1. ESTADOS DEL EDITOR DE TEXTOS ── */
+  const [editMode, setEditMode] = useState(false);
+  const [webTexts, setWebTexts] = useState<Record<string, string>>(DEFAULT_WEB_TEXTS);
+  const [savingTexts, setSavingTexts] = useState(false);
+  const [saveSuccessTexts, setSaveSuccessTexts] = useState(false);
+  const [saveErrorTexts, setSaveErrorTexts] = useState('');
+  const [showSqlModal, setShowSqlModal] = useState(false);
+
+  // Helper Component for Inline Editable Text
+  const EditableText = ({ 
+    textKey, 
+    className = '', 
+    as: Component = 'span',
+    allowHtml = false
+  }: { 
+    textKey: string; 
+    className?: string; 
+    as?: any;
+    allowHtml?: boolean;
+  }) => {
+    const content = webTexts[textKey] || '';
+
+    const handleBlur = (e: React.FocusEvent<HTMLElement>) => {
+      const newValue = allowHtml ? e.currentTarget.innerHTML : e.currentTarget.innerText;
+      setWebTexts(prev => ({
+        ...prev,
+        [textKey]: newValue
+      }));
+    };
+
+    if (editMode) {
+      return (
+        <Component
+          contentEditable
+          suppressContentEditableWarning
+          onBlur={handleBlur}
+          className={`${className} outline-none border border-dashed border-mercu-accent/50 focus:border-mercu-accent focus:bg-white/5 px-2 py-0.5 rounded transition-all cursor-text`}
+          dangerouslySetInnerHTML={allowHtml ? { __html: content } : undefined}
+          title="Haz clic para editar este texto"
+        >
+          {!allowHtml ? content : undefined}
+        </Component>
+      );
+    }
+
+    return (
+      <Component 
+        className={className}
+        dangerouslySetInnerHTML={allowHtml ? { __html: content } : undefined}
+      >
+        {!allowHtml ? content : undefined}
+      </Component>
+    );
+  };
 
   /* ── 2. ESTADOS DE LA GALERÍA MULTIMEDIA ── */
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(DEFAULT_GALLERY_ITEMS);
@@ -295,6 +411,98 @@ export default function HomePage() {
 
     fetchGallery();
   }, []);
+
+  /* ── 6.6. EFECTO: CARGA DE TEXTOS EDITABLES ── */
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('edit') === 'true') {
+        setEditMode(true);
+      }
+    }
+
+    async function fetchWebTexts() {
+      try {
+        const { data, error } = await supabase
+          .from('web_texts')
+          .select('*');
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          const loadedTexts: Record<string, string> = { ...DEFAULT_WEB_TEXTS };
+          data.forEach((item: any) => {
+            loadedTexts[item.key] = item.value;
+          });
+          setWebTexts(loadedTexts);
+        } else {
+          const local = localStorage.getItem('casafoa_web_texts');
+          if (local) {
+            setWebTexts(JSON.parse(local));
+          }
+        }
+      } catch (err) {
+        console.warn('Conexión a Supabase no disponible para textos o tabla inexistente. Usando local/defaults.');
+        const local = localStorage.getItem('casafoa_web_texts');
+        if (local) {
+          setWebTexts(JSON.parse(local));
+        }
+      }
+    }
+
+    fetchWebTexts();
+  }, []);
+
+  const handleSaveWebTexts = async () => {
+    setSavingTexts(true);
+    setSaveErrorTexts('');
+    setSaveSuccessTexts(false);
+
+    try {
+      const itemsToSave = Object.entries(webTexts).map(([key, value]) => ({
+        key,
+        value
+      }));
+
+      const { error } = await supabase
+        .from('web_texts')
+        .upsert(itemsToSave, { onConflict: 'key' });
+
+      if (error) throw error;
+
+      localStorage.setItem('casafoa_web_texts', JSON.stringify(webTexts));
+      setSaveSuccessTexts(true);
+      setTimeout(() => setSaveSuccessTexts(false), 4000);
+    } catch (err: any) {
+      console.warn('Error al guardar en Supabase. Guardando localmente:', err.message);
+      localStorage.setItem('casafoa_web_texts', JSON.stringify(webTexts));
+      setSaveSuccessTexts(true);
+      setSaveErrorTexts(
+        'Los cambios se guardaron localmente en tu navegador. Para guardarlos en la base de datos de Supabase de forma permanente, haz clic en "Ver SQL Supabase" y crea la tabla.'
+      );
+      setTimeout(() => setSaveSuccessTexts(false), 8000);
+    } finally {
+      setSavingTexts(false);
+    }
+  };
+
+  const handleResetWebTexts = () => {
+    if (confirm('¿Estás seguro de que deseas restablecer todos los textos a los valores originales predeterminados? Se perderán las modificaciones locales.')) {
+      setWebTexts(DEFAULT_WEB_TEXTS);
+      localStorage.removeItem('casafoa_web_texts');
+      alert('Textos restablecidos a los valores predeterminados. Para confirmar el cambio, haz clic en "Guardar Cambios".');
+    }
+  };
+
+  const handleExportWebTextsJson = () => {
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(webTexts, null, 2));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", "textos_casafoa_2026.json");
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+  };
 
   const openLightbox = (type: 'image' | 'video', index: number) => {
     setLightboxType(type);
@@ -599,15 +807,22 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div className="hero-eyebrow z-10 text-xs font-semibold tracking-[0.25em] uppercase text-mercu-accent mb-6">
-          Pinturerías Mercurio × Casa FOA Córdoba 2026
-        </div>
-        <h1 className="hero-title z-10 font-serif text-5xl md:text-8xl font-light leading-[0.95] tracking-tight mb-4">
-          Una jornada<br/><em>para ver</em><br/>diferente.
-        </h1>
-        <p className="hero-subtitle z-10 text-sm tracking-widest uppercase text-mercu-muted">
-          Edición Pocito Social Life · Nueva Córdoba
-        </p>
+        <EditableText 
+          textKey="hero_eyebrow" 
+          className="hero-eyebrow z-10 text-xs font-semibold tracking-[0.25em] uppercase text-mercu-accent mb-6 block"
+          as="div"
+        />
+        <EditableText 
+          textKey="hero_title" 
+          className="hero-title z-10 font-serif text-5xl md:text-8xl font-light leading-[0.95] tracking-tight mb-4 block"
+          as="h1"
+          allowHtml
+        />
+        <EditableText 
+          textKey="hero_subtitle" 
+          className="hero-subtitle z-10 text-sm tracking-widest uppercase text-mercu-muted block"
+          as="p"
+        />
 
         <div className="scroll-hint absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10" aria-hidden="true">
           <div className="scroll-line w-[1px] h-10 bg-gradient-to-b from-transparent to-mercu-muted animate-pulse"></div>
@@ -633,66 +848,138 @@ export default function HomePage() {
       {/* ── SECCIÓN CASA FOA ── */}
       <section id="casa-foa" className="py-24 px-8 max-w-4xl mx-auto">
         <div className="reveal">
-          <div className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-4 flex items-center gap-3">
-            El escenario de hoy
-          </div>
-          <h2 className="section-title font-serif text-4xl md:text-6xl font-light leading-tight text-mercu-cream">
-            40 años transformando<br/><em>arquitectura en</em><br/>experiencias vivas.
-          </h2>
-          <p className="section-lead text-base md:text-lg leading-relaxed text-mercu-cream/70 mt-6 max-w-2xl">
-            Antes de recorrer, entendamos el espacio. Casa FOA no es una exposición de materiales — es el punto de encuentro definitivo del diseño en el país. Aquí te revelamos curiosidades y datos esenciales que pocos conocen.
-          </p>
+          <EditableText 
+            textKey="section_foa_eyebrow" 
+            className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-4 block"
+            as="div"
+          />
+          <EditableText 
+            textKey="section_foa_title" 
+            className="section-title font-serif text-4xl md:text-6xl font-light leading-tight text-mercu-cream block"
+            as="h2"
+            allowHtml
+          />
+          <EditableText 
+            textKey="section_foa_lead" 
+            className="section-lead text-base md:text-lg leading-relaxed text-mercu-cream/70 mt-6 max-w-2xl block"
+            as="p"
+          />
         </div>
 
         {/* Malla de Datos Estadísticos */}
         <div className="dato-grid reveal grid grid-cols-2 md:grid-cols-4 gap-[1px] bg-mercu-border border border-mercu-border rounded overflow-hidden my-16">
           <div className="dato-item bg-mercu-dark-card p-10 text-center transition-all duration-300 hover:bg-mercu-border/5">
-            <div className="dato-num font-serif text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1">1985</div>
-            <div className="dato-label text-[10px] tracking-widest text-mercu-muted uppercase">Primera edición</div>
+            <EditableText 
+              textKey="stat1_num" 
+              className="dato-num font-serif text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1 block"
+              as="div"
+            />
+            <EditableText 
+              textKey="stat1_label" 
+              className="dato-label text-[10px] tracking-widest text-mercu-muted uppercase block"
+              as="div"
+            />
           </div>
           <div className="dato-item bg-mercu-dark-card p-10 text-center transition-all duration-300 hover:bg-mercu-border/5">
-            <div className="dato-num font-serif text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1">35+</div>
-            <div className="dato-label text-[10px] tracking-widest text-mercu-muted uppercase">Espacios de diseño</div>
+            <EditableText 
+              textKey="stat2_num" 
+              className="dato-num font-serif text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1 block"
+              as="div"
+            />
+            <EditableText 
+              textKey="stat2_label" 
+              className="dato-label text-[10px] tracking-widest text-mercu-muted uppercase block"
+              as="div"
+            />
           </div>
           <div className="dato-item bg-mercu-dark-card p-10 text-center transition-all duration-300 hover:bg-mercu-border/5">
-            <div className="dato-num font-serif text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1">4.400</div>
-            <div className="dato-label text-[10px] tracking-widest text-mercu-muted uppercase">m² de intervención</div>
+            <EditableText 
+              textKey="stat3_num" 
+              className="dato-num font-serif text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1 block"
+              as="div"
+            />
+            <EditableText 
+              textKey="stat3_label" 
+              className="dato-label text-[10px] tracking-widest text-mercu-muted uppercase block"
+              as="div"
+            />
           </div>
           <div className="dato-item bg-mercu-dark-card p-10 text-center transition-all duration-300 hover:bg-mercu-border/5">
-            <div className="dato-num font-serif text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1">180K</div>
-            <div className="dato-label text-[10px] tracking-widest text-mercu-muted uppercase">Visitantes promedio</div>
+            <EditableText 
+              textKey="stat4_num" 
+              className="dato-num font-serif text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1 block"
+              as="div"
+            />
+            <EditableText 
+              textKey="stat4_label" 
+              className="dato-label text-[10px] tracking-widest text-mercu-muted uppercase block"
+              as="div"
+            />
           </div>
         </div>
 
         {/* Malla de Curiosidades */}
         <div className="curiosity-grid reveal grid grid-cols-1 gap-[1px] bg-mercu-border border border-mercu-border rounded overflow-hidden mb-16">
           <div className="curiosity-item bg-mercu-dark p-10 flex gap-8 items-start transition-all duration-300 hover:bg-mercu-border/5">
-            <div className="curiosity-num font-serif text-5xl font-light text-mercu-accent/20 transition-colors duration-300">01</div>
-            <div className="curiosity-content">
-              <h3 className="curiosity-label text-xs font-semibold tracking-wider text-mercu-accent uppercase mb-3">El origen filantrópico</h3>
-              <p className="curiosity-text text-sm leading-relaxed text-mercu-cream/80">
-                Casa FOA nació en 1985 de la mano de <strong>Mercedes Malbrán de Campos</strong> con un fin solidario: financiar las actividades de la Fundación Oftalmológica Argentina. Lo que comenzó como un té benéfico en una casona hoy es el polo de diseño más relevante de Latinoamérica.
-              </p>
+            <EditableText 
+              textKey="curiosity1_num" 
+              className="curiosity-num font-serif text-5xl font-light text-mercu-accent/20 transition-colors duration-300 block"
+              as="div"
+            />
+            <div className="curiosity-content w-full">
+              <EditableText 
+                textKey="curiosity1_title" 
+                className="curiosity-label text-xs font-semibold tracking-wider text-mercu-accent uppercase mb-3 block"
+                as="h3"
+              />
+              <EditableText 
+                textKey="curiosity1_text" 
+                className="curiosity-text text-sm leading-relaxed text-mercu-cream/80 block"
+                as="p"
+                allowHtml
+              />
             </div>
           </div>
 
           <div className="curiosity-item bg-mercu-dark p-10 flex gap-8 items-start transition-all duration-300 hover:bg-mercu-border/5">
-            <div className="curiosity-num font-serif text-5xl font-light text-mercu-accent/20 transition-colors duration-300">02</div>
-            <div className="curiosity-content">
-              <h3 className="curiosity-label text-xs font-semibold tracking-wider text-mercu-accent uppercase mb-3">La inspiración internacional</h3>
-              <p className="curiosity-text text-sm leading-relaxed text-mercu-cream/80">
-                El modelo de Casa FOA se inspiró en la célebre Kips Bay Decorator Showhouse de Nueva York. Su enorme repercusión local sirvió como modelo directo para la creación de franquicias similares en la región como <strong>Casa Cor (Brasil, Uruguay) y Casa Decor (España)</strong>.
-              </p>
+            <EditableText 
+              textKey="curiosity2_num" 
+              className="curiosity-num font-serif text-5xl font-light text-mercu-accent/20 transition-colors duration-300 block"
+              as="div"
+            />
+            <div className="curiosity-content w-full">
+              <EditableText 
+                textKey="curiosity2_title" 
+                className="curiosity-label text-xs font-semibold tracking-wider text-mercu-accent uppercase mb-3 block"
+                as="h3"
+              />
+              <EditableText 
+                textKey="curiosity2_text" 
+                className="curiosity-text text-sm leading-relaxed text-mercu-cream/80 block"
+                as="p"
+                allowHtml
+              />
             </div>
           </div>
 
           <div className="curiosity-item bg-mercu-dark p-10 flex gap-8 items-start transition-all duration-300 hover:bg-mercu-border/5">
-            <div className="curiosity-num font-serif text-5xl font-light text-mercu-accent/20 transition-colors duration-300">03</div>
-            <div className="curiosity-content">
-              <h3 className="curiosity-label text-xs font-semibold tracking-wider text-mercu-accent uppercase mb-3">Rescate de patrimonio</h3>
-              <p className="curiosity-text text-sm leading-relaxed text-mercu-cream/80">
-                Cada edición recupera un hito arquitectónico en desuso. A lo largo del tiempo ha restaurado palacios históricos, silos de granos, conventos, fábricas textiles abandonadas y muelles. En 2026, desembarca en <strong>Pocito Social Life</strong> para fundirse con la vitalidad moderna de Nueva Córdoba.
-              </p>
+            <EditableText 
+              textKey="curiosity3_num" 
+              className="curiosity-num font-serif text-5xl font-light text-mercu-accent/20 transition-colors duration-300 block"
+              as="div"
+            />
+            <div className="curiosity-content w-full">
+              <EditableText 
+                textKey="curiosity3_title" 
+                className="curiosity-label text-xs font-semibold tracking-wider text-mercu-accent uppercase mb-3 block"
+                as="h3"
+              />
+              <EditableText 
+                textKey="curiosity3_text" 
+                className="curiosity-text text-sm leading-relaxed text-mercu-cream/80 block"
+                as="p"
+                allowHtml
+              />
             </div>
           </div>
         </div>
@@ -700,23 +987,47 @@ export default function HomePage() {
         {/* Ejes Conceptuales */}
         <div className="reveal">
           <div className="divider w-16 h-[1px] bg-mercu-accent my-12"></div>
-          <div className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-6">Los 4 Ejes del Recorrido</div>
+          <EditableText 
+            textKey="ejes_title" 
+            className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-6 block"
+            as="div"
+          />
           <div className="ejes-list flex flex-col gap-[1px] bg-mercu-border border border-mercu-border rounded overflow-hidden mt-8">
             <div className="eje-item bg-mercu-dark-card p-8 flex gap-6 items-center transition-all duration-300 hover:bg-mercu-border/5">
               <div className="eje-mark w-7 h-7 border border-mercu-accent rounded-full flex items-center justify-center flex-shrink-0"><div className="eje-dot w-2 h-2 bg-mercu-accent rounded-full"></div></div>
-              <div className="eje-text font-serif text-lg text-mercu-cream"><em>Diseñar desde lo auténtico</em> — Materialidad honesta y texturas sin refinar.</div>
+              <EditableText 
+                textKey="eje1_text" 
+                className="eje-text font-serif text-lg text-mercu-cream block"
+                as="div"
+                allowHtml
+              />
             </div>
             <div className="eje-item bg-mercu-dark-card p-8 flex gap-6 items-center transition-all duration-300 hover:bg-mercu-border/5">
               <div className="eje-mark w-7 h-7 border border-mercu-accent rounded-full flex items-center justify-center flex-shrink-0"><div className="eje-dot w-2 h-2 bg-mercu-accent rounded-full"></div></div>
-              <div className="eje-text font-serif text-lg text-mercu-cream"><em>Rediseñar lo esencial</em> — Redefinir la habitabilidad mínima con máximo confort.</div>
+              <EditableText 
+                textKey="eje2_text" 
+                className="eje-text font-serif text-lg text-mercu-cream block"
+                as="div"
+                allowHtml
+              />
             </div>
             <div className="eje-item bg-mercu-dark-card p-8 flex gap-6 items-center transition-all duration-300 hover:bg-mercu-border/5">
               <div className="eje-mark w-7 h-7 border border-mercu-accent rounded-full flex items-center justify-center flex-shrink-0"><div className="eje-dot w-2 h-2 bg-mercu-accent rounded-full"></div></div>
-              <div className="eje-text font-serif text-lg text-mercu-cream"><em>Tradición en presente continuo</em> — La herencia artesanal cordobesa adaptada a la vanguardia.</div>
+              <EditableText 
+                textKey="eje3_text" 
+                className="eje-text font-serif text-lg text-mercu-cream block"
+                as="div"
+                allowHtml
+              />
             </div>
             <div className="eje-item bg-mercu-dark-card p-8 flex gap-6 items-center transition-all duration-300 hover:bg-mercu-border/5">
               <div className="eje-mark w-7 h-7 border border-mercu-accent rounded-full flex items-center justify-center flex-shrink-0"><div className="eje-dot w-2 h-2 bg-mercu-accent rounded-full"></div></div>
-              <div className="eje-text font-serif text-lg text-mercu-cream"><em>Habitar la transformación</em> — Plantas flexibles para hogares inteligentes y cambiantes.</div>
+              <EditableText 
+                textKey="eje4_text" 
+                className="eje-text font-serif text-lg text-mercu-cream block"
+                as="div"
+                allowHtml
+              />
             </div>
           </div>
         </div>
@@ -731,11 +1042,22 @@ export default function HomePage() {
           </div>
           <div className="section-header mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
-              <div className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-4">Experiencia Visual</div>
-              <h2 className="section-title font-serif text-4xl md:text-6xl font-light leading-tight text-mercu-cream">Galería de Espacios e<br/><em>Inspiración y Diseño.</em></h2>
-              <p className="section-lead text-base md:text-lg leading-relaxed text-mercu-cream/70 mt-6 max-w-2xl">
-                Un recorrido interactivo por el interiorismo y la arquitectura de vanguardia en Pocito Córdoba 2026. Disfrutá de nuestras 7 postales curadas de diseño y 5 conferencias magistrales.
-              </p>
+              <EditableText 
+                textKey="gallery_eyebrow" 
+                className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-4 block"
+                as="div"
+              />
+              <EditableText 
+                textKey="gallery_title" 
+                className="section-title font-serif text-4xl md:text-6xl font-light leading-tight text-mercu-cream block"
+                as="h2"
+                allowHtml
+              />
+              <EditableText 
+                textKey="gallery_lead" 
+                className="section-lead text-base md:text-lg leading-relaxed text-mercu-cream/70 mt-6 max-w-2xl block"
+                as="p"
+              />
             </div>
             
             {/* Controles de Filtro */}
@@ -969,11 +1291,22 @@ export default function HomePage() {
       <section id="musica" className="py-24 px-8 max-w-4xl mx-auto">
         <div className="reveal">
           <div className="section-header mb-16">
-            <div className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-4">Estimulación sensorial</div>
-            <h2 className="section-title font-serif text-4xl md:text-6xl font-light leading-tight text-mercu-cream">Música para<br/><em>proyectar y crear.</em></h2>
-            <p className="section-lead text-base md:text-lg leading-relaxed text-mercu-cream/70 mt-6 max-w-2xl">
-              Diseñamos paisajes sonoros especiales para sumergirte en el flujo creativo. Clickeá en los tracks para reproducir composiciones ambientales en tiempo real sintetizadas por tu navegador.
-            </p>
+            <EditableText 
+              textKey="music_eyebrow" 
+              className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-4 block"
+              as="div"
+            />
+            <EditableText 
+              textKey="music_title" 
+              className="section-title font-serif text-4xl md:text-6xl font-light leading-tight text-mercu-cream block"
+              as="h2"
+              allowHtml
+            />
+            <EditableText 
+              textKey="music_lead" 
+              className="section-lead text-base md:text-lg leading-relaxed text-mercu-cream/70 mt-6 max-w-2xl block"
+              as="p"
+            />
           </div>
         </div>
 
@@ -1044,13 +1377,22 @@ export default function HomePage() {
       <section id="acreditar" className="py-24 px-8 max-w-2xl mx-auto">
         <div className="reveal">
           <div className="section-header mb-12 text-center">
-            <div className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-4 justify-center">
-              Pase Digital Exclusivo
-            </div>
-            <h2 className="section-title font-serif text-4xl md:text-5xl font-light leading-tight text-mercu-cream">Registrá tu<br/><em>acreditación online.</em></h2>
-            <p className="section-lead text-sm md:text-base leading-relaxed text-mercu-cream/70 mt-6 max-w-xl mx-auto">
-              Completá tu registro para formar parte de la jornada especial Mercurio × Alba en Casa FOA. Recibirás tu credencial digital con acceso prioritario.
-            </p>
+            <EditableText 
+              textKey="acreditar_eyebrow" 
+              className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-4 flex justify-center"
+              as="div"
+            />
+            <EditableText 
+              textKey="acreditar_title" 
+              className="section-title font-serif text-4xl md:text-5xl font-light leading-tight text-mercu-cream block"
+              as="h2"
+              allowHtml
+            />
+            <EditableText 
+              textKey="acreditar_lead" 
+              className="section-lead text-sm md:text-base leading-relaxed text-mercu-cream/70 mt-6 max-w-xl mx-auto block"
+              as="p"
+            />
           </div>
 
           {!submitSuccess ? (
@@ -1093,7 +1435,7 @@ export default function HomePage() {
                 <div className="flex flex-col gap-2">
                   <label htmlFor="profesion" className="text-[10px] tracking-widest text-mercu-muted uppercase font-semibold">Profesión / Rol</label>
                   <select 
-                    id="profesion"
+                     id="profesion"
                     value={profesion}
                     onChange={(e) => setProfesion(e.target.value)}
                     className="bg-mercu-dark border border-mercu-border text-mercu-cream p-3 rounded focus:outline-none focus:border-mercu-accent text-sm"
@@ -1231,11 +1573,22 @@ export default function HomePage() {
       <section id="videos" className="py-24 px-8 max-w-4xl mx-auto">
         <div className="reveal">
           <div className="section-header mb-16">
-            <div className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-4">Perspectivas globales</div>
-            <h2 className="section-title font-serif text-4xl md:text-6xl font-light leading-tight text-mercu-cream">Charlas que<br/><em>inspiran la mirada.</em></h2>
-            <p className="section-lead text-base md:text-lg leading-relaxed text-mercu-cream/70 mt-6 max-w-2xl">
-              Cuatro pensadores globales discuten la importancia de dotar a los espacios de alma, alegría, sustentabilidad y arraigo local. Haz clic en cualquiera para verla directamente.
-            </p>
+            <EditableText 
+              textKey="videos_eyebrow" 
+              className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-4 block"
+              as="div"
+            />
+            <EditableText 
+              textKey="videos_title" 
+              className="section-title font-serif text-4xl md:text-6xl font-light leading-tight text-mercu-cream block"
+              as="h2"
+              allowHtml
+            />
+            <EditableText 
+              textKey="videos_lead" 
+              className="section-lead text-base md:text-lg leading-relaxed text-mercu-cream/70 mt-6 max-w-2xl block"
+              as="p"
+            />
           </div>
         </div>
 
@@ -1331,14 +1684,170 @@ export default function HomePage() {
       <footer className="border-t border-mercu-border py-16 px-8 max-w-4xl mx-auto flex flex-col gap-8">
         <div className="flex justify-between items-center flex-wrap gap-6">
           <div className="footer-logo font-serif text-2xl text-mercu-cream">Mercurio × <em className="italic text-mercu-warm">Casa FOA</em></div>
-          <p className="text-xs text-mercu-muted max-w-md leading-relaxed">
-            Una iniciativa diseñada para inspirar la práctica profesional diaria de arquitectos y diseñadores. Desarrollado en alianza por Pinturerías Mercurio y Alba AkzoNobel.
-          </p>
+          <EditableText 
+            textKey="footer_lead" 
+            className="text-xs text-mercu-muted max-w-md leading-relaxed block"
+            as="p"
+          />
         </div>
-        <div className="text-[10px] tracking-wider text-mercu-muted/40 uppercase">
-          © 2026 Pinturerías Mercurio S.A. Todos los derechos reservados.
-        </div>
+        <EditableText 
+          textKey="footer_copy" 
+          className="text-[10px] tracking-wider text-mercu-muted/40 uppercase block"
+          as="div"
+        />
       </footer>
+
+      {/* ── BARRA DE HERRAMIENTAS DE EDICIÓN FLOTANTE (FAB) ── */}
+      {editMode && (
+        <div className="fixed bottom-6 left-6 z-[999] animate-fade-in flex flex-col gap-3">
+          {saveSuccessTexts && (
+            <div className="bg-emerald-950/90 backdrop-blur-md border border-emerald-500/30 text-emerald-300 text-xs py-3 px-4 rounded shadow-2xl max-w-sm flex flex-col gap-1 transition-all duration-300">
+              <span className="font-semibold flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                ✓ Cambios guardados con éxito
+              </span>
+              {saveErrorTexts ? (
+                <span className="text-[10px] text-emerald-300/80 leading-relaxed font-light mt-1">
+                  {saveErrorTexts}
+                </span>
+              ) : (
+                <span className="text-[10px] text-emerald-300/80">
+                  Sincronizado correctamente con Supabase.
+                </span>
+              )}
+            </div>
+          )}
+
+          <div className="flex items-center gap-2 bg-neutral-900/90 backdrop-blur-xl border border-mercu-border rounded-full p-2 shadow-2xl">
+            <div className="text-[10px] uppercase font-bold tracking-widest text-mercu-accent px-4 py-1.5 border-r border-mercu-border/50 hidden sm:inline-block">
+              Editor de Textos
+            </div>
+            
+            <button
+              onClick={handleSaveWebTexts}
+              disabled={savingTexts}
+              className="flex items-center gap-1.5 bg-mercu-accent hover:bg-mercu-cream text-mercu-dark font-semibold text-xs tracking-wider uppercase px-4 py-2 rounded-full transition-all active:scale-95 disabled:opacity-50"
+              title="Guardar todos los cambios en Supabase / LocalStorage"
+            >
+              <Save size={14} />
+              <span>{savingTexts ? 'Guardando...' : 'Guardar'}</span>
+            </button>
+
+            <button
+              onClick={handleResetWebTexts}
+              className="p-2 text-mercu-muted hover:text-mercu-cream rounded-full hover:bg-white/5 transition-all"
+              title="Restablecer textos predeterminados"
+            >
+              <Undo size={16} />
+            </button>
+
+            <button
+              onClick={handleExportWebTextsJson}
+              className="p-2 text-mercu-muted hover:text-mercu-cream rounded-full hover:bg-white/5 transition-all"
+              title="Exportar textos como JSON"
+            >
+              <Download size={16} />
+            </button>
+
+            <button
+              onClick={() => setShowSqlModal(true)}
+              className="p-2 text-mercu-muted hover:text-mercu-accent rounded-full hover:bg-white/5 transition-all flex items-center gap-1"
+              title="Ver instrucciones SQL de Supabase"
+            >
+              <Code size={16} />
+              <span className="text-[9px] uppercase tracking-wider font-bold pr-1 hidden md:inline">SQL</span>
+            </button>
+
+            <button
+              onClick={() => {
+                if (confirm('¿Deseas salir del modo editor de textos? No te olvides de guardar tus cambios.')) {
+                  setEditMode(false);
+                  // Limpiar query param de la URL sin recargar la página
+                  if (typeof window !== 'undefined') {
+                    const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+                    window.history.pushState({ path: newUrl }, '', newUrl);
+                  }
+                }
+              }}
+              className="p-2 text-mercu-muted hover:text-red-400 rounded-full hover:bg-white/5 transition-all border-l border-mercu-border/50 pl-3"
+              title="Cerrar editor"
+            >
+              <X size={16} />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ── MODAL SQL SUPABASE DE INSTRUCCIONES ── */}
+      {showSqlModal && (
+        <div 
+          onClick={() => setShowSqlModal(false)}
+          className="fixed inset-0 bg-black/85 backdrop-blur-md z-[1000] flex items-center justify-center p-4 animate-fade-in"
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            className="bg-neutral-900 border border-mercu-border rounded-xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col max-h-[85vh]"
+          >
+            {/* Cabecera */}
+            <div className="flex justify-between items-center px-6 py-4 border-b border-mercu-border/50 bg-neutral-950/40">
+              <div className="flex items-center gap-2">
+                <Code size={18} className="text-mercu-accent" />
+                <h3 className="font-serif text-lg text-mercu-cream">Configuración de Supabase</h3>
+              </div>
+              <button 
+                onClick={() => setShowSqlModal(false)}
+                className="w-8 h-8 rounded-full bg-white/5 text-mercu-cream flex items-center justify-center hover:bg-mercu-accent hover:text-mercu-dark transition-all"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Contenido */}
+            <div className="p-6 overflow-y-auto flex flex-col gap-4 text-xs md:text-sm leading-relaxed text-mercu-muted">
+              <p>
+                Para habilitar la persistencia de textos en tiempo real en la nube para todos tus usuarios, ejecuta la siguiente consulta en el <strong>SQL Editor</strong> de tu panel de Supabase:
+              </p>
+              
+              <div className="relative font-mono bg-black text-emerald-400 p-4 rounded-lg overflow-x-auto border border-mercu-border/50 text-[11px] leading-normal select-all">
+                <pre>{`create table if not exists public.web_texts (
+  key text primary key,
+  value text not null
+);
+
+alter table public.web_texts enable row level security;
+
+create policy "Permitir lectura pública de textos" 
+on public.web_texts for select using (true);
+
+create policy "Permitir inserción pública de textos" 
+on public.web_texts for insert with check (true);
+
+create policy "Permitir actualización pública de textos" 
+on public.web_texts for update using (true);`}</pre>
+              </div>
+
+              <div className="bg-amber-950/30 border border-amber-500/20 text-amber-300/90 p-4 rounded-lg flex flex-col gap-1.5 text-xs">
+                <span className="font-bold flex items-center gap-1">
+                  ⚠️ Nota sobre Resiliencia
+                </span>
+                <span>
+                  Si no creas esta tabla o la base de datos no está disponible, el sistema guardará automáticamente tus textos de forma local en tu navegador (<strong>LocalStorage</strong>). Podrás seguir editando y guardando de manera 100% funcional.
+                </span>
+              </div>
+            </div>
+
+            {/* Footer */}
+            <div className="px-6 py-4 border-t border-mercu-border/30 bg-neutral-950/40 flex justify-end">
+              <button 
+                onClick={() => setShowSqlModal(false)}
+                className="bg-mercu-accent hover:bg-mercu-cream text-mercu-dark font-semibold text-xs tracking-wider uppercase px-5 py-2.5 rounded-full transition-all"
+              >
+                Entendido
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

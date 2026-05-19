@@ -425,17 +425,26 @@ export default function AdminPage() {
         </div>
 
         {activeTab === 'acreditados' ? (
-          <button 
-            onClick={handleExportCSV}
-            className="bg-mercu-accent hover:bg-mercu-cream text-mercu-dark font-semibold text-xs tracking-widest uppercase px-6 py-4 rounded transition-all hover:scale-105 flex items-center gap-2"
-          >
-            <Download size={14} /> Exportar CSV
-          </button>
+          <div className="flex flex-wrap md:flex-nowrap gap-3 w-full md:w-auto">
+            <Link 
+              href="/?edit=true" 
+              className="bg-neutral-900 border border-mercu-border hover:border-mercu-accent hover:text-mercu-accent text-mercu-cream font-semibold text-xs tracking-widest uppercase px-6 py-4 rounded transition-all hover:scale-105 flex items-center justify-center gap-2"
+              title="Abrir editor de textos visual en la Landing Page"
+            >
+              <Paintbrush size={14} /> Editar Textos Web
+            </Link>
+            <button 
+              onClick={handleExportCSV}
+              className="bg-mercu-accent hover:bg-mercu-cream text-mercu-dark font-semibold text-xs tracking-widest uppercase px-6 py-4 rounded transition-all hover:scale-105 flex items-center justify-center gap-2 flex-grow md:flex-grow-0"
+            >
+              <Download size={14} /> Exportar CSV
+            </button>
+          </div>
         ) : (
           <button 
             onClick={handleSaveGallery}
             disabled={savingGallery}
-            className={`font-semibold text-xs tracking-widest uppercase px-8 py-4 rounded transition-all hover:scale-[1.03] flex items-center gap-2 ${saveSuccess ? 'bg-emerald-500 text-white border-emerald-500' : 'bg-mercu-accent hover:bg-mercu-cream text-mercu-dark border-transparent'}`}
+            className={`font-semibold text-xs tracking-widest uppercase px-8 py-4 rounded transition-all hover:scale-[1.03] flex items-center gap-2 w-full md:w-auto justify-center ${saveSuccess ? 'bg-emerald-500 text-white border-emerald-500' : 'bg-mercu-accent hover:bg-mercu-cream text-mercu-dark border-transparent'}`}
           >
             {savingGallery ? 'Guardando...' : saveSuccess ? '¡Guardado con Éxito! ✓' : 'Guardar Galería'}
           </button>
