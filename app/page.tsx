@@ -776,7 +776,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-mercu-dark text-mercu-cream font-sans selection:bg-mercu-accent selection:text-mercu-dark">
       
       {/* ── HERO DE ENTRADA ── */}
-      <header id="inicio" className="hero relative min-h-screen flex flex-col justify-end px-6 py-12 md:p-16 overflow-hidden">
+      <header id="inicio" className="hero relative min-h-[65vh] md:min-h-screen flex flex-col justify-end px-6 py-12 md:p-16 overflow-hidden">
         <div className="hero-bg"></div>
         <div className="hero-grid"></div>
         <div className="hero-corner"></div>
