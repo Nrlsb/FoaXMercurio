@@ -1544,7 +1544,8 @@ export default function HomePage() {
             rel="noopener noreferrer" 
             className="flex items-center gap-2 text-xs text-mercu-muted hover:text-mercu-cream transition-colors"
           >
-            <span className="text-sm">📸</span> Alba
+            <img src="/alba_blanco.png" alt="Alba" className="h-3.5 w-auto object-contain brightness-95 hover:brightness-100 transition-all" />
+            <span>Alba</span>
           </a>
           <div className="w-[1px] h-4 bg-mercu-border"></div>
           <a 
@@ -1553,12 +1554,17 @@ export default function HomePage() {
             rel="noopener noreferrer" 
             className="flex items-center gap-2 text-xs text-mercu-muted hover:text-mercu-cream transition-colors"
           >
-            <span className="text-sm">📸</span> Mercurio
+            <img src="/logomercurioblanco.png" alt="Mercurio" className="h-4 w-auto object-contain brightness-95 hover:brightness-100 transition-all" />
+            <span>Mercurio</span>
           </a>
         </div>
 
         <div className="flex justify-between items-center flex-wrap gap-6">
-          <div className="footer-logo font-serif text-2xl text-mercu-cream">Mercurio × <em className="italic text-mercu-warm">Casa FOA</em></div>
+          <div className="footer-logo flex items-center gap-3.5 select-none">
+            <img src="/logomercurioblanco.png" alt="Pinturerías Mercurio" className="h-6.5 w-auto object-contain" />
+            <span className="text-mercu-muted/40 font-light text-sm">×</span>
+            <img src="/logo_casafoa.svg" alt="Casa FOA" className="h-5.5 w-auto object-contain" />
+          </div>
           <EditableText 
             textKey="footer_lead" 
             className="text-xs text-mercu-muted max-w-md leading-relaxed block"
