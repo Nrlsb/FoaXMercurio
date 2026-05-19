@@ -590,6 +590,13 @@ export default function HomePage() {
             <span className="logo-label text-[10px] tracking-widest text-mercu-muted uppercase">con</span>
             <img src="/alba_blanco.png" alt="Alba" className="h-9 w-auto block object-contain" />
           </div>
+
+          <div className="logo-separator h-8 w-[1px] bg-mercu-border"></div>
+
+          <div className="logo-svg-wrap flex flex-col gap-1">
+            <span className="logo-label text-[10px] tracking-widest text-mercu-muted uppercase">en</span>
+            <img src="/logo_casafoa.svg" alt="Casa FOA" className="h-9 w-auto block object-contain" />
+          </div>
         </div>
 
         <div className="hero-eyebrow z-10 text-xs font-semibold tracking-[0.25em] uppercase text-mercu-accent mb-6">
