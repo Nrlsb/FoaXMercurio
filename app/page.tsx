@@ -1175,20 +1175,20 @@ export default function HomePage() {
         </div>
 
         {/* Widget del Reproductor de Audio */}
-        <div className="music-player-widget reveal bg-mercu-dark-card border border-mercu-border rounded p-8 flex flex-col md:flex-row items-center gap-6 my-16">
-          <div className="player-artwork w-24 h-24 bg-mercu-dark border border-mercu-border rounded flex items-center justify-center text-4xl relative flex-shrink-0 shadow-lg after:content-[''] after:absolute after:inset-0 after:rounded after:bg-gradient-to-tr after:from-mercu-accent/10 after:to-transparent">
+        <div className="music-player-widget reveal bg-mercu-dark-card border border-mercu-border rounded p-6 md:p-8 flex flex-col md:flex-row items-center gap-4 md:gap-6 my-16">
+          <div className="player-artwork w-20 h-20 md:w-24 md:h-24 bg-mercu-dark border border-mercu-border rounded flex items-center justify-center text-3xl md:text-4xl relative flex-shrink-0 shadow-lg after:content-[''] after:absolute after:inset-0 after:rounded after:bg-gradient-to-tr after:from-mercu-accent/10 after:to-transparent">
             {tracks[activeTrackIndex].emoji}
           </div>
-          <div className="flex-grow w-full flex flex-col gap-3">
-            <div className="player-info-artist text-xs tracking-wider text-mercu-muted uppercase">{tracks[activeTrackIndex].artist}</div>
-            <h3 className="player-info-title font-serif text-2xl text-mercu-cream">{tracks[activeTrackIndex].title}</h3>
-            <div className="flex items-center gap-6 mt-2">
+          <div className="flex-grow w-full flex flex-col gap-2 md:gap-3 text-center md:text-left items-center md:items-start">
+            <div className="player-info-artist text-[10px] md:text-xs tracking-wider text-mercu-muted uppercase">{tracks[activeTrackIndex].artist}</div>
+            <h3 className="player-info-title font-serif text-xl md:text-2xl text-mercu-cream">{tracks[activeTrackIndex].title}</h3>
+            <div className="flex items-center gap-4 md:gap-6 mt-1 md:mt-2 w-full justify-center md:justify-start">
               <button 
                 onClick={handlePlayToggle}
-                className="w-12 h-12 bg-mercu-accent text-mercu-dark rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:bg-mercu-cream hover:scale-105 active:scale-95"
+                className="w-10 h-10 md:w-12 md:h-12 bg-mercu-accent text-mercu-dark rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:bg-mercu-cream hover:scale-105 active:scale-95 flex-shrink-0"
                 aria-label={isPlaying ? 'Pausar' : 'Reproducir'}
               >
-                {isPlaying ? <Pause size={20} fill="currentColor" /> : <Play size={20} className="translate-x-[2px]" fill="currentColor" />}
+                {isPlaying ? <Pause size={18} fill="currentColor" /> : <Play size={18} className="translate-x-[1px]" fill="currentColor" />}
               </button>
               <div 
                 onClick={(e) => {
@@ -1211,25 +1211,25 @@ export default function HomePage() {
             <div 
               key={track.id}
               onClick={() => handleTrackChange(index)}
-              className={`playlist-item bg-mercu-dark p-6 grid grid-cols-[auto_1fr_auto] items-center gap-8 cursor-pointer transition-all duration-300 ${activeTrackIndex === index ? 'bg-mercu-border/5' : 'hover:bg-mercu-border/5'}`}
+              className={`playlist-item bg-mercu-dark p-4 md:p-6 grid grid-cols-[auto_1fr_auto] items-center gap-3 sm:gap-4 md:gap-8 cursor-pointer transition-all duration-300 ${activeTrackIndex === index ? 'bg-mercu-border/5' : 'hover:bg-mercu-border/5'}`}
             >
-              <div className="playlist-cover w-14 h-14 bg-mercu-dark-card border border-mercu-border rounded flex items-center justify-center text-2xl transition-transform hover:scale-105">
+              <div className="playlist-cover w-11 h-11 md:w-14 md:h-14 bg-mercu-dark-card border border-mercu-border rounded flex items-center justify-center text-xl md:text-2xl transition-transform hover:scale-105 flex-shrink-0">
                 {track.emoji}
               </div>
-              <div className="playlist-info flex flex-col gap-1">
-                <h3 className={`playlist-title font-serif text-lg ${activeTrackIndex === index ? 'text-mercu-warm' : 'text-mercu-cream'}`}>{track.title}</h3>
-                <span className="playlist-meta text-xs text-mercu-muted">{track.artist}</span>
+              <div className="playlist-info flex flex-col gap-0.5 md:gap-1 min-w-0">
+                <h3 className={`playlist-title font-serif text-base md:text-lg truncate ${activeTrackIndex === index ? 'text-mercu-warm' : 'text-mercu-cream'}`}>{track.title}</h3>
+                <span className="playlist-meta text-[10px] md:text-xs text-mercu-muted truncate">{track.artist}</span>
               </div>
-              <div className="playlist-arrow text-xs text-mercu-muted tracking-wider uppercase flex items-center gap-2 transition-transform hover:translate-x-1">
+              <div className="playlist-arrow text-[10px] md:text-xs text-mercu-muted tracking-wider uppercase flex items-center gap-2 transition-transform hover:translate-x-1 flex-shrink-0">
                 {activeTrackIndex === index && isPlaying ? (
-                  <div className="wave-animation flex items-end gap-[2px] h-4 w-5">
-                    <div className="wave-bar w-[2px] bg-mercu-accent h-4 animate-bounce"></div>
-                    <div className="wave-bar w-[2px] bg-mercu-accent h-3 animate-bounce [animation-delay:0.15s]"></div>
-                    <div className="wave-bar w-[2px] bg-mercu-accent h-2 animate-bounce [animation-delay:0.3s]"></div>
-                    <div className="wave-bar w-[2px] bg-mercu-accent h-3 animate-bounce [animation-delay:0.45s]"></div>
+                  <div className="wave-animation flex items-end gap-[2px] h-3.5 w-4 md:h-4 md:w-5">
+                    <div className="wave-bar w-[1.5px] md:w-[2px] bg-mercu-accent h-3.5 animate-bounce"></div>
+                    <div className="wave-bar w-[1.5px] md:w-[2px] bg-mercu-accent h-2.5 animate-bounce [animation-delay:0.15s]"></div>
+                    <div className="wave-bar w-[1.5px] md:w-[2px] bg-mercu-accent h-1.5 animate-bounce [animation-delay:0.3s]"></div>
+                    <div className="wave-bar w-[1.5px] md:w-[2px] bg-mercu-accent h-2.5 animate-bounce [animation-delay:0.45s]"></div>
                   </div>
                 ) : (
-                  <span>{activeTrackIndex === index ? 'En pausa' : 'Escuchar'} ▶</span>
+                  <span>{activeTrackIndex === index ? 'Pausa' : 'Escuchar'} ▶</span>
                 )}
               </div>
             </div>
