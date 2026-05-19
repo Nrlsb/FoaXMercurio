@@ -231,7 +231,7 @@ function VideoPlayerContent() {
             Mirá los videos registrados directamente de los espacios en exposición. Alterná entre las marcas patrocinadoras para reproducir los videos oficiales en alta definición o explorar la carpeta completa.
           </p>
 
-          {/* Selector de Marcas (Pestañas) */}
+          {/* Selector de Marcas (Pestañas con Logos) */}
           <div className="flex gap-2 md:gap-4 bg-black/45 border border-mercu-border/60 p-1.5 rounded-full mt-12 overflow-x-auto max-w-full scrollbar-none">
             {Object.entries(BRANDS).map(([key, brand]) => (
               <button
@@ -239,16 +239,22 @@ function VideoPlayerContent() {
                 onClick={() => handleBrandChange(key)}
                 style={{ 
                   backgroundColor: activeBrand === key ? brand.accentColor : 'transparent',
-                  color: activeBrand === key ? '#05070f' : 'inherit'
                 }}
-                className={`px-5 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase transition-all duration-300 flex items-center gap-2 whitespace-nowrap ${
+                className={`px-6 py-2 rounded-full transition-all duration-300 flex items-center justify-center whitespace-nowrap h-11 group ${
                   activeBrand === key 
-                    ? 'font-bold shadow-lg scale-105' 
-                    : 'text-mercu-muted hover:text-mercu-cream'
+                    ? 'shadow-lg scale-105' 
+                    : 'hover:bg-white/5'
                 }`}
               >
-                <Film size={12} />
-                {brand.name}
+                <img 
+                  src={brand.logo} 
+                  alt={brand.name} 
+                  className={`h-5 md:h-6 w-auto object-contain transition-all duration-300 ${
+                    activeBrand === key 
+                      ? 'brightness-0' 
+                      : 'opacity-50 group-hover:opacity-100'
+                  }`}
+                />
               </button>
             ))}
           </div>
