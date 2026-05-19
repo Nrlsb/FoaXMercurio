@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/lib/supabase';
+import Link from 'next/link';
 import { 
   Play, 
   Pause, 
@@ -780,10 +781,7 @@ export default function HomePage() {
         <div className="hero-corner"></div>
         <div className="hero-corner-br"></div>
 
-        <div className="hero-date z-10" aria-hidden="true">
-          <div className="hero-date-num font-serif text-8xl font-light text-mercu-accent opacity-20">20</div>
-          <div className="hero-date-label text-xs tracking-widest uppercase text-mercu-muted">Mayo 2026</div>
-        </div>
+
 
         {/* Logotipos */}
         <div className="logo-bar z-10 mb-10 flex items-center gap-8 flex-wrap animate-fade-in opacity-0">
@@ -1020,15 +1018,13 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
             {/* Tarjeta MERCURIO */}
-            <a 
-              href="https://drive.google.com/drive/folders/19d2XHXwQefpMaoU6d38WUKHhykdz23pX?usp=sharing" 
-              target="_blank" 
-              rel="noopener noreferrer"
+            <Link 
+              href="/videos?brand=mercurio" 
               id="mercurio"
               className="group relative flex flex-col items-center justify-center p-8 bg-mercu-dark-card border border-mercu-border rounded-xl transition-all duration-500 hover:border-[#eb2891] hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(235,40,145,0.15)] min-h-[250px]"
             >
               <div className="absolute top-4 right-4 text-xs text-mercu-muted font-mono opacity-40 group-hover:opacity-100 transition-opacity">
-                Carpeta ↗
+                Videos ↗
               </div>
               <img 
                 src="/logomercurioblanco.png" 
@@ -1038,18 +1034,16 @@ export default function HomePage() {
               <span className="text-[10px] tracking-widest text-[#eb2891] uppercase mt-8 font-semibold opacity-60 group-hover:opacity-100 transition-opacity">
                 Ver Videos Mercurio
               </span>
-            </a>
+            </Link>
 
             {/* Tarjeta CASA FOA */}
-            <a 
-              href="https://drive.google.com/drive/folders/1jV2jPWKyd8xoTQmrv7PW5lyeEuzBMKWH?usp=sharing" 
-              target="_blank" 
-              rel="noopener noreferrer"
+            <Link 
+              href="/videos?brand=casa-foa" 
               id="casa-foa-gallery"
               className="group relative flex flex-col items-center justify-center p-8 bg-mercu-dark-card border border-mercu-border rounded-xl transition-all duration-500 hover:border-[#eb2891] hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(235,40,145,0.15)] min-h-[250px]"
             >
               <div className="absolute top-4 right-4 text-xs text-mercu-muted font-mono opacity-40 group-hover:opacity-100 transition-opacity">
-                Carpeta ↗
+                Videos ↗
               </div>
               <img 
                 src="/logo_casafoa.svg" 
@@ -1059,26 +1053,26 @@ export default function HomePage() {
               <span className="text-[10px] tracking-widest text-[#eb2891] uppercase mt-8 font-semibold opacity-60 group-hover:opacity-100 transition-opacity">
                 Ver Videos Casa FOA
               </span>
-            </a>
+            </Link>
 
             {/* Tarjeta ALBA */}
-            <a 
-              href="https://drive.google.com/drive/folders/19qF3mUt52-il45RnUOnBLjsz-PYmEaAL?usp=drive_link" 
-              target="_blank" 
-              rel="noopener noreferrer"
+            <Link 
+              href="/videos?brand=alba" 
               id="alba"
               className="group relative flex flex-col items-center justify-center p-8 bg-mercu-dark-card border border-mercu-border rounded-xl transition-all duration-500 hover:border-[#eb2891] hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(235,40,145,0.15)] min-h-[250px]"
             >
               <div className="absolute top-4 right-4 text-xs text-mercu-muted font-mono opacity-40 group-hover:opacity-100 transition-opacity">
-                Carpeta ↗
+                Videos ↗
               </div>
               <img 
                 src="/alba_blanco.png" 
                 alt="Alba" 
                 className="h-10 w-auto object-contain transition-transform duration-500 group-hover:scale-110" 
               />
-              {/* NO LE PONGAMOS TITULOS NI SUBTITULO */}
-            </a>
+              <span className="text-[10px] tracking-widest text-[#eb2891] uppercase mt-8 font-semibold opacity-60 group-hover:opacity-100 transition-opacity">
+                Ver Videos Alba
+              </span>
+            </Link>
           </div>
         </div>
       </section>
