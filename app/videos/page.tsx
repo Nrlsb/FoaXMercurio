@@ -5,10 +5,7 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import { 
   ArrowLeft, 
   Film, 
-  Download, 
-  FolderOpen, 
   Play, 
-  ExternalLink,
   Sparkles
 } from 'lucide-react';
 import Link from 'next/link';
@@ -298,58 +295,6 @@ function VideoPlayerContent() {
               <p className="text-sm leading-relaxed text-mercu-cream/80 font-light">
                 {selectedVideo?.description}
               </p>
-            </div>
-          </div>
-
-          {/* VISOR DE CARPETA COMPARTIDA */}
-          <div className="bg-mercu-dark-card border border-mercu-border/40 rounded-xl p-6 md:p-8 flex flex-col gap-6">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-mercu-border/20 pb-4">
-              <div>
-                <h3 className="font-serif text-xl font-light text-mercu-cream flex items-center gap-2.5">
-                  <FolderOpen size={20} className="text-mercu-accent" />
-                  Explorador de Registros Originales
-                </h3>
-                <p className="text-xs text-mercu-muted mt-1 leading-relaxed">
-                  Visualizá y descargá el material crudo guardado en la carpeta de Google Drive directamente desde acá.
-                </p>
-              </div>
-
-              <div className="flex gap-2 w-full md:w-auto">
-                <a 
-                  href={currentBrand.driveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-neutral-900 border border-mercu-border hover:border-mercu-accent hover:text-mercu-accent text-mercu-cream font-semibold text-xs tracking-widest uppercase px-4 py-3 rounded-lg transition-all flex items-center justify-center gap-2 flex-1 md:flex-initial"
-                >
-                  <ExternalLink size={12} />
-                  Abrir Drive ↗
-                </a>
-                <a 
-                  href={currentBrand.driveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-mercu-accent hover:bg-mercu-cream text-mercu-dark font-semibold text-xs tracking-widest uppercase px-4 py-3 rounded-lg transition-all flex items-center justify-center gap-2 flex-1 md:flex-initial"
-                >
-                  <Download size={12} />
-                  Descargar Todo
-                </a>
-              </div>
-            </div>
-
-            {/* Frame de Google Drive */}
-            <div className="w-full aspect-[16/10] md:aspect-[16/8] bg-black/30 border border-mercu-border/30 rounded-lg overflow-hidden relative group">
-              <iframe
-                src={`https://drive.google.com/embeddedfolderview?id=${currentBrand.driveFolderId}#grid`}
-                className="w-full h-full border-none opacity-85 hover:opacity-100 transition-opacity duration-300"
-                allowFullScreen
-              ></iframe>
-            </div>
-
-            <div className="text-[11px] text-mercu-muted/70 leading-relaxed bg-black/20 p-4 rounded border border-mercu-border/10 flex items-start gap-2.5">
-              <span>💡</span>
-              <span>
-                <strong>Nota de visualización:</strong> Los videos en Google Drive pueden requerir permisos de visualización compartida pública. Si algún archivo solicita inicio de sesión, hacé clic en <strong>"Abrir Drive"</strong> para verlo directamente en una pestaña de Google o descargalo en tu dispositivo.
-              </span>
             </div>
           </div>
         </div>
