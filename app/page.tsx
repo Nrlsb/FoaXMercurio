@@ -776,7 +776,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-mercu-dark text-mercu-cream font-sans selection:bg-mercu-accent selection:text-mercu-dark">
       
       {/* ── HERO DE ENTRADA ── */}
-      <header id="inicio" className="hero relative min-h-screen flex flex-col justify-end p-8 md:p-16 overflow-hidden">
+      <header id="inicio" className="hero relative min-h-screen flex flex-col justify-end px-6 py-12 md:p-16 overflow-hidden">
         <div className="hero-bg"></div>
         <div className="hero-grid"></div>
         <div className="hero-corner"></div>
@@ -785,12 +785,12 @@ export default function HomePage() {
 
 
         {/* Logotipos */}
-        <div className="z-10 mb-8 md:mb-10 flex items-center flex-nowrap gap-3 sm:gap-4 md:gap-8 animate-fade-in opacity-0">
-          <img src="/logomercurioblanco.png" alt="Pinturerías Mercurio" className="h-7 sm:h-8 md:h-10 w-auto block object-contain" />
-          <div className="h-5 sm:h-6 md:h-8 w-[1px] bg-mercu-border flex-shrink-0"></div>
-          <img src="/alba_blanco.png" alt="Alba" className="h-6 sm:h-7 md:h-9 w-auto block object-contain" />
-          <div className="h-5 sm:h-6 md:h-8 w-[1px] bg-mercu-border flex-shrink-0"></div>
-          <img src="/logo_casafoa.svg" alt="Casa FOA" className="h-6 sm:h-7 md:h-9 w-auto block object-contain" />
+        <div className="z-10 mb-8 md:mb-10 flex items-center flex-nowrap gap-3.5 sm:gap-4 md:gap-8 animate-fade-in opacity-0">
+          <img src="/logomercurioblanco.png" alt="Pinturerías Mercurio" className="h-9 sm:h-9 md:h-10 w-auto block object-contain" />
+          <div className="h-6 sm:h-6 md:h-8 w-[1px] bg-mercu-border flex-shrink-0"></div>
+          <img src="/alba_blanco.png" alt="Alba" className="h-8 sm:h-8 md:h-9 w-auto block object-contain" />
+          <div className="h-6 sm:h-6 md:h-8 w-[1px] bg-mercu-border flex-shrink-0"></div>
+          <img src="/logo_casafoa.svg" alt="Casa FOA" className="h-8 sm:h-8 md:h-9 w-auto block object-contain" />
         </div>
 
         <EditableText 
@@ -800,7 +800,7 @@ export default function HomePage() {
         />
         <EditableText 
           textKey="hero_title" 
-          className="hero-title z-10 font-serif text-4xl sm:text-5xl md:text-8xl font-light leading-[0.95] tracking-tight mb-4 block"
+          className="hero-title z-10 font-serif text-5xl md:text-8xl font-light leading-[0.95] tracking-tight mb-4 block"
           as="h1"
           allowHtml
         />
