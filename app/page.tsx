@@ -137,8 +137,8 @@ const DEFAULT_GALLERY_ITEMS: GalleryItem[] = [
 
 const DEFAULT_WEB_TEXTS: Record<string, string> = {
   hero_eyebrow: 'Pinturerías Mercurio × Casa FOA Córdoba 2026',
-  hero_title: 'Una jornada<br/><em>para ver</em><br/>diferente.',
-  hero_subtitle: 'Edición Pocito Social Life · Nueva Córdoba',
+  hero_title: 'CASA FOA EXPERIENCIA MERCURIO- ALBA',
+  hero_subtitle: 'Edicion pocito social life – Cordoba.',
   
   section_foa_eyebrow: 'El escenario de hoy',
   section_foa_title: '40 años transformando<br/><em>arquitectura en</em><br/>experiencias vivas.',
@@ -158,8 +158,8 @@ const DEFAULT_WEB_TEXTS: Record<string, string> = {
   curiosity1_text: 'Casa FOA nació en 1985 de la mano de Mercedes Malbrán de Campos con un fin solidario: financiar las actividades de la Fundación Oftalmológica Argentina. Lo que comenzó como un té benéfico en una casona hoy es el polo de diseño más relevante de Latinoamérica.',
   
   curiosity2_num: '02',
-  curiosity2_title: 'La inspiración internacional',
-  curiosity2_text: 'El modelo de Casa FOA se inspiró en la célebre Kips Bay Decorator Showhouse de Nueva York. Su enorme repercusión local sirvió como modelo directo para la creación de franquicias similares en la región como Casa Cor (Brasil, Uruguay) y Casa Decor (España).',
+  curiosity2_title: 'Rescate de patrimonio',
+  curiosity2_text: 'Cada edición recupera un hito arquitectónico en desuso. A lo largo del tiempo ha restaurado palacios históricos, silos de granos, conventos, fábricas textiles abandonadas y muelles. En 2026, desembarca en Pocito Social Life para fundirse con la vitalidad moderna de Nueva Córdoba.',
   
   curiosity3_num: '03',
   curiosity3_title: 'Rescate de patrimonio',
@@ -167,7 +167,7 @@ const DEFAULT_WEB_TEXTS: Record<string, string> = {
   
   ejes_title: 'Los 4 Ejes del Recorrido',
   eje1_text: 'Diseñar desde lo auténtico — Materialidad honesta y texturas sin refinar.',
-  eje2_text: 'Rediseñar lo esencial — Redefinir la habitabilidad mínima con máximo confort.',
+  eje2_text: 'Rediseñar lo esencal — Redefinir la habitabilidad mínima con máximo confort.',
   eje3_text: 'Tradición en presente continuo — La herencia artesanal cordobesa adaptada a la vanguardia.',
   eje4_text: 'Habitar la transformación — Plantas flexibles para hogares inteligentes y cambiantes.',
   
@@ -320,7 +320,7 @@ export default function HomePage() {
       setShowScrollTop(scrollY > 300);
 
       // Link activo
-      const sections = document.querySelectorAll('section, header');
+      const sections = document.querySelectorAll('section, header, #mercurio, #alba');
       let current = 'inicio';
       sections.forEach(section => {
         const top = (section as HTMLElement).offsetTop - 180;
@@ -787,24 +787,11 @@ export default function HomePage() {
 
         {/* Logotipos */}
         <div className="logo-bar z-10 mb-10 flex items-center gap-8 flex-wrap animate-fade-in opacity-0">
-          <div className="logo-svg-wrap flex flex-col gap-1">
-            <span className="logo-label text-[10px] tracking-widest text-mercu-muted uppercase">Pinturerías</span>
-            <img src="/logomercurioblanco.png" alt="Pinturerías Mercurio" className="h-10 w-auto block object-contain" />
-          </div>
-          
+          <img src="/logomercurioblanco.png" alt="Pinturerías Mercurio" className="h-10 w-auto block object-contain" />
           <div className="logo-separator h-8 w-[1px] bg-mercu-border"></div>
-          
-          <div className="logo-svg-wrap flex flex-col gap-1">
-            <span className="logo-label text-[10px] tracking-widest text-mercu-muted uppercase">con</span>
-            <img src="/alba_blanco.png" alt="Alba" className="h-9 w-auto block object-contain" />
-          </div>
-
+          <img src="/alba_blanco.png" alt="Alba" className="h-9 w-auto block object-contain" />
           <div className="logo-separator h-8 w-[1px] bg-mercu-border"></div>
-
-          <div className="logo-svg-wrap flex flex-col gap-1">
-            <span className="logo-label text-[10px] tracking-widest text-mercu-muted uppercase">en</span>
-            <img src="/logo_casafoa.svg" alt="Casa FOA" className="h-9 w-auto block object-contain" />
-          </div>
+          <img src="/logo_casafoa.svg" alt="Casa FOA" className="h-9 w-auto block object-contain" />
         </div>
 
         <EditableText 
@@ -837,10 +824,10 @@ export default function HomePage() {
           </div>
           <div className="flex gap-2 overflow-x-auto scrollbar-none">
             <a href="#casa-foa" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'casa-foa' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Casa FOA</a>
-            <a href="#galeria" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'galeria' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Galería</a>
+            <a href="#mercurio" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'mercurio' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Mercurio</a>
+            <a href="#alba" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'alba' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Alba</a>
             <a href="#musica" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'musica' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Música</a>
-            <a href="#acreditar" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'acreditar' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Acreditación</a>
-            <a href="#videos" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'videos' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Charlas</a>
+            <a href="#charlas" className={`text-[10px] md:text-xs font-medium tracking-widest uppercase py-5 px-4 transition-all relative ${activeSection === 'charlas' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-4 after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Charlas</a>
           </div>
         </div>
       </nav>
@@ -961,27 +948,6 @@ export default function HomePage() {
               />
             </div>
           </div>
-
-          <div className="curiosity-item bg-mercu-dark p-10 flex gap-8 items-start transition-all duration-300 hover:bg-mercu-border/5">
-            <EditableText 
-              textKey="curiosity3_num" 
-              className="curiosity-num font-serif text-5xl font-light text-mercu-accent/20 transition-colors duration-300 block"
-              as="div"
-            />
-            <div className="curiosity-content w-full">
-              <EditableText 
-                textKey="curiosity3_title" 
-                className="curiosity-label text-xs font-semibold tracking-wider text-mercu-accent uppercase mb-3 block"
-                as="h3"
-              />
-              <EditableText 
-                textKey="curiosity3_text" 
-                className="curiosity-text text-sm leading-relaxed text-mercu-cream/80 block"
-                as="p"
-                allowHtml
-              />
-            </div>
-          </div>
         </div>
 
         {/* Ejes Conceptuales */}
@@ -1034,184 +1000,87 @@ export default function HomePage() {
       </section>
 
       {/* ── SECCIÓN GALERÍA MULTIMEDIA ── */}
-      <section id="galeria" className="py-24 px-8 max-w-6xl mx-auto">
+      <section className="py-24 px-8 max-w-6xl mx-auto">
         <div className="reveal">
           <div className="mercu-tag inline-flex items-center gap-2 text-xs font-semibold tracking-wider text-mercu-muted uppercase border border-mercu-border rounded px-4 py-2 mb-8 bg-mercu-dark-card/40">
             <span className="mercu-dot w-2 h-2 bg-mercu-accent rounded-full animate-pulse"></span>
-            Galería Casa FOA 2026
+            Galería Casa FOA 2026 (Solo Videos)
           </div>
-          <div className="section-header mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
-            <div>
-              <EditableText 
-                textKey="gallery_eyebrow" 
-                className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-4 block"
-                as="div"
+          <div className="section-header mb-12">
+            <span className="section-eyebrow text-xs font-semibold tracking-widest uppercase text-[#eb2891] mb-4 block">
+              -EXPERIENCIA VISUAL - CASA FOA 2025
+            </span>
+            <h2 className="section-title font-serif text-4xl md:text-6xl font-light leading-tight text-mercu-cream block">
+              GALERIA
+            </h2>
+            <p className="section-lead text-base md:text-lg leading-relaxed text-mercu-cream/70 mt-6 max-w-2xl block">
+              Explore los recorridos visuales y registros audiovisuales exclusivos a través de las siguientes carpetas compartidas.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+            {/* Tarjeta MERCURIO */}
+            <a 
+              href="https://drive.google.com/drive/folders/19d2XHXwQefpMaoU6d38WUKHhykdz23pX?usp=sharing" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              id="mercurio"
+              className="group relative flex flex-col items-center justify-center p-8 bg-mercu-dark-card border border-mercu-border rounded-xl transition-all duration-500 hover:border-[#eb2891] hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(235,40,145,0.15)] min-h-[250px]"
+            >
+              <div className="absolute top-4 right-4 text-xs text-mercu-muted font-mono opacity-40 group-hover:opacity-100 transition-opacity">
+                Carpeta ↗
+              </div>
+              <img 
+                src="/logomercurioblanco.png" 
+                alt="Mercurio" 
+                className="h-10 w-auto object-contain transition-transform duration-500 group-hover:scale-110" 
               />
-              <EditableText 
-                textKey="gallery_title" 
-                className="section-title font-serif text-4xl md:text-6xl font-light leading-tight text-mercu-cream block"
-                as="h2"
-                allowHtml
+              <span className="text-[10px] tracking-widest text-[#eb2891] uppercase mt-8 font-semibold opacity-60 group-hover:opacity-100 transition-opacity">
+                Ver Videos Mercurio
+              </span>
+            </a>
+
+            {/* Tarjeta CASA FOA */}
+            <a 
+              href="https://drive.google.com/drive/folders/1jV2jPWKyd8xoTQmrv7PW5lyeEuzBMKWH?usp=sharing" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              id="casa-foa-gallery"
+              className="group relative flex flex-col items-center justify-center p-8 bg-mercu-dark-card border border-mercu-border rounded-xl transition-all duration-500 hover:border-[#eb2891] hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(235,40,145,0.15)] min-h-[250px]"
+            >
+              <div className="absolute top-4 right-4 text-xs text-mercu-muted font-mono opacity-40 group-hover:opacity-100 transition-opacity">
+                Carpeta ↗
+              </div>
+              <img 
+                src="/logo_casafoa.svg" 
+                alt="Casa FOA" 
+                className="h-16 w-auto object-contain transition-transform duration-500 group-hover:scale-110" 
               />
-              <EditableText 
-                textKey="gallery_lead" 
-                className="section-lead text-base md:text-lg leading-relaxed text-mercu-cream/70 mt-6 max-w-2xl block"
-                as="p"
+              <span className="text-[10px] tracking-widest text-[#eb2891] uppercase mt-8 font-semibold opacity-60 group-hover:opacity-100 transition-opacity">
+                Ver Videos Casa FOA
+              </span>
+            </a>
+
+            {/* Tarjeta ALBA */}
+            <a 
+              href="https://drive.google.com/drive/folders/19qF3mUt52-il45RnUOnBLjsz-PYmEaAL?usp=drive_link" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              id="alba"
+              className="group relative flex flex-col items-center justify-center p-8 bg-mercu-dark-card border border-mercu-border rounded-xl transition-all duration-500 hover:border-[#eb2891] hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(235,40,145,0.15)] min-h-[250px]"
+            >
+              <div className="absolute top-4 right-4 text-xs text-mercu-muted font-mono opacity-40 group-hover:opacity-100 transition-opacity">
+                Carpeta ↗
+              </div>
+              <img 
+                src="/alba_blanco.png" 
+                alt="Alba" 
+                className="h-10 w-auto object-contain transition-transform duration-500 group-hover:scale-110" 
               />
-            </div>
-            
-            {/* Controles de Filtro */}
-            <div className="flex gap-2 bg-mercu-dark-card border border-mercu-border p-1.5 rounded-full text-xs self-start md:self-end">
-              <button 
-                onClick={() => setGalleryFilter('all')}
-                className={`px-4 py-2 rounded-full font-medium tracking-wider uppercase transition-all duration-300 ${galleryFilter === 'all' ? 'bg-mercu-accent text-mercu-dark shadow-md' : 'text-mercu-muted hover:text-mercu-cream'}`}
-              >
-                Todo
-              </button>
-              <button 
-                onClick={() => setGalleryFilter('image')}
-                className={`px-4 py-2 rounded-full font-medium tracking-wider uppercase transition-all duration-300 ${galleryFilter === 'image' ? 'bg-mercu-accent text-mercu-dark shadow-md' : 'text-mercu-muted hover:text-mercu-cream'}`}
-              >
-                Imágenes (7)
-              </button>
-              <button 
-                onClick={() => setGalleryFilter('video')}
-                className={`px-4 py-2 rounded-full font-medium tracking-wider uppercase transition-all duration-300 ${galleryFilter === 'video' ? 'bg-mercu-accent text-mercu-dark shadow-md' : 'text-mercu-muted hover:text-mercu-cream'}`}
-              >
-                Videos (5)
-              </button>
-            </div>
+              {/* NO LE PONGAMOS TITULOS NI SUBTITULO */}
+            </a>
           </div>
         </div>
-
-        {loadingGallery ? (
-          <div className="text-center py-20 text-sm text-mercu-muted">Cargando la galería de Casa FOA...</div>
-        ) : (
-          <div className="reveal">
-            {/* VISTA DE IMÁGENES (Asymmetrical Premium Grid) */}
-            {(galleryFilter === 'all' || galleryFilter === 'image') && (
-              <div className="mb-16">
-                {galleryFilter === 'all' && (
-                  <div className="text-xs font-semibold tracking-widest text-mercu-muted uppercase mb-6 border-b border-mercu-border pb-2 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 bg-mercu-accent rounded-full"></span>
-                    Postales de Arquitectura y Espacio
-                  </div>
-                )}
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-                  {galleryItems.filter(item => item.slot_type === 'image').map((img, idx) => {
-                    let gridClass = "col-span-1 row-span-1";
-                    if (idx === 0) gridClass = "sm:col-span-2 sm:row-span-2 aspect-[4/3] sm:aspect-auto";
-                    else if (idx === 1) gridClass = "sm:col-span-2 col-span-1";
-                    else if (idx === 6) gridClass = "sm:col-span-2 col-span-1";
-                    
-                    return (
-                      <div 
-                        key={`img-${idx}`}
-                        onClick={() => openLightbox('image', idx)}
-                        className={`group relative overflow-hidden rounded-lg bg-mercu-dark-card border border-mercu-border cursor-pointer transition-all duration-500 hover:border-mercu-accent shadow-md ${gridClass}`}
-                      >
-                        <div className="w-full h-full min-h-[220px] aspect-[4/3] sm:aspect-auto overflow-hidden relative">
-                          <img 
-                            src={img.url || 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800'} 
-                            alt={img.title}
-                            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110 group-hover:brightness-90"
-                            loading="lazy"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-85 transition-opacity duration-300"></div>
-                          
-                          <div className="absolute bottom-0 left-0 right-0 p-5 flex flex-col justify-end translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                            <span className="text-[9px] tracking-widest text-mercu-accent font-semibold uppercase mb-1">
-                              Imagen #{idx + 1}
-                            </span>
-                            <h3 className="font-serif text-lg md:text-xl text-mercu-cream leading-snug group-hover:text-mercu-warm transition-colors duration-300">
-                              {img.title || `Espacio ${idx + 1}`}
-                            </h3>
-                            <p className="text-xs text-mercu-muted mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 line-clamp-2 font-light leading-relaxed">
-                              {img.description}
-                            </p>
-                          </div>
-                          
-                          <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/60 backdrop-blur-md border border-mercu-border flex items-center justify-center text-mercu-cream opacity-0 group-hover:opacity-100 transition-all duration-300 scale-90 group-hover:scale-100">
-                            <span className="text-xs">🔍</span>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-
-            {/* VISTA DE VIDEOS (Modern Curated Row/Grid) */}
-            {(galleryFilter === 'all' || galleryFilter === 'video') && (
-              <div className="mb-12">
-                {galleryFilter === 'all' && (
-                  <div className="text-xs font-semibold tracking-widest text-mercu-muted uppercase mb-6 border-b border-mercu-border pb-2 flex items-center gap-2 mt-8">
-                    <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full"></span>
-                    Charlas y Conferencias en Video
-                  </div>
-                )}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {galleryItems.filter(item => item.slot_type === 'video').map((vid, idx) => {
-                    let gridClass = "col-span-1";
-                    if (idx === 0) gridClass = "md:col-span-2";
-                    
-                    const isLocal = vid.url && (vid.url.startsWith('data:video/') || vid.url.endsWith('.mp4') || vid.url.includes('.webm'));
-                    const thumbUrl = isLocal ? '' : getYouTubeThumbnail(vid.url);
-                    
-                    return (
-                      <div 
-                        key={`vid-${idx}`}
-                        onClick={() => openLightbox('video', idx)}
-                        className={`group relative overflow-hidden rounded-lg bg-mercu-dark-card border border-mercu-border cursor-pointer transition-all duration-500 hover:border-emerald-400 shadow-md ${gridClass}`}
-                      >
-                        <div className="w-full aspect-[16/9] overflow-hidden relative bg-black">
-                          {isLocal ? (
-                            <video 
-                              src={vid.url} 
-                              className="w-full h-full object-cover opacity-70 group-hover:opacity-50 transition-opacity duration-300"
-                              muted 
-                              loop 
-                              playsInline
-                              autoPlay
-                            />
-                          ) : (
-                            <img 
-                              src={thumbUrl} 
-                              alt={vid.title}
-                              className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 group-hover:brightness-75"
-                              loading="lazy"
-                            />
-                          )}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/35 to-transparent opacity-75 group-hover:opacity-90 transition-opacity duration-300"></div>
-                          
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <div className="w-14 h-14 rounded-full border border-mercu-border/50 bg-black/60 backdrop-blur-md flex items-center justify-center text-mercu-cream shadow-2xl transition-all duration-300 group-hover:scale-110 group-hover:border-emerald-400 group-hover:bg-emerald-400 group-hover:text-mercu-dark">
-                              <span className="text-xl translate-x-[2px]">▶</span>
-                            </div>
-                          </div>
-
-                          <div className="absolute bottom-0 left-0 right-0 p-5 flex flex-col justify-end">
-                            <span className="text-[9px] tracking-widest text-emerald-400 font-semibold uppercase mb-1 flex items-center gap-1.5">
-                              <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-ping"></span>
-                              Video #{idx + 1}
-                            </span>
-                            <h3 className="font-serif text-lg md:text-xl text-mercu-cream leading-snug group-hover:text-emerald-300 transition-colors duration-300 line-clamp-1">
-                              {vid.title || `Conferencia ${idx + 1}`}
-                            </h3>
-                            <p className="text-xs text-mercu-muted mt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-500 line-clamp-2 font-light leading-relaxed">
-                              {vid.description}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-          </div>
-        )}
       </section>
 
       {/* ── MODAL LIGHTBOX MULTIMEDIA COMPLETO ── */}
@@ -1569,75 +1438,65 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── SECCIÓN PODCASTS / CHARLAS (TED VIDEOS) ── */}
-      <section id="videos" className="py-24 px-8 max-w-4xl mx-auto">
+      {/* ── SECCIÓN CHARLAS ── */}
+      <section id="charlas" className="py-24 px-8 max-w-4xl mx-auto">
         <div className="reveal">
           <div className="section-header mb-16">
-            <EditableText 
-              textKey="videos_eyebrow" 
-              className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-4 block"
-              as="div"
-            />
-            <EditableText 
-              textKey="videos_title" 
-              className="section-title font-serif text-4xl md:text-6xl font-light leading-tight text-mercu-cream block"
-              as="h2"
-              allowHtml
-            />
-            <EditableText 
-              textKey="videos_lead" 
-              className="section-lead text-base md:text-lg leading-relaxed text-mercu-cream/70 mt-6 max-w-2xl block"
-              as="p"
-            />
+            <span className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-4 block">
+              Perspectivas Conceptuales
+            </span>
+            <h2 className="section-title font-serif text-4xl md:text-6xl font-light leading-tight text-mercu-cream block">
+              Charlas que inspiran la mirada
+            </h2>
+            <p className="section-lead text-base md:text-lg leading-relaxed text-mercu-cream/70 mt-6 max-w-2xl block">
+              Descubra nuevas visiones sobre accesibilidad, neuroarquitectura y prácticas alternativas de diseño arquitectónico.
+            </p>
           </div>
         </div>
 
-        {/* Malla de Charlas TED */}
+        {/* Malla de Charlas */}
         <div className="ted-grid reveal grid gap-[1px] bg-mercu-border border border-mercu-border rounded overflow-hidden">
           <div 
-            onClick={() => setModalVideoUrl("https://www.youtube.com/embed/Z67_1kP_yqY")}
+            onClick={() => setModalVideoUrl("https://www.youtube.com/embed/KeJTUrXYBVs")}
             className="ted-item bg-mercu-dark p-8 md:p-10 cursor-pointer transition-all duration-300 hover:bg-mercu-border/5 grid grid-cols-1 md:grid-cols-[1fr_auto] items-center gap-6"
           >
             <div>
-              <span className="ted-tag inline-block text-[10px] tracking-widest font-semibold uppercase px-3 py-1 rounded-full border border-mercu-accent text-mercu-accent mb-3">Diseño</span>
-              <div className="ted-speaker text-xs tracking-wider text-mercu-muted uppercase mb-1 font-semibold">Thomas Heatherwick</div>
-              <h3 className="ted-title font-serif text-xl md:text-2xl text-mercu-cream mb-2 transition-colors duration-300">Building the Soul of Cities</h3>
-              <p className="ted-why text-sm text-mercu-muted leading-relaxed max-w-xl">Por qué el aburrimiento arquitectónico genera problemas de salud mental urbana y cómo diseñar fachadas con emociones.</p>
+              <span className="ted-tag inline-block text-[10px] tracking-widest font-semibold uppercase px-3 py-1 rounded-full border border-mercu-accent text-mercu-accent mb-3">Accesibilidad</span>
+              <div className="ted-speaker text-xs tracking-wider text-mercu-muted uppercase mb-1 font-semibold">Gabriela Carrillo</div>
+              <h3 className="ted-title font-serif text-xl md:text-2xl text-mercu-cream mb-2 transition-colors duration-300">La verdadera accesibilidad en arquitectura</h3>
+              <p className="ted-why text-sm text-mercu-muted leading-relaxed max-w-xl">Una reflexión profunda sobre cómo diseñar espacios que sean verdaderamente inclusivos y accesibles para todos.</p>
             </div>
             <div className="ted-right flex items-center gap-6">
-              <span className="ted-duration font-mono text-xs text-mercu-accent/30 tracking-wider">16:42</span>
               <div className="ted-play-icon w-11 h-11 border border-mercu-border rounded-full flex items-center justify-center text-mercu-cream transition-all duration-300 hover:bg-mercu-cream hover:text-mercu-dark hover:border-mercu-cream">▶</div>
             </div>
           </div>
 
           <div 
-            onClick={() => setModalVideoUrl("https://www.youtube.com/embed/5_dKzT6TsmA")}
+            onClick={() => setModalVideoUrl("https://www.youtube.com/embed/FNOnzelCGlM")}
             className="ted-item bg-mercu-dark p-8 md:p-10 cursor-pointer transition-all duration-300 hover:bg-mercu-border/5 grid grid-cols-1 md:grid-cols-[1fr_auto] items-center gap-6"
           >
             <div>
-              <span className="ted-tag inline-block text-[10px] tracking-widest font-semibold uppercase px-3 py-1 rounded-full border border-emerald-400/40 text-emerald-400 mb-3">Vida</span>
-              <div className="ted-speaker text-xs tracking-wider text-mercu-muted uppercase mb-1 font-semibold">Ingrid Fetell Lee</div>
-              <h3 className="ted-title font-serif text-xl md:text-2xl text-mercu-cream mb-2 transition-colors duration-300">Where Joy Hides and Where to Find It</h3>
-              <p className="ted-why text-sm text-mercu-muted leading-relaxed max-w-xl">El impacto neurológico del color vibrante y las formas curvas en el hogar como antídotos directos al estrés diario.</p>
+              <span className="ted-tag inline-block text-[10px] tracking-widest font-semibold uppercase px-3 py-1 rounded-full border border-emerald-400/40 text-emerald-400 mb-3">Neuroarquitectura</span>
+              <div className="ted-speaker text-xs tracking-wider text-mercu-muted uppercase mb-1 font-semibold">Ana Monbiedro</div>
+              <h3 className="ted-title font-serif text-xl md:text-2xl text-mercu-cream mb-2 transition-colors duration-300">¿Podemos diseñar desde lo que sentimos?: Neuroarquitectura</h3>
+              <p className="ted-why text-sm text-mercu-muted leading-relaxed max-w-xl">El impacto neurológico del diseño espacial y cómo las emociones guían la concepción del hábitat humano.</p>
             </div>
             <div className="ted-right flex items-center gap-6">
-              <span className="ted-duration font-mono text-xs text-mercu-accent/30 tracking-wider">13:35</span>
               <div className="ted-play-icon w-11 h-11 border border-mercu-border rounded-full flex items-center justify-center text-mercu-cream transition-all duration-300 hover:bg-mercu-cream hover:text-mercu-dark hover:border-mercu-cream">▶</div>
             </div>
           </div>
 
           <div 
-            onClick={() => setModalVideoUrl("https://www.youtube.com/embed/fAifF2nZ_1Q")}
+            onClick={() => setModalVideoUrl("https://www.youtube.com/embed/STvFfOWsarw")}
             className="ted-item bg-mercu-dark p-8 md:p-10 cursor-pointer transition-all duration-300 hover:bg-mercu-border/5 grid grid-cols-1 md:grid-cols-[1fr_auto] items-center gap-6"
           >
             <div>
-              <span className="ted-tag inline-block text-[10px] tracking-widest font-semibold uppercase px-3 py-1 rounded-full border border-amber-500/40 text-amber-500 mb-3">Ciudad</span>
-              <div className="ted-speaker text-xs tracking-wider text-mercu-muted uppercase mb-1 font-semibold">Francis Kéré</div>
-              <h3 className="ted-title font-serif text-xl md:text-2xl text-mercu-cream mb-2 transition-colors duration-300">How to Build with Clay and Community</h3>
-              <p className="ted-why text-sm text-mercu-muted leading-relaxed max-w-xl">El ganador del Premio Pritzker demuestra cómo la arquitectura ancestral con barro genera espacios más eficientes y democráticos.</p>
+              <span className="ted-tag inline-block text-[10px] tracking-widest font-semibold uppercase px-3 py-1 rounded-full border border-amber-500/40 text-amber-500 mb-3">Alternativas</span>
+              <div className="ted-speaker text-xs tracking-wider text-mercu-muted uppercase mb-1 font-semibold">Axel Becerra Santacruz</div>
+              <h3 className="ted-title font-serif text-xl md:text-2xl text-mercu-cream mb-2 transition-colors duration-300">Otras formas de hacer arquitectura</h3>
+              <p className="ted-why text-sm text-mercu-muted leading-relaxed max-w-xl">Una mirada hacia metodologías y prácticas de diseño arquitectónico fuera de los márgenes tradicionales.</p>
             </div>
             <div className="ted-right flex items-center gap-6">
-              <span className="ted-duration font-mono text-xs text-mercu-accent/30 tracking-wider">12:05</span>
               <div className="ted-play-icon w-11 h-11 border border-mercu-border rounded-full flex items-center justify-center text-mercu-cream transition-all duration-300 hover:bg-mercu-cream hover:text-mercu-dark hover:border-mercu-cream">▶</div>
             </div>
           </div>
@@ -1682,6 +1541,28 @@ export default function HomePage() {
 
       {/* ── FOOTER FINAL ── */}
       <footer className="border-t border-mercu-border py-16 px-8 max-w-4xl mx-auto flex flex-col gap-8">
+        {/* Instagram Links */}
+        <div className="flex flex-wrap gap-6 border-b border-mercu-border/40 pb-8 items-center justify-start">
+          <span className="text-[10px] tracking-widest text-mercu-muted uppercase font-bold mr-2">Seguinos en Instagram:</span>
+          <a 
+            href="https://www.instagram.com/alba.pinturas/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex items-center gap-2 text-xs text-mercu-muted hover:text-mercu-cream transition-colors"
+          >
+            <span className="text-sm">📸</span> Alba
+          </a>
+          <div className="w-[1px] h-4 bg-mercu-border"></div>
+          <a 
+            href="https://www.instagram.com/pint_mercurio/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex items-center gap-2 text-xs text-mercu-muted hover:text-mercu-cream transition-colors"
+          >
+            <span className="text-sm">📸</span> Mercurio
+          </a>
+        </div>
+
         <div className="flex justify-between items-center flex-wrap gap-6">
           <div className="footer-logo font-serif text-2xl text-mercu-cream">Mercurio × <em className="italic text-mercu-warm">Casa FOA</em></div>
           <EditableText 
