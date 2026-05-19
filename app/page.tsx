@@ -1021,7 +1021,7 @@ export default function HomePage() {
             <Link 
               href="/videos?brand=mercurio" 
               id="mercurio"
-              className="group relative flex flex-col items-center justify-center p-8 bg-mercu-dark-card border border-mercu-border rounded-xl transition-all duration-500 hover:border-[#eb2891] hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(235,40,145,0.15)] min-h-[250px]"
+              className="group relative flex flex-col items-center justify-center p-8 bg-mercu-dark-card border border-mercu-muted/20 rounded-xl transition-all duration-500 hover:border-mercu-accent/40 hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(235,40,145,0.08)] min-h-[250px]"
             >
               <div className="absolute top-4 right-4 text-xs text-mercu-muted font-mono opacity-40 group-hover:opacity-100 transition-opacity">
                 Videos ↗
@@ -1040,7 +1040,7 @@ export default function HomePage() {
             <Link 
               href="/videos?brand=casa-foa" 
               id="casa-foa-gallery"
-              className="group relative flex flex-col items-center justify-center p-8 bg-mercu-dark-card border border-mercu-border rounded-xl transition-all duration-500 hover:border-[#eb2891] hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(235,40,145,0.15)] min-h-[250px]"
+              className="group relative flex flex-col items-center justify-center p-8 bg-mercu-dark-card border border-mercu-muted/20 rounded-xl transition-all duration-500 hover:border-mercu-accent/40 hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(235,40,145,0.08)] min-h-[250px]"
             >
               <div className="absolute top-4 right-4 text-xs text-mercu-muted font-mono opacity-40 group-hover:opacity-100 transition-opacity">
                 Videos ↗
@@ -1059,7 +1059,7 @@ export default function HomePage() {
             <Link 
               href="/videos?brand=alba" 
               id="alba"
-              className="group relative flex flex-col items-center justify-center p-8 bg-mercu-dark-card border border-mercu-border rounded-xl transition-all duration-500 hover:border-[#eb2891] hover:scale-[1.03] hover:shadow-[0_0_30px_rgba(235,40,145,0.15)] min-h-[250px]"
+              className="group relative flex flex-col items-center justify-center p-8 bg-mercu-dark-card border border-mercu-muted/20 rounded-xl transition-all duration-500 hover:border-mercu-accent/40 hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(235,40,145,0.08)] min-h-[250px]"
             >
               <div className="absolute top-4 right-4 text-xs text-mercu-muted font-mono opacity-40 group-hover:opacity-100 transition-opacity">
                 Videos ↗
