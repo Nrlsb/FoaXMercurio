@@ -205,11 +205,33 @@ async function processVideos() {
         continue;
       }
 
-      // 2. Si no existe, descargar de Drive
-      console.log(`1. Descargando de Google Drive (ID: ${video.driveId})...`);
-      const buffer = await downloadFromDrive(video.driveId);
-      const sizeMB = (buffer.length / (1024 * 1024)).toFixed(2);
-      console.log(`   Descarga completada con éxito. Tamaño: ${sizeMB} MB`);
+      // 2. Obtener el buffer del video (local si está comprimido, de lo contrario descargar de Drive)
+      let buffer;
+      let sizeMB;
+
+      let localFilename = null;
+      if (video.brandFolder === 'Mercurio') {
+        if (video.filename === 'mercurio-1.mp4') {
+          localFilename = 'mercurio-1-compressed.mp4';
+        } else if (video.filename === 'mercurio-2.mp4') {
+          localFilename = 'mercurio-2-compressed.mp4';
+        }
+      }
+
+      const localPath = localFilename ? path.join(__dirname, localFilename) : null;
+
+      if (localPath && fs.existsSync(localPath)) {
+        console.log(`1. [Local] Detectado archivo comprimido local: ${localFilename}. Cargando...`);
+        buffer = fs.readFileSync(localPath);
+        sizeMB = (buffer.length / (1024 * 1024)).toFixed(2);
+        console.log(`   Archivo local cargado con éxito. Tamaño: ${sizeMB} MB`);
+      } else {
+        console.log(`1. Descargando de Google Drive (ID: ${video.driveId})...`);
+        buffer = await downloadFromDrive(video.driveId);
+        sizeMB = (buffer.length / (1024 * 1024)).toFixed(2);
+        console.log(`   Descarga completada con éxito. Tamaño: ${sizeMB} MB`);
+      }
+
 
       // 3. Subir a Supabase
       console.log(`2. Subiendo a Supabase Storage en: videos/${supabasePath}...`);
