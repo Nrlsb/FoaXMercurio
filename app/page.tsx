@@ -128,8 +128,8 @@ const DEFAULT_GALLERY_ITEMS: GalleryItem[] = [
 
 const DEFAULT_WEB_TEXTS: Record<string, string> = {
   hero_eyebrow: 'Pinturerías Mercurio × Casa FOA Córdoba 2026',
-  hero_title: 'CASA FOA EXPERIENCIA MERCURIO- ALBA',
-  hero_subtitle: 'Edicion pocito social life – Cordoba.',
+  hero_title: 'CASA FOA EXPERIENCIA<br/><em>MERCURIO × ALBA</em>',
+  hero_subtitle: 'Edición Pocito Social Life – Córdoba.',
   
   section_foa_eyebrow: 'El escenario de hoy',
   section_foa_title: '40 años transformando<br/><em>arquitectura en</em><br/>experiencias vivas.',

@@ -128,16 +128,25 @@ body {
   font-family: var(--font-serif);
   font-size: clamp(3rem, 10vw, 7.5rem);
   font-weight: 300;
-  line-height: 0.95;
-  letter-spacing: -0.02em;
+  line-height: 0.9;
+  letter-spacing: -0.03em;
   position: relative;
   z-index: 1;
+  text-shadow: 0 4px 24px rgba(5, 7, 15, 0.7);
   animation: fadeUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both;
+  font-feature-settings: "ss01", "ss02", "clig", "liga";
 }
 
 .hero-title em {
   font-style: italic;
-  color: var(--c-warm);
+  font-family: var(--font-serif);
+  font-weight: 300;
+  background: linear-gradient(135deg, var(--c-accent) 0%, var(--c-warm) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  padding-right: 0.05em; /* Previene recorte de letras en cursiva */
 }
 
 .hero-subtitle {

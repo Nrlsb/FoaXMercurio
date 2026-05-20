@@ -81,3 +81,28 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+/* ── MEJORAS TIPOGRÁFICAS PREMIUM ── */
+.font-serif em {
+  font-style: italic;
+  font-family: var(--font-serif);
+  color: var(--c-warm); /* Amarillo Oficial Mercurio */
+}
+
+.hero-title {
+  text-shadow: 0 4px 24px rgba(5, 7, 15, 0.7);
+  letter-spacing: -0.03em;
+  font-feature-settings: "ss01", "ss02", "clig", "liga";
+}
+
+.hero-title em {
+  font-style: italic;
+  font-family: var(--font-serif);
+  font-weight: 300;
+  background: linear-gradient(135deg, var(--c-accent) 0%, var(--c-warm) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  padding-right: 0.05em; /* Previene recorte de letras en cursiva */
+}
