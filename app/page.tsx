@@ -3,13 +3,13 @@
 import { useState, useEffect, useRef } from 'react';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
-import { 
-  Play, 
-  Pause, 
-  Sparkles, 
-  Tv, 
-  Compass, 
-  Mic, 
+import {
+  Play,
+  Pause,
+  Sparkles,
+  Tv,
+  Compass,
+  Mic,
   Users,
   Search,
   SlidersHorizontal,
@@ -128,13 +128,13 @@ const DEFAULT_GALLERY_ITEMS: GalleryItem[] = [
 
 const DEFAULT_WEB_TEXTS: Record<string, string> = {
   hero_eyebrow: 'Pinturerías Mercurio × Casa FOA Córdoba 2026',
-  hero_title: 'CASA FOA EXPERIENCIA<br/><em>MERCURIO × ALBA</em>',
-  hero_subtitle: 'Edición Pocito Social Life – Córdoba.',
-  
+  hero_title: 'CASA FOA EXPERIENCIA MERCURIO- ALBA',
+  hero_subtitle: 'Edicion pocito social life – Cordoba.',
+
   section_foa_eyebrow: 'El escenario de hoy',
   section_foa_title: '40 años transformando<br/><em>arquitectura en</em><br/>experiencias vivas.',
   section_foa_lead: 'Antes de recorrer, entendamos el espacio. Casa FOA no es una exposición de materiales — es el punto de encuentro definitivo del diseño en el país. Aquí te revelamos curiosidades y datos esenciales que pocos conocen.',
-  
+
   stat1_num: '1985',
   stat1_label: 'Primera edición',
   stat2_num: '35+',
@@ -143,33 +143,33 @@ const DEFAULT_WEB_TEXTS: Record<string, string> = {
   stat3_label: 'm² de intervención',
   stat4_num: '180K',
   stat4_label: 'Visitantes promedio',
-  
+
   curiosity1_num: '01',
   curiosity1_title: 'El origen filantrópico',
   curiosity1_text: 'Casa FOA nació en 1985 de la mano de Mercedes Malbrán de Campos con un fin solidario: financiar las actividades de la Fundación Oftalmológica Argentina. Lo que comenzó como un té benéfico en una casona hoy es el polo de diseño más relevante de Latinoamérica.',
-  
+
   curiosity2_num: '02',
   curiosity2_title: 'Rescate de patrimonio',
   curiosity2_text: 'Cada edición recupera un hito arquitectónico en desuso. A lo largo del tiempo ha restaurado palacios históricos, silos de granos, conventos, fábricas textiles abandonadas y muelles. En 2026, desembarca en Pocito Social Life para fundirse con la vitalidad moderna de Nueva Córdoba.',
-  
+
   curiosity3_num: '03',
   curiosity3_title: 'Rescate de patrimonio',
   curiosity3_text: 'Cada edición recupera un hito arquitectónico en desuso. A lo largo del tiempo ha restaurado palacios históricos, silos de granos, conventos, fábricas textiles abandonadas y muelles. En 2026, desembarca en Pocito Social Life para fundirse con la vitalidad moderna de Nueva Córdoba.',
-  
+
   ejes_title: 'Los 4 Ejes del Recorrido',
   eje1_text: 'Diseñar desde lo auténtico — Materialidad honesta y texturas sin refinar.',
   eje2_text: 'Rediseñar lo esencal — Redefinir la habitabilidad mínima con máximo confort.',
   eje3_text: 'Tradición en presente continuo — La herencia artesanal cordobesa adaptada a la vanguardia.',
   eje4_text: 'Habitar la transformación — Plantas flexibles para hogares inteligentes y cambiantes.',
-  
+
   gallery_eyebrow: 'Experiencia Visual',
   gallery_title: 'Galería de Espacios e<br/><em>Inspiración y Diseño.</em>',
   gallery_lead: 'Un recorrido interactivo por el interiorismo y la arquitectura de vanguardia en Pocito Córdoba 2026. Disfrutá de nuestras 7 postales curadas de diseño y 5 conferencias magistrales.',
-  
+
   videos_eyebrow: 'Perspectivas globales',
   videos_title: 'Charlas que<br/><em>inspiran la mirada.</em>',
   videos_lead: 'Cuatro pensadores globales discuten la importancia de dotar a los espacios de alma, alegría, sustentabilidad y arraigo local. Haz clic en cualquiera para verla directamente.',
-  
+
   footer_lead: 'Una iniciativa diseñada para inspirar la práctica profesional diaria de arquitectos y diseñadores. Desarrollado en alianza por Pinturerías Mercurio y Alba AkzoNobel.',
   footer_copy: '© 2026 Pinturerías Mercurio S.A. Todos los derechos reservados.'
 };
@@ -188,14 +188,14 @@ export default function HomePage() {
   const [showSqlModal, setShowSqlModal] = useState(false);
 
   // Helper Component for Inline Editable Text
-  const EditableText = ({ 
-    textKey, 
-    className = '', 
+  const EditableText = ({
+    textKey,
+    className = '',
     as: Component = 'span',
     allowHtml = false
-  }: { 
-    textKey: string; 
-    className?: string; 
+  }: {
+    textKey: string;
+    className?: string;
     as?: any;
     allowHtml?: boolean;
   }) => {
@@ -225,7 +225,7 @@ export default function HomePage() {
     }
 
     return (
-      <Component 
+      <Component
         className={className}
         dangerouslySetInnerHTML={allowHtml ? { __html: content } : undefined}
       >
@@ -238,7 +238,7 @@ export default function HomePage() {
   const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(DEFAULT_GALLERY_ITEMS);
   const [loadingGallery, setLoadingGallery] = useState(true);
   const [galleryFilter, setGalleryFilter] = useState<'all' | 'image' | 'video'>('all');
-  
+
   // Estados para Lightbox interactivo
   const [lightboxActive, setLightboxActive] = useState(false);
   const [lightboxType, setLightboxType] = useState<'image' | 'video'>('image');
@@ -251,7 +251,7 @@ export default function HomePage() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      
+
       // Botón volver arriba
       setShowScrollTop(scrollY > 300);
 
@@ -269,7 +269,7 @@ export default function HomePage() {
     };
 
     window.addEventListener('scroll', handleScroll);
-    
+
     // Intersection Observer para reveal
     const revealElements = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
@@ -460,7 +460,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-mercu-dark text-mercu-cream font-sans selection:bg-mercu-accent selection:text-mercu-dark">
-      
+
       {/* ── HERO DE ENTRADA ── */}
       <header id="inicio" className="hero relative min-h-[65vh] md:min-h-screen flex flex-col justify-end px-6 py-12 md:p-16 overflow-hidden">
         <div className="hero-bg"></div>
@@ -479,19 +479,19 @@ export default function HomePage() {
           <img src="/logo_casafoa.svg" alt="Casa FOA" className="h-8 sm:h-8 md:h-9 w-auto block object-contain" />
         </div>
 
-        <EditableText 
-          textKey="hero_eyebrow" 
+        <EditableText
+          textKey="hero_eyebrow"
           className="hero-eyebrow z-10 text-xs font-semibold tracking-[0.25em] uppercase text-mercu-accent mb-6 block"
           as="div"
         />
-        <EditableText 
-          textKey="hero_title" 
+        <EditableText
+          textKey="hero_title"
           className="hero-title z-10 font-serif text-5xl md:text-8xl font-light leading-[0.95] tracking-tight mb-4 block"
           as="h1"
           allowHtml
         />
-        <EditableText 
-          textKey="hero_subtitle" 
+        <EditableText
+          textKey="hero_subtitle"
           className="hero-subtitle z-10 text-sm tracking-widest uppercase text-mercu-muted block"
           as="p"
         />
@@ -519,19 +519,19 @@ export default function HomePage() {
       {/* ── SECCIÓN CASA FOA ── */}
       <section id="casa-foa" className="py-24 px-8 max-w-4xl mx-auto">
         <div className="reveal">
-          <EditableText 
-            textKey="section_foa_eyebrow" 
+          <EditableText
+            textKey="section_foa_eyebrow"
             className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-4 block"
             as="div"
           />
-          <EditableText 
-            textKey="section_foa_title" 
+          <EditableText
+            textKey="section_foa_title"
             className="section-title font-serif text-4xl md:text-6xl font-light leading-tight text-mercu-cream block"
             as="h2"
             allowHtml
           />
-          <EditableText 
-            textKey="section_foa_lead" 
+          <EditableText
+            textKey="section_foa_lead"
             className="section-lead text-base md:text-lg leading-relaxed text-mercu-cream/70 mt-6 max-w-2xl block"
             as="p"
           />
@@ -540,49 +540,49 @@ export default function HomePage() {
         {/* Malla de Datos Estadísticos */}
         <div className="dato-grid reveal grid grid-cols-2 md:grid-cols-4 gap-[1px] bg-mercu-border border border-mercu-border rounded overflow-hidden my-16">
           <div className="dato-item bg-mercu-dark-card p-6 md:p-10 text-center transition-all duration-300 hover:bg-mercu-border/5">
-            <EditableText 
-              textKey="stat1_num" 
+            <EditableText
+              textKey="stat1_num"
               className="dato-num font-serif text-4xl md:text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1 block"
               as="div"
             />
-            <EditableText 
-              textKey="stat1_label" 
+            <EditableText
+              textKey="stat1_label"
               className="dato-label text-[10px] tracking-widest text-mercu-muted uppercase block"
               as="div"
             />
           </div>
           <div className="dato-item bg-mercu-dark-card p-6 md:p-10 text-center transition-all duration-300 hover:bg-mercu-border/5">
-            <EditableText 
-              textKey="stat2_num" 
+            <EditableText
+              textKey="stat2_num"
               className="dato-num font-serif text-4xl md:text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1 block"
               as="div"
             />
-            <EditableText 
-              textKey="stat2_label" 
+            <EditableText
+              textKey="stat2_label"
               className="dato-label text-[10px] tracking-widest text-mercu-muted uppercase block"
               as="div"
             />
           </div>
           <div className="dato-item bg-mercu-dark-card p-6 md:p-10 text-center transition-all duration-300 hover:bg-mercu-border/5">
-            <EditableText 
-              textKey="stat3_num" 
+            <EditableText
+              textKey="stat3_num"
               className="dato-num font-serif text-4xl md:text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1 block"
               as="div"
             />
-            <EditableText 
-              textKey="stat3_label" 
+            <EditableText
+              textKey="stat3_label"
               className="dato-label text-[10px] tracking-widest text-mercu-muted uppercase block"
               as="div"
             />
           </div>
           <div className="dato-item bg-mercu-dark-card p-6 md:p-10 text-center transition-all duration-300 hover:bg-mercu-border/5">
-            <EditableText 
-              textKey="stat4_num" 
+            <EditableText
+              textKey="stat4_num"
               className="dato-num font-serif text-4xl md:text-5xl font-light text-mercu-cream mb-3 transition-transform hover:-translate-y-1 block"
               as="div"
             />
-            <EditableText 
-              textKey="stat4_label" 
+            <EditableText
+              textKey="stat4_label"
               className="dato-label text-[10px] tracking-widest text-mercu-muted uppercase block"
               as="div"
             />
@@ -592,19 +592,19 @@ export default function HomePage() {
         {/* Malla de Curiosidades */}
         <div className="curiosity-grid reveal grid grid-cols-1 gap-[1px] bg-mercu-border border border-mercu-border rounded overflow-hidden mb-16">
           <div className="curiosity-item bg-mercu-dark p-6 md:p-10 flex flex-col sm:flex-row gap-4 md:gap-8 items-start transition-all duration-300 hover:bg-mercu-border/5">
-            <EditableText 
-              textKey="curiosity1_num" 
+            <EditableText
+              textKey="curiosity1_num"
               className="curiosity-num font-serif text-5xl font-light text-mercu-accent/20 transition-colors duration-300 block"
               as="div"
             />
             <div className="curiosity-content w-full">
-              <EditableText 
-                textKey="curiosity1_title" 
+              <EditableText
+                textKey="curiosity1_title"
                 className="curiosity-label text-xs font-semibold tracking-wider text-mercu-accent uppercase mb-3 block"
                 as="h3"
               />
-              <EditableText 
-                textKey="curiosity1_text" 
+              <EditableText
+                textKey="curiosity1_text"
                 className="curiosity-text text-sm leading-relaxed text-mercu-cream/80 block"
                 as="p"
                 allowHtml
@@ -613,19 +613,19 @@ export default function HomePage() {
           </div>
 
           <div className="curiosity-item bg-mercu-dark p-6 md:p-10 flex flex-col sm:flex-row gap-4 md:gap-8 items-start transition-all duration-300 hover:bg-mercu-border/5">
-            <EditableText 
-              textKey="curiosity2_num" 
+            <EditableText
+              textKey="curiosity2_num"
               className="curiosity-num font-serif text-5xl font-light text-mercu-accent/20 transition-colors duration-300 block"
               as="div"
             />
             <div className="curiosity-content w-full">
-              <EditableText 
-                textKey="curiosity2_title" 
+              <EditableText
+                textKey="curiosity2_title"
                 className="curiosity-label text-xs font-semibold tracking-wider text-mercu-accent uppercase mb-3 block"
                 as="h3"
               />
-              <EditableText 
-                textKey="curiosity2_text" 
+              <EditableText
+                textKey="curiosity2_text"
                 className="curiosity-text text-sm leading-relaxed text-mercu-cream/80 block"
                 as="p"
                 allowHtml
@@ -637,16 +637,16 @@ export default function HomePage() {
         {/* Ejes Conceptuales */}
         <div className="reveal">
           <div className="divider w-16 h-[1px] bg-mercu-accent my-12"></div>
-          <EditableText 
-            textKey="ejes_title" 
+          <EditableText
+            textKey="ejes_title"
             className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-6 block"
             as="div"
           />
           <div className="ejes-list flex flex-col gap-[1px] bg-mercu-border border border-mercu-border rounded overflow-hidden mt-8">
             <div className="eje-item bg-mercu-dark-card p-5 md:p-8 flex gap-4 md:gap-6 items-center transition-all duration-300 hover:bg-mercu-border/5">
               <div className="eje-mark w-7 h-7 border border-mercu-accent rounded-full flex items-center justify-center flex-shrink-0"><div className="eje-dot w-2 h-2 bg-mercu-accent rounded-full"></div></div>
-              <EditableText 
-                textKey="eje1_text" 
+              <EditableText
+                textKey="eje1_text"
                 className="eje-text font-serif text-base md:text-lg text-mercu-cream block"
                 as="div"
                 allowHtml
@@ -654,8 +654,8 @@ export default function HomePage() {
             </div>
             <div className="eje-item bg-mercu-dark-card p-5 md:p-8 flex gap-4 md:gap-6 items-center transition-all duration-300 hover:bg-mercu-border/5">
               <div className="eje-mark w-7 h-7 border border-mercu-accent rounded-full flex items-center justify-center flex-shrink-0"><div className="eje-dot w-2 h-2 bg-mercu-accent rounded-full"></div></div>
-              <EditableText 
-                textKey="eje2_text" 
+              <EditableText
+                textKey="eje2_text"
                 className="eje-text font-serif text-base md:text-lg text-mercu-cream block"
                 as="div"
                 allowHtml
@@ -663,8 +663,8 @@ export default function HomePage() {
             </div>
             <div className="eje-item bg-mercu-dark-card p-5 md:p-8 flex gap-4 md:gap-6 items-center transition-all duration-300 hover:bg-mercu-border/5">
               <div className="eje-mark w-7 h-7 border border-mercu-accent rounded-full flex items-center justify-center flex-shrink-0"><div className="eje-dot w-2 h-2 bg-mercu-accent rounded-full"></div></div>
-              <EditableText 
-                textKey="eje3_text" 
+              <EditableText
+                textKey="eje3_text"
                 className="eje-text font-serif text-base md:text-lg text-mercu-cream block"
                 as="div"
                 allowHtml
@@ -672,8 +672,8 @@ export default function HomePage() {
             </div>
             <div className="eje-item bg-mercu-dark-card p-5 md:p-8 flex gap-4 md:gap-6 items-center transition-all duration-300 hover:bg-mercu-border/5">
               <div className="eje-mark w-7 h-7 border border-mercu-accent rounded-full flex items-center justify-center flex-shrink-0"><div className="eje-dot w-2 h-2 bg-mercu-accent rounded-full"></div></div>
-              <EditableText 
-                textKey="eje4_text" 
+              <EditableText
+                textKey="eje4_text"
                 className="eje-text font-serif text-base md:text-lg text-mercu-cream block"
                 as="div"
                 allowHtml
@@ -704,18 +704,18 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
             {/* Tarjeta MERCURIO */}
-            <Link 
-              href="/videos?brand=mercurio" 
+            <Link
+              href="/videos?brand=mercurio"
               id="mercurio"
               className="group relative flex flex-col items-center justify-center p-8 bg-mercu-dark-card border border-mercu-muted/20 rounded-xl transition-all duration-500 hover:border-mercu-accent/40 hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(235,40,145,0.08)] min-h-[250px]"
             >
               <div className="absolute top-4 right-4 text-xs text-mercu-muted font-mono opacity-40 group-hover:opacity-100 transition-opacity">
                 Videos ↗
               </div>
-              <img 
-                src="/logomercurioblanco.png" 
-                alt="Mercurio" 
-                className="h-10 w-auto object-contain transition-transform duration-500 group-hover:scale-110" 
+              <img
+                src="/logomercurioblanco.png"
+                alt="Mercurio"
+                className="h-10 w-auto object-contain transition-transform duration-500 group-hover:scale-110"
               />
               <span className="text-[10px] tracking-widest text-[#eb2891] uppercase mt-8 font-semibold opacity-60 group-hover:opacity-100 transition-opacity">
                 Ver Videos Mercurio
@@ -723,18 +723,18 @@ export default function HomePage() {
             </Link>
 
             {/* Tarjeta CASA FOA */}
-            <Link 
-              href="/videos?brand=casa-foa" 
+            <Link
+              href="/videos?brand=casa-foa"
               id="casa-foa-gallery"
               className="group relative flex flex-col items-center justify-center p-8 bg-mercu-dark-card border border-mercu-muted/20 rounded-xl transition-all duration-500 hover:border-mercu-accent/40 hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(235,40,145,0.08)] min-h-[250px]"
             >
               <div className="absolute top-4 right-4 text-xs text-mercu-muted font-mono opacity-40 group-hover:opacity-100 transition-opacity">
                 Videos ↗
               </div>
-              <img 
-                src="/logo_casafoa.svg" 
-                alt="Casa FOA" 
-                className="h-16 w-auto object-contain transition-transform duration-500 group-hover:scale-110" 
+              <img
+                src="/logo_casafoa.svg"
+                alt="Casa FOA"
+                className="h-16 w-auto object-contain transition-transform duration-500 group-hover:scale-110"
               />
               <span className="text-[10px] tracking-widest text-[#eb2891] uppercase mt-8 font-semibold opacity-60 group-hover:opacity-100 transition-opacity">
                 Ver Videos Casa FOA
@@ -742,18 +742,18 @@ export default function HomePage() {
             </Link>
 
             {/* Tarjeta ALBA */}
-            <Link 
-              href="/videos?brand=alba" 
+            <Link
+              href="/videos?brand=alba"
               id="alba"
               className="group relative flex flex-col items-center justify-center p-8 bg-mercu-dark-card border border-mercu-muted/20 rounded-xl transition-all duration-500 hover:border-mercu-accent/40 hover:scale-[1.03] hover:shadow-[0_0_20px_rgba(235,40,145,0.08)] min-h-[250px]"
             >
               <div className="absolute top-4 right-4 text-xs text-mercu-muted font-mono opacity-40 group-hover:opacity-100 transition-opacity">
                 Videos ↗
               </div>
-              <img 
-                src="/alba_blanco.png" 
-                alt="Alba" 
-                className="h-10 w-auto object-contain transition-transform duration-500 group-hover:scale-110" 
+              <img
+                src="/alba_blanco.png"
+                alt="Alba"
+                className="h-10 w-auto object-contain transition-transform duration-500 group-hover:scale-110"
               />
               <span className="text-[10px] tracking-widest text-[#eb2891] uppercase mt-8 font-semibold opacity-60 group-hover:opacity-100 transition-opacity">
                 Ver Videos Alba
@@ -765,7 +765,7 @@ export default function HomePage() {
 
       {/* ── MODAL LIGHTBOX MULTIMEDIA COMPLETO ── */}
       {lightboxActive && (
-        <div 
+        <div
           onClick={() => setLightboxActive(false)}
           className="fixed inset-0 bg-black/95 backdrop-blur-md z-[1000] flex flex-col justify-between p-4 md:p-8 animate-fade-in"
         >
@@ -778,8 +778,8 @@ export default function HomePage() {
                 {galleryItems.filter(item => item.slot_type === lightboxType)[lightboxIndex]?.title}
               </h4>
             </div>
-            
-            <button 
+
+            <button
               onClick={() => setLightboxActive(false)}
               className="w-10 h-10 rounded-full bg-neutral-900 border border-mercu-border/50 text-mercu-cream flex items-center justify-center text-sm font-semibold hover:bg-mercu-accent hover:text-mercu-dark hover:border-mercu-accent transition-all"
             >
@@ -788,7 +788,7 @@ export default function HomePage() {
           </div>
 
           <div className="flex-grow w-full max-w-6xl mx-auto flex items-center justify-between gap-4 py-6">
-            <button 
+            <button
               onClick={(e) => { e.stopPropagation(); handleLightboxPrev(); }}
               className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-neutral-900/80 border border-mercu-border/30 text-mercu-cream flex items-center justify-center hover:bg-mercu-accent hover:text-mercu-dark transition-all duration-300 flex-shrink-0"
               aria-label="Anterior"
@@ -796,27 +796,27 @@ export default function HomePage() {
               ◀
             </button>
 
-            <div 
+            <div
               onClick={(e) => e.stopPropagation()}
               className="flex-grow max-h-[65vh] md:max-h-[70vh] aspect-[16/10] bg-black/40 border border-mercu-border/50 rounded-lg overflow-hidden flex items-center justify-center relative shadow-2xl"
             >
               {lightboxType === 'image' ? (
-                <img 
-                  src={galleryItems.filter(item => item.slot_type === 'image')[lightboxIndex]?.url} 
+                <img
+                  src={galleryItems.filter(item => item.slot_type === 'image')[lightboxIndex]?.url}
                   alt="Lightbox"
                   className="w-full h-full object-contain max-h-[65vh] md:max-h-[70vh]"
                 />
               ) : (
-                <iframe 
+                <iframe
                   className="w-full h-full border-none aspect-[16/9]"
-                  src={galleryItems.filter(item => item.slot_type === 'video')[lightboxIndex]?.url} 
-                  allow="autoplay; encrypted-media" 
+                  src={galleryItems.filter(item => item.slot_type === 'video')[lightboxIndex]?.url}
+                  allow="autoplay; encrypted-media"
                   allowFullScreen
                 ></iframe>
               )}
             </div>
 
-            <button 
+            <button
               onClick={(e) => { e.stopPropagation(); handleLightboxNext(); }}
               className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-neutral-900/80 border border-mercu-border/30 text-mercu-cream flex items-center justify-center hover:bg-mercu-accent hover:text-mercu-dark transition-all duration-300 flex-shrink-0"
               aria-label="Siguiente"
@@ -825,7 +825,7 @@ export default function HomePage() {
             </button>
           </div>
 
-          <div 
+          <div
             onClick={(e) => e.stopPropagation()}
             className="w-full max-w-3xl mx-auto text-center z-10 py-4 px-6 bg-neutral-950/70 backdrop-blur-md border border-mercu-border/30 rounded-lg mb-4"
           >
@@ -857,7 +857,7 @@ export default function HomePage() {
 
         {/* Malla de Charlas */}
         <div className="ted-grid reveal grid gap-[1px] bg-mercu-border border border-mercu-border rounded overflow-hidden">
-          <div 
+          <div
             onClick={() => setModalVideoUrl("https://www.youtube.com/embed/KeJTUrXYBVs")}
             className="ted-item bg-mercu-dark p-8 md:p-10 cursor-pointer transition-all duration-300 hover:bg-mercu-border/5 grid grid-cols-1 md:grid-cols-[1fr_auto] items-center gap-6"
           >
@@ -872,7 +872,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div 
+          <div
             onClick={() => setModalVideoUrl("https://www.youtube.com/embed/FNOnzelCGlM")}
             className="ted-item bg-mercu-dark p-8 md:p-10 cursor-pointer transition-all duration-300 hover:bg-mercu-border/5 grid grid-cols-1 md:grid-cols-[1fr_auto] items-center gap-6"
           >
@@ -887,7 +887,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div 
+          <div
             onClick={() => setModalVideoUrl("https://www.youtube.com/embed/STvFfOWsarw")}
             className="ted-item bg-mercu-dark p-8 md:p-10 cursor-pointer transition-all duration-300 hover:bg-mercu-border/5 grid grid-cols-1 md:grid-cols-[1fr_auto] items-center gap-6"
           >
@@ -906,24 +906,24 @@ export default function HomePage() {
 
       {/* ── MODAL DE VIDEO EMBEBIDO ── */}
       {modalVideoUrl && (
-        <div 
+        <div
           onClick={() => setModalVideoUrl(null)}
           className="fixed inset-0 bg-black/85 backdrop-blur-md z-[1000] flex items-center justify-center p-8 animate-fade-in"
         >
-          <div 
+          <div
             onClick={(e) => e.stopPropagation()}
             className="bg-mercu-dark border border-mercu-border rounded-lg w-full max-w-3xl aspect-[16/9] relative overflow-hidden shadow-2xl scale-100 transition-transform duration-300"
           >
-            <button 
+            <button
               onClick={() => setModalVideoUrl(null)}
               className="absolute top-4 right-4 bg-black/70 border border-mercu-border text-mercu-cream px-4 py-2 rounded text-xs font-semibold hover:bg-mercu-cream hover:text-mercu-dark transition-all"
             >
               Cerrar ✕
             </button>
-            <iframe 
+            <iframe
               className="w-full h-full border-none"
-              src={modalVideoUrl} 
-              allow="autoplay; encrypted-media" 
+              src={modalVideoUrl}
+              allow="autoplay; encrypted-media"
               allowFullScreen
             ></iframe>
           </div>
@@ -932,7 +932,7 @@ export default function HomePage() {
 
       {/* ── BOTÓN FLOTANTE VOLVER ARRIBA ── */}
       {showScrollTop && (
-        <button 
+        <button
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           className="fixed bottom-8 right-8 bg-mercu-dark-card/90 border border-mercu-border text-mercu-cream w-12 h-12 rounded-full flex items-center justify-center cursor-pointer z-50 hover:bg-mercu-cream hover:text-mercu-dark transition-all duration-300 animate-fade-in"
         >
@@ -945,20 +945,20 @@ export default function HomePage() {
         {/* Instagram Links */}
         <div className="flex flex-wrap gap-6 border-b border-mercu-border/40 pb-8 items-center justify-start">
           <span className="text-[10px] tracking-widest text-mercu-muted uppercase font-bold mr-2">Seguinos en Instagram:</span>
-          <a 
-            href="https://www.instagram.com/alba.pinturas/" 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            href="https://www.instagram.com/alba.pinturas/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-2.5 text-xs text-mercu-muted hover:text-mercu-cream transition-colors group"
           >
             <Instagram size={16} className="text-mercu-muted group-hover:text-mercu-cream transition-colors" />
             <img src="/alba_blanco.png" alt="Alba" className="w-auto object-contain brightness-95 group-hover:brightness-100 transition-all" style={{ height: '14px' }} />
           </a>
           <div className="w-[1px] h-4 bg-mercu-border"></div>
-          <a 
-            href="https://www.instagram.com/pint_mercurio/" 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            href="https://www.instagram.com/pint_mercurio/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-2.5 text-xs text-mercu-muted hover:text-mercu-cream transition-colors group"
           >
             <Instagram size={16} className="text-mercu-muted group-hover:text-mercu-cream transition-colors" />
@@ -972,14 +972,14 @@ export default function HomePage() {
             <span className="text-mercu-muted/50 font-light text-2xl mx-1">×</span>
             <img src="/logo_casafoa.svg" alt="Casa FOA" className="w-auto object-contain" style={{ height: '32px' }} />
           </div>
-          <EditableText 
-            textKey="footer_lead" 
+          <EditableText
+            textKey="footer_lead"
             className="text-xs text-mercu-muted max-w-md leading-relaxed block"
             as="p"
           />
         </div>
-        <EditableText 
-          textKey="footer_copy" 
+        <EditableText
+          textKey="footer_copy"
           className="text-[10px] tracking-wider text-mercu-muted/40 uppercase block"
           as="div"
         />
@@ -1010,7 +1010,7 @@ export default function HomePage() {
             <div className="text-[10px] uppercase font-bold tracking-widest text-mercu-accent px-4 py-1.5 border-r border-mercu-border/50 hidden sm:inline-block">
               Editor de Textos
             </div>
-            
+
             <button
               onClick={handleSaveWebTexts}
               disabled={savingTexts}
@@ -1068,11 +1068,11 @@ export default function HomePage() {
 
       {/* ── MODAL SQL SUPABASE DE INSTRUCCIONES ── */}
       {showSqlModal && (
-        <div 
+        <div
           onClick={() => setShowSqlModal(false)}
           className="fixed inset-0 bg-black/85 backdrop-blur-md z-[1000] flex items-center justify-center p-4 animate-fade-in"
         >
-          <div 
+          <div
             onClick={(e) => e.stopPropagation()}
             className="bg-neutral-900 border border-mercu-border rounded-xl w-full max-w-2xl overflow-hidden shadow-2xl flex flex-col max-h-[85vh]"
           >
@@ -1082,7 +1082,7 @@ export default function HomePage() {
                 <Code size={18} className="text-mercu-accent" />
                 <h3 className="font-serif text-lg text-mercu-cream">Configuración de Supabase</h3>
               </div>
-              <button 
+              <button
                 onClick={() => setShowSqlModal(false)}
                 className="w-8 h-8 rounded-full bg-white/5 text-mercu-cream flex items-center justify-center hover:bg-mercu-accent hover:text-mercu-dark transition-all"
               >
@@ -1095,7 +1095,7 @@ export default function HomePage() {
               <p>
                 Para habilitar la persistencia de textos en tiempo real en la nube para todos tus usuarios, ejecuta la siguiente consulta en el <strong>SQL Editor</strong> de tu panel de Supabase:
               </p>
-              
+
               <div className="relative font-mono bg-black text-emerald-400 p-4 rounded-lg overflow-x-auto border border-mercu-border/50 text-[11px] leading-normal select-all">
                 <pre>{`create table if not exists public.web_texts (
   key text primary key,
@@ -1126,7 +1126,7 @@ on public.web_texts for update using (true);`}</pre>
 
             {/* Footer */}
             <div className="px-6 py-4 border-t border-mercu-border/30 bg-neutral-950/40 flex justify-end">
-              <button 
+              <button
                 onClick={() => setShowSqlModal(false)}
                 className="bg-mercu-accent hover:bg-mercu-cream text-mercu-dark font-semibold text-xs tracking-wider uppercase px-5 py-2.5 rounded-full transition-all"
               >
