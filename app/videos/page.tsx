@@ -10,12 +10,12 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-// Estructura de videos con Drive ID y Miniaturas de Unsplash
+// Estructura de videos con URL pública de Supabase y Miniaturas de Unsplash
 interface VideoItem {
   id: string;
   title: string;
   duration: string;
-  driveId: string;
+  videoUrl: string; // URL pública de Supabase Storage
   description: string;
   thumbnail: string;
 }
@@ -45,7 +45,7 @@ const BRANDS: Record<string, BrandConfig> = {
         id: 'mercurio-1',
         title: 'Mercurio Pinturerías: Soluciones Integrales para tu Obra',
         duration: '0:56',
-        driveId: '1b7xFBOvgucxJi9i2zEOwHQLmE1yUUoye',
+        videoUrl: 'https://vfpibmmifhchxhvuygzw.supabase.co/storage/v1/object/public/videos/Mercurio/mercurio-1.mp4',
         description: 'Descubrí cómo potenciamos cada etapa de tu proyecto de construcción. Desde pinturas Alba hasta las soluciones constructivas premium de Weber y Fix, te acompañamos para lograr la máxima calidad y rendimiento en tu trabajo.',
         thumbnail: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?q=80&w=400'
       },
@@ -53,7 +53,7 @@ const BRANDS: Record<string, BrandConfig> = {
         id: 'mercurio-2',
         title: '45 Años de Historia: De "La Casa del Pintor" a Pinturerías Mercurio',
         duration: '1:58',
-        driveId: '1r7tfVfDEKeHsWV1zIzccqbFJSiN_YuVT',
+        videoUrl: 'https://vfpibmmifhchxhvuygzw.supabase.co/storage/v1/object/public/videos/Mercurio/mercurio-2.mp4',
         description: 'Un recorrido emotivo por nuestra trayectoria. Conocé nuestros orígenes familiares como una pequeña pinturería local, nuestra evolución y el compromiso de todo el equipo que hace posible que sigamos acompañando tus proyectos arquitectónicos e inmobiliarios hoy en día.',
         thumbnail: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=400'
       }
@@ -72,7 +72,7 @@ const BRANDS: Record<string, BrandConfig> = {
         id: 'foa-1',
         title: 'Casa FOA Córdoba 2024: La Obra en Construcción desde las Alturas',
         duration: '0:16',
-        driveId: '1HjXLpEANA6L2HUN9R7JfjHFhrDtOohDM',
+        videoUrl: 'https://vfpibmmifhchxhvuygzw.supabase.co/storage/v1/object/public/videos/CasaFoa/foa-1.mp4',
         description: 'Una espectacular vista aérea con dron del imponente complejo Pocito de Grupo Proaco en Córdoba, la sede en obra gris que se convertirá en el epicentro del diseño, la arquitectura y el paisajismo en esta edición especial de Casa FOA.',
         thumbnail: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=400'
       },
@@ -80,7 +80,7 @@ const BRANDS: Record<string, BrandConfig> = {
         id: 'foa-2',
         title: 'Reflexiones sobre el Aniversario de Casa FOA - Enrique Segundo Malbrán',
         duration: '1:27',
-        driveId: '1I57mR3lyaYK4X3xWdnpOsBrsPcEdvqAr',
+        videoUrl: 'https://vfpibmmifhchxhvuygzw.supabase.co/storage/v1/object/public/videos/CasaFoa/foa-2.mp4',
         description: 'Entrevista exclusiva con Enrique Segundo Malbrán, presidente de FOA. Nos comparte su visión sobre el significado de esta edición aniversario, el impacto cultural del evento y la labor fundamental de la Fundación Oftalmológica Argentina en la comunidad.',
         thumbnail: 'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?q=80&w=400'
       },
@@ -88,7 +88,7 @@ const BRANDS: Record<string, BrandConfig> = {
         id: 'foa-3',
         title: '40 Años de Historia y Diseño: El Legado de Casa FOA',
         duration: '2:12',
-        driveId: '1PRI4Mh58JYsg98Ay5mGxvfk3CJjcaHJi',
+        videoUrl: 'https://vfpibmmifhchxhvuygzw.supabase.co/storage/v1/object/public/videos/CasaFoa/foa-3.mp4',
         description: 'Homenaje al recorrido histórico de Casa FOA desde su fundación por Mercedes Malbrán de Campos. Repasamos la evolución y las sedes icónicas que han transformado el interiorismo en Argentina, desde hitos como Molina Ciudad (2012) hasta el actual desarrollo en Madero Harbour (2025).',
         thumbnail: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=400'
       },
@@ -96,7 +96,7 @@ const BRANDS: Record<string, BrandConfig> = {
         id: 'foa-4',
         title: 'Detrás de Escena en Pocito: Preparando el Espacio Casa FOA',
         duration: '0:45',
-        driveId: '1Sm6Jj2ZD8IXl_Aid3Sg81pDX_JTGTqZ2',
+        videoUrl: 'https://vfpibmmifhchxhvuygzw.supabase.co/storage/v1/object/public/videos/CasaFoa/foa-4.mp4',
         description: 'Ignacio Albarracín, Gerente de Retail de Grupo Proaco, te invita a una visita guiada exclusiva por el interior de Pocito en plena fase de construcción. Descubrí la escala monumental de la obra y el proceso de preparación del predio que albergará las tendencias de diseño más importantes de la región.',
         thumbnail: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=400'
       }
@@ -115,15 +115,15 @@ const BRANDS: Record<string, BrandConfig> = {
         id: 'alba-1',
         title: 'Alba Efectos Especiales Design: Texturas y Tendencias de Alta Gama',
         duration: '0:15',
-        driveId: '15KkezwkVOLBImZkSGp2YPufqT_iCj4kv',
-        description: 'Transformá tus ambientes con la línea premium Alba Design. Inspirate con la aplicación real y sofisticada de los acabados Cemento Alisado, Mármol, Velvet y Nuage en paredes modernas que definen un estilo único.',
+        videoUrl: 'https://vfpibmmifhchxhvuygzw.supabase.co/storage/v1/object/public/videos/Alba/alba-1.mp4',
+        description: 'Transformá tus ambientes con la línea premium Alba Design. Inspirate con la aplicación real y sofisticada de los acabados Cemento Alisado, Mármol, Velvet y Nuage en paredes modernas que definen un estilo unique.',
         thumbnail: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=400'
       },
       {
         id: 'alba-2',
         title: 'Inspiración en Azul Puro: Ideas de Color para tu Hogar',
         duration: '0:25',
-        driveId: '1UPqCvKHv8UzpJyBwg_9L6D8kcMi5KgYH',
+        videoUrl: 'https://vfpibmmifhchxhvuygzw.supabase.co/storage/v1/object/public/videos/Alba/alba-2.mp4',
         description: 'Te compartimos una carpeta de referencias estéticas y de diseño basadas en el "Azul Puro". Descubrí cómo este color versátil, lleno de vida y elegancia, se adapta a cada rincón de tu hogar en muebles, vajilla, terrazas y paredes.',
         thumbnail: 'https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=400'
       },
@@ -131,7 +131,7 @@ const BRANDS: Record<string, BrandConfig> = {
         id: 'alba-3',
         title: 'Historia y Arte: Homenaje a la Trayectoria de Alba Pinturas',
         duration: '1:11',
-        driveId: '1IjVEgxIAV-SWqg_sjppkmhTWRpEhTkoe',
+        videoUrl: 'https://vfpibmmifhchxhvuygzw.supabase.co/storage/v1/object/public/videos/Alba/alba-3.mp4',
         description: '"Alba no pintó sólo paredes, pintó la historia". Un video homenaje lleno de nostalgia y arte dedicado especialmente a nuestros clientes de la región del Litoral, repasando el legado de la marca a través de bocetos históricos, talleres de artistas y comerciales clásicos de Argentina.',
         thumbnail: 'https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=400'
       },
@@ -139,7 +139,7 @@ const BRANDS: Record<string, BrandConfig> = {
         id: 'alba-4',
         title: 'Albaxpert: La Elección del Pintor Profesional',
         duration: '0:53',
-        driveId: '1GiBbcxqECbMu1MGoxgut8uDdeIMWhgFS',
+        videoUrl: 'https://vfpibmmifhchxhvuygzw.supabase.co/storage/v1/object/public/videos/Alba/alba-4.mp4',
         description: 'Conocé a fondo Albaxpert Látex Interior Mate, la herramienta indispensable de los profesionales de la pintura. Diseñado con una fórmula antihongos de alta cubritura y máximo rendimiento para garantizar terminaciones perfectas y duraderas.',
         thumbnail: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?q=80&w=400'
       },
@@ -147,7 +147,7 @@ const BRANDS: Record<string, BrandConfig> = {
         id: 'alba-5',
         title: 'Lanzamiento: NUEVO Alba Multisuperficies Epoxi al Agua',
         duration: '1:00',
-        driveId: '11gv9BJKA7pN2imUO9gmcL6fG_MT1gXrx',
+        videoUrl: 'https://vfpibmmifhchxhvuygzw.supabase.co/storage/v1/object/public/videos/Alba/alba-5.mp4',
         description: 'La solución definitiva para proteger y dar color a todo tipo de soportes. Conocé el nuevo esmalte epoxi base agua monocomponente: super resistente, lavable, sin olor y de alta adherencia sobre madera, hierro, albañilería y pisos de concreto. Secado rápido al tacto en 1 hora.',
         thumbnail: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=400'
       },
@@ -155,7 +155,7 @@ const BRANDS: Record<string, BrandConfig> = {
         id: 'alba-6',
         title: 'Alba en Casa FOA Córdoba 2024: Galería de Diseño y Color',
         duration: '0:48',
-        driveId: '1Ys9MOykfQmp-FMoDqBMb6_nef0SwB_fB',
+        videoUrl: 'https://vfpibmmifhchxhvuygzw.supabase.co/storage/v1/object/public/videos/Alba/alba-6.mp4',
         description: 'Acompañanos en un recorrido por los espacios más destacados de Casa FOA en Pocito. Admirá la aplicación real de nuestras paletas de color, efectos especiales y texturas exclusivas que transforman la arquitectura de la muestra en verdaderas obras de arte.',
         thumbnail: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?q=80&w=400'
       }
@@ -267,16 +267,20 @@ function VideoPlayerContent() {
         {/* REPRODUCTOR PRINCIPAL */}
         <div className="lg:col-span-2 flex flex-col gap-6">
           <div className="bg-mercu-dark-card border border-mercu-border/50 rounded-xl overflow-hidden shadow-2xl relative">
-            {/* Reproductor de Google Drive Embebido */}
-            <div className="w-full aspect-[16/9] bg-black/80 flex items-center justify-center relative">
+            {/* Reproductor de Supabase Storage */}
+            <div className="w-full aspect-[16/9] bg-black/90 flex items-center justify-center relative">
               {selectedVideo ? (
-                <iframe
-                  className="w-full h-full border-none"
-                  src={`https://drive.google.com/file/d/${selectedVideo.driveId}/preview`}
-                  title={selectedVideo.title}
-                  allow="autoplay; encrypted-media"
-                  allowFullScreen
-                ></iframe>
+                <video
+                  key={selectedVideo.videoUrl} // Fuerza el reinicio del componente al cambiar de video
+                  className="w-full h-full object-contain"
+                  controls
+                  autoPlay
+                  playsInline
+                  poster={selectedVideo.thumbnail}
+                >
+                  <source src={selectedVideo.videoUrl} type="video/mp4" />
+                  Tu navegador no soporta la reproducción de video HTML5.
+                </video>
               ) : (
                 <div className="text-center p-8">
                   <Play size={48} className="text-mercu-accent/40 mx-auto mb-4 animate-pulse" />

@@ -9,10 +9,7 @@ import {
   Sparkles, 
   Tv, 
   Compass, 
-  Music, 
   Mic, 
-  ArrowRight, 
-  CheckCircle, 
   Users,
   Search,
   SlidersHorizontal,
@@ -31,14 +28,6 @@ import {
 } from 'lucide-react';
 
 // Tipos de datos
-interface Track {
-  id: string;
-  title: string;
-  artist: string;
-  emoji: string;
-  type: 'synth' | 'ocean' | 'chime';
-}
-
 interface GalleryItem {
   id?: string;
   slot_type: 'image' | 'video';
@@ -177,14 +166,6 @@ const DEFAULT_WEB_TEXTS: Record<string, string> = {
   gallery_title: 'Galería de Espacios e<br/><em>Inspiración y Diseño.</em>',
   gallery_lead: 'Un recorrido interactivo por el interiorismo y la arquitectura de vanguardia en Pocito Córdoba 2026. Disfrutá de nuestras 7 postales curadas de diseño y 5 conferencias magistrales.',
   
-  music_eyebrow: 'Estimulación sensorial',
-  music_title: 'Música para<br/><em>proyectar y crear.</em>',
-  music_lead: 'Diseñamos paisajes sonoros especiales para sumergirte en el flujo creativo. Clickeá en los tracks para reproducir composiciones ambientales en tiempo real sintetizadas por tu navegador.',
-  
-  acreditar_eyebrow: 'Pase Digital Exclusivo',
-  acreditar_title: 'Registrá tu<br/><em>acreditación online.</em>',
-  acreditar_lead: 'Completá tu registro para formar parte de la jornada especial Mercurio × Alba en Casa FOA. Recibirás tu credencial digital con acceso prioritario.',
-  
   videos_eyebrow: 'Perspectivas globales',
   videos_title: 'Charlas que<br/><em>inspiran la mirada.</em>',
   videos_lead: 'Cuatro pensadores globales discuten la importancia de dotar a los espacios de alma, alegría, sustentabilidad y arraigo local. Haz clic en cualquiera para verla directamente.',
@@ -263,55 +244,8 @@ export default function HomePage() {
   const [lightboxType, setLightboxType] = useState<'image' | 'video'>('image');
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
-  // Espacio favorito seleccionado en el formulario de acreditación
-  const [selectedSpace, setSelectedSpace] = useState(DEFAULT_GALLERY_ITEMS[0].title);
-
-  /* ── 3. ESTADOS DEL REPRODUCTOR DE MÚSICA SINTÉTICA (WEB AUDIO) ── */
-  const tracks: Track[] = [
-    {
-      id: 'track1',
-      title: 'Focus & Flow',
-      artist: 'Mercurio Deep Ambient',
-      emoji: '🎧',
-      type: 'synth'
-    },
-    {
-      id: 'track2',
-      title: 'Texturas Orgánicas',
-      artist: 'Alba Soundscapes',
-      emoji: '🌿',
-      type: 'ocean'
-    },
-    {
-      id: 'track3',
-      title: 'Espacios Acústicos',
-      artist: 'Pocito Lo-Fi',
-      emoji: '📐',
-      type: 'chime'
-    }
-  ];
-
-  const [activeTrackIndex, setActiveTrackIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentProgress, setCurrentProgress] = useState(0);
-  const [audioCtx, setAudioCtx] = useState<AudioContext | null>(null);
-  const [synthNodes, setSynthNodes] = useState<any[]>([]);
-  const [activeMasterGain, setActiveMasterGain] = useState<GainNode | null>(null);
-  const [chimeIntervalId, setChimeIntervalId] = useState<NodeJS.Timeout | null>(null);
-  const progressIntervalRef = useRef<NodeJS.Timeout | null>(null);
-
   /* ── 4. ESTADOS DEL MODAL TED VIDEOS ── */
   const [modalVideoUrl, setModalVideoUrl] = useState<string | null>(null);
-
-  /* ── 5. ESTADOS DE ACREDITACIÓN (SUPABASE FORM) ── */
-  const [nombre, setNombre] = useState('');
-  const [email, setEmail] = useState('');
-  const [profesion, setProfesion] = useState('Público General');
-  const [matricula, setMatrícula] = useState('');
-  const [submitting, setSubmitting] = useState(false);
-  const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [registeredUser, setRegisteredUser] = useState<any>(null);
-  const [formError, setFormError] = useState('');
 
   /* ── 6. EFECTOS: SCROLL OBSERVER Y BOTÓN BACK-TO-TOP ── */
   useEffect(() => {
@@ -352,7 +286,6 @@ export default function HomePage() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
       observer.disconnect();
-      clearInterval(progressIntervalRef.current!);
     };
   }, []);
 
@@ -385,16 +318,11 @@ export default function HomePage() {
             }
           });
           setGalleryItems(merged);
-          // Actualizar el espacio favorito seleccionado al cargar las imágenes reales
-          const firstImg = merged.find(i => i.slot_type === 'image');
-          if (firstImg) setSelectedSpace(firstImg.title);
         } else {
           const local = localStorage.getItem('casafoa_gallery_items');
           if (local) {
             const parsed = JSON.parse(local);
             setGalleryItems(parsed);
-            const firstImg = parsed.find((i: any) => i.slot_type === 'image');
-            if (firstImg) setSelectedSpace(firstImg.title);
           }
         }
       } catch (err) {
@@ -403,8 +331,6 @@ export default function HomePage() {
         if (local) {
           const parsed = JSON.parse(local);
           setGalleryItems(parsed);
-          const firstImg = parsed.find((i: any) => i.slot_type === 'image');
-          if (firstImg) setSelectedSpace(firstImg.title);
         }
       } finally {
         setLoadingGallery(false);
@@ -532,246 +458,6 @@ export default function HomePage() {
     return 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800';
   };
 
-  /* ── 7. LÓGICA DE SÍNTESIS DE AUDIO (WEB AUDIO API) ── */
-  const initAudio = () => {
-    if (!audioCtx) {
-      const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
-      setAudioCtx(ctx);
-      return ctx;
-    }
-    return audioCtx;
-  };
-
-  const stopActiveAudio = () => {
-    synthNodes.forEach(node => {
-      try {
-        node.stop();
-      } catch (e) {}
-    });
-    setSynthNodes([]);
-    if (chimeIntervalId) {
-      clearInterval(chimeIntervalId);
-      setChimeIntervalId(null);
-    }
-  };
-
-  const playSynthSound = (type: 'synth' | 'ocean' | 'chime', ctx: AudioContext) => {
-    stopActiveAudio();
-    
-    if (ctx.state === 'suspended') {
-      ctx.resume();
-    }
-
-    const masterGain = ctx.createGain();
-    masterGain.gain.setValueAtTime(0.001, ctx.currentTime);
-    masterGain.gain.linearRampToValueAtTime(0.12, ctx.currentTime + 1.2); // Fade-in de ganancia
-    masterGain.connect(ctx.destination);
-    setActiveMasterGain(masterGain);
-
-    const nodes: any[] = [];
-
-    if (type === 'synth') {
-      // Focus & Flow: Sintetizador profundo y suave
-      const freqs = [130.81, 196.00, 261.63, 329.63]; // Do3, Sol3, Do4, Mi4
-      freqs.forEach((freq, idx) => {
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(freq, ctx.currentTime);
-        
-        // Modulación para dar profundidad orgánica
-        const lfo = ctx.createOscillator();
-        const lfoGain = ctx.createGain();
-        lfo.type = 'sine';
-        lfo.frequency.setValueAtTime(0.1 + (idx * 0.05), ctx.currentTime);
-        lfoGain.gain.setValueAtTime(0.02, ctx.currentTime);
-        
-        lfo.connect(lfoGain.gain);
-        gain.gain.setValueAtTime(0.04, ctx.currentTime);
-        
-        osc.connect(gain);
-        lfoGain.connect(gain.gain);
-        gain.connect(masterGain);
-        
-        osc.start();
-        lfo.start();
-        nodes.push(osc);
-        nodes.push(lfo);
-      });
-      setSynthNodes(nodes);
-
-    } else if (type === 'ocean') {
-      // Texturas Orgánicas: Olas de Mar con Ruido Blanco
-      const bufferSize = ctx.sampleRate * 2;
-      const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-      const output = noiseBuffer.getChannelData(0);
-      for (let i = 0; i < bufferSize; i++) {
-        output[i] = Math.random() * 2 - 1;
-      }
-      
-      const whiteNoise = ctx.createBufferSource();
-      whiteNoise.buffer = noiseBuffer;
-      whiteNoise.loop = true;
-      
-      const filter = ctx.createBiquadFilter();
-      filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(450, ctx.currentTime);
-      filter.Q.setValueAtTime(0.8, ctx.currentTime);
-      
-      const lfo = ctx.createOscillator();
-      const lfoGain = ctx.createGain();
-      lfo.type = 'sine';
-      lfo.frequency.setValueAtTime(0.12, ctx.currentTime); // Frecuencia de la ola
-      lfoGain.gain.setValueAtTime(220, ctx.currentTime);
-      
-      lfo.connect(lfoGain);
-      lfoGain.connect(filter.frequency);
-      whiteNoise.connect(filter);
-      filter.connect(masterGain);
-      
-      whiteNoise.start();
-      lfo.start();
-      nodes.push(whiteNoise);
-      nodes.push(lfo);
-      setSynthNodes(nodes);
-
-    } else if (type === 'chime') {
-      // Espacios Acústicos: Campanadas cristalinas pentatónicas
-      const interval = setInterval(() => {
-        const scale = [523.25, 587.33, 659.25, 783.99, 880.00, 1046.50]; // Pentatónica C5
-        const freq = scale[Math.floor(Math.random() * scale.length)];
-        
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(freq, ctx.currentTime);
-        
-        gain.gain.setValueAtTime(0.001, ctx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(0.1, ctx.currentTime + 0.05);
-        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.8);
-        
-        osc.connect(gain);
-        gain.connect(masterGain);
-        osc.start();
-        osc.stop(ctx.currentTime + 2.0);
-      }, 2400);
-      
-      setChimeIntervalId(interval);
-
-      // Pad continuo base
-      const baseFreqs = [65.41, 130.81];
-      baseFreqs.forEach(freq => {
-        const baseOsc = ctx.createOscillator();
-        const baseGain = ctx.createGain();
-        baseOsc.type = 'triangle';
-        baseOsc.frequency.setValueAtTime(freq, ctx.currentTime);
-        baseGain.gain.setValueAtTime(0.02, ctx.currentTime);
-        baseOsc.connect(baseGain);
-        baseGain.connect(masterGain);
-        baseOsc.start();
-        nodes.push(baseOsc);
-      });
-      setSynthNodes(nodes);
-    }
-  };
-
-  const handlePlayToggle = () => {
-    const ctx = initAudio();
-    if (isPlaying) {
-      setIsPlaying(false);
-      // Fade out
-      if (activeMasterGain) {
-        activeMasterGain.gain.setValueAtTime(activeMasterGain.gain.value, ctx.currentTime);
-        activeMasterGain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
-        setTimeout(() => {
-          stopActiveAudio();
-        }, 400);
-      } else {
-        stopActiveAudio();
-      }
-      clearInterval(progressIntervalRef.current!);
-    } else {
-      setIsPlaying(true);
-      playSynthSound(tracks[activeTrackIndex].type, ctx);
-      
-      // Control de barra de progreso
-      progressIntervalRef.current = setInterval(() => {
-        setCurrentProgress(prev => {
-          if (prev >= 100) {
-            // Siguiente track
-            const nextIdx = (activeTrackIndex + 1) % tracks.length;
-            setActiveTrackIndex(nextIdx);
-            playSynthSound(tracks[nextIdx].type, ctx);
-            return 0;
-          }
-          return prev + 0.3;
-        });
-      }, 100);
-    }
-  };
-
-  const handleTrackChange = (idx: number) => {
-    const ctx = initAudio();
-    setActiveTrackIndex(idx);
-    setCurrentProgress(0);
-    if (!isPlaying) {
-      setIsPlaying(true);
-      progressIntervalRef.current = setInterval(() => {
-        setCurrentProgress(prev => {
-          if (prev >= 100) return 0;
-          return prev + 0.3;
-        });
-      }, 100);
-    }
-    playSynthSound(tracks[idx].type, ctx);
-  };
-
-  /* ── 8. LÓGICA DE ACREDITACIÓN EN SUPABASE ── */
-  const handleAccreditation = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitting(true);
-    setFormError('');
-
-    const userData = {
-      nombre,
-      email,
-      profesion,
-      matricula: profesion === 'Arquitecto/a' || profesion === 'Diseñador/a de Interiores' ? matricula : null,
-      color_favorito: selectedSpace
-    };
-
-    try {
-      // Intentar insertar en Supabase
-      const { data, error } = await supabase
-        .from('invitados')
-        .insert([userData])
-        .select();
-
-      if (error) {
-        if (error.code === '23505') {
-          throw new Error('Este correo electrónico ya está acreditado.');
-        }
-        throw error;
-      }
-
-      setRegisteredUser(data ? data[0] : userData);
-      setSubmitSuccess(true);
-    } catch (error: any) {
-      console.warn('Error en conexión Supabase, activando modo simulación:', error.message);
-      
-      setRegisteredUser({
-        ...userData,
-        created_at: new Date().toISOString(),
-        id: Math.random().toString(36).substring(2, 9).toUpperCase()
-      });
-      setSubmitSuccess(true);
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-mercu-dark text-mercu-cream font-sans selection:bg-mercu-accent selection:text-mercu-dark">
       
@@ -825,7 +511,6 @@ export default function HomePage() {
             <a href="#casa-foa" className={`text-[9px] md:text-xs font-medium tracking-widest uppercase py-4 md:py-5 px-2 md:px-4 transition-all relative ${activeSection === 'casa-foa' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-2 md:after:left-4 after:right-2 md:after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Casa FOA</a>
             <a href="#mercurio" className={`text-[9px] md:text-xs font-medium tracking-widest uppercase py-4 md:py-5 px-2 md:px-4 transition-all relative ${activeSection === 'mercurio' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-2 md:after:left-4 after:right-2 md:after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Mercurio</a>
             <a href="#alba" className={`text-[9px] md:text-xs font-medium tracking-widest uppercase py-4 md:py-5 px-2 md:px-4 transition-all relative ${activeSection === 'alba' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-2 md:after:left-4 after:right-2 md:after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Alba</a>
-            <a href="#musica" className={`text-[9px] md:text-xs font-medium tracking-widest uppercase py-4 md:py-5 px-2 md:px-4 transition-all relative ${activeSection === 'musica' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-2 md:after:left-4 after:right-2 md:after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Música</a>
             <a href="#charlas" className={`text-[9px] md:text-xs font-medium tracking-widest uppercase py-4 md:py-5 px-2 md:px-4 transition-all relative ${activeSection === 'charlas' ? 'text-mercu-cream after:scale-x-100' : 'text-mercu-muted hover:text-mercu-cream after:scale-x-0'} after:content-[''] after:absolute after:bottom-[-1px] after:left-2 md:after:left-4 after:right-2 md:after:right-4 after:height-[2px] after:bg-mercu-accent after:transition-transform after:duration-300`}>Charlas</a>
           </div>
         </div>
@@ -1151,287 +836,8 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* ── SECCIÓN MÚSICA ── */}
-      <section id="musica" className="py-24 px-8 max-w-4xl mx-auto">
-        <div className="reveal">
-          <div className="section-header mb-16">
-            <EditableText 
-              textKey="music_eyebrow" 
-              className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-4 block"
-              as="div"
-            />
-            <EditableText 
-              textKey="music_title" 
-              className="section-title font-serif text-4xl md:text-6xl font-light leading-tight text-mercu-cream block"
-              as="h2"
-              allowHtml
-            />
-            <EditableText 
-              textKey="music_lead" 
-              className="section-lead text-base md:text-lg leading-relaxed text-mercu-cream/70 mt-6 max-w-2xl block"
-              as="p"
-            />
-          </div>
-        </div>
 
-        {/* Widget del Reproductor de Audio */}
-        <div className="music-player-widget reveal bg-mercu-dark-card border border-mercu-border rounded p-6 md:p-8 flex flex-col md:flex-row items-center gap-4 md:gap-6 my-16">
-          <div className="player-artwork w-20 h-20 md:w-24 md:h-24 bg-mercu-dark border border-mercu-border rounded flex items-center justify-center text-3xl md:text-4xl relative flex-shrink-0 shadow-lg after:content-[''] after:absolute after:inset-0 after:rounded after:bg-gradient-to-tr after:from-mercu-accent/10 after:to-transparent">
-            {tracks[activeTrackIndex].emoji}
-          </div>
-          <div className="flex-grow w-full flex flex-col gap-2 md:gap-3 text-center md:text-left items-center md:items-start">
-            <div className="player-info-artist text-[10px] md:text-xs tracking-wider text-mercu-muted uppercase">{tracks[activeTrackIndex].artist}</div>
-            <h3 className="player-info-title font-serif text-xl md:text-2xl text-mercu-cream">{tracks[activeTrackIndex].title}</h3>
-            <div className="flex items-center gap-4 md:gap-6 mt-1 md:mt-2 w-full justify-center md:justify-start">
-              <button 
-                onClick={handlePlayToggle}
-                className="w-10 h-10 md:w-12 md:h-12 bg-mercu-accent text-mercu-dark rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:bg-mercu-cream hover:scale-105 active:scale-95 flex-shrink-0"
-                aria-label={isPlaying ? 'Pausar' : 'Reproducir'}
-              >
-                {isPlaying ? <Pause size={18} fill="currentColor" /> : <Play size={18} className="translate-x-[1px]" fill="currentColor" />}
-              </button>
-              <div 
-                onClick={(e) => {
-                  const rect = e.currentTarget.getBoundingClientRect();
-                  const percent = ((e.clientX - rect.left) / rect.width) * 100;
-                  setCurrentProgress(percent);
-                  if (!isPlaying) handlePlayToggle();
-                }}
-                className="w-full h-1 bg-mercu-muted/20 rounded-full cursor-pointer relative overflow-hidden"
-              >
-                <div className="h-full bg-mercu-accent absolute left-0 top-0 transition-all duration-100" style={{ width: `${currentProgress}%` }}></div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        {/* Lista de Playlists */}
-        <div className="playlist-grid reveal grid gap-[1px] bg-mercu-border border border-mercu-border rounded overflow-hidden">
-          {tracks.map((track, index) => (
-            <div 
-              key={track.id}
-              onClick={() => handleTrackChange(index)}
-              className={`playlist-item bg-mercu-dark p-4 md:p-6 grid grid-cols-[auto_1fr_auto] items-center gap-3 sm:gap-4 md:gap-8 cursor-pointer transition-all duration-300 ${activeTrackIndex === index ? 'bg-mercu-border/5' : 'hover:bg-mercu-border/5'}`}
-            >
-              <div className="playlist-cover w-11 h-11 md:w-14 md:h-14 bg-mercu-dark-card border border-mercu-border rounded flex items-center justify-center text-xl md:text-2xl transition-transform hover:scale-105 flex-shrink-0">
-                {track.emoji}
-              </div>
-              <div className="playlist-info flex flex-col gap-0.5 md:gap-1 min-w-0">
-                <h3 className={`playlist-title font-serif text-base md:text-lg truncate ${activeTrackIndex === index ? 'text-mercu-warm' : 'text-mercu-cream'}`}>{track.title}</h3>
-                <span className="playlist-meta text-[10px] md:text-xs text-mercu-muted truncate">{track.artist}</span>
-              </div>
-              <div className="playlist-arrow text-[10px] md:text-xs text-mercu-muted tracking-wider uppercase flex items-center gap-2 transition-transform hover:translate-x-1 flex-shrink-0">
-                {activeTrackIndex === index && isPlaying ? (
-                  <div className="wave-animation flex items-end gap-[2px] h-3.5 w-4 md:h-4 md:w-5">
-                    <div className="wave-bar w-[1.5px] md:w-[2px] bg-mercu-accent h-3.5 animate-bounce"></div>
-                    <div className="wave-bar w-[1.5px] md:w-[2px] bg-mercu-accent h-2.5 animate-bounce [animation-delay:0.15s]"></div>
-                    <div className="wave-bar w-[1.5px] md:w-[2px] bg-mercu-accent h-1.5 animate-bounce [animation-delay:0.3s]"></div>
-                    <div className="wave-bar w-[1.5px] md:w-[2px] bg-mercu-accent h-2.5 animate-bounce [animation-delay:0.45s]"></div>
-                  </div>
-                ) : (
-                  <span>{activeTrackIndex === index ? 'Pausa' : 'Escuchar'} ▶</span>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── SECCIÓN ACREDITACIÓN (NUEVA CON SUPABASE) ── */}
-      <section id="acreditar" className="py-24 px-8 max-w-2xl mx-auto">
-        <div className="reveal">
-          <div className="section-header mb-12 text-center">
-            <EditableText 
-              textKey="acreditar_eyebrow" 
-              className="section-eyebrow text-xs font-medium tracking-widest uppercase text-mercu-accent mb-4 flex justify-center"
-              as="div"
-            />
-            <EditableText 
-              textKey="acreditar_title" 
-              className="section-title font-serif text-4xl md:text-5xl font-light leading-tight text-mercu-cream block"
-              as="h2"
-              allowHtml
-            />
-            <EditableText 
-              textKey="acreditar_lead" 
-              className="section-lead text-sm md:text-base leading-relaxed text-mercu-cream/70 mt-6 max-w-xl mx-auto block"
-              as="p"
-            />
-          </div>
-
-          {!submitSuccess ? (
-            <form onSubmit={handleAccreditation} className="bg-mercu-dark-card border border-mercu-border rounded-lg p-5 sm:p-8 flex flex-col gap-6 shadow-xl relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-mercu-accent to-mercu-accent2"></div>
-              
-              {formError && (
-                <div className="bg-red-950/40 border border-red-500/30 text-red-300 p-4 rounded text-xs leading-relaxed">
-                  ⚠️ {formError}
-                </div>
-              )}
-
-              <div className="flex flex-col gap-2">
-                <label htmlFor="nombre" className="text-[10px] tracking-widest text-mercu-muted uppercase font-semibold">Nombre Completo</label>
-                <input 
-                  type="text" 
-                  id="nombre" 
-                  required
-                  value={nombre}
-                  onChange={(e) => setNombre(e.target.value)}
-                  placeholder="Ej: Sofía Martínez"
-                  className="bg-mercu-dark border border-mercu-border text-mercu-cream p-3 rounded focus:outline-none focus:border-mercu-accent text-sm"
-                />
-              </div>
-
-              <div className="flex flex-col gap-2">
-                <label htmlFor="email" className="text-[10px] tracking-widest text-mercu-muted uppercase font-semibold">Correo Electrónico</label>
-                <input 
-                  type="email" 
-                  id="email" 
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Ej: sofia@estudio.com"
-                  className="bg-mercu-dark border border-mercu-border text-mercu-cream p-3 rounded focus:outline-none focus:border-mercu-accent text-sm"
-                />
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="profesion" className="text-[10px] tracking-widest text-mercu-muted uppercase font-semibold">Profesión / Rol</label>
-                  <select 
-                     id="profesion"
-                    value={profesion}
-                    onChange={(e) => setProfesion(e.target.value)}
-                    className="bg-mercu-dark border border-mercu-border text-mercu-cream p-3 rounded focus:outline-none focus:border-mercu-accent text-sm"
-                  >
-                    <option value="Arquitecto/a">Arquitecto/a</option>
-                    <option value="Diseñador/a de Interiores">Diseñador/a de Interiores</option>
-                    <option value="Estudiante">Estudiante</option>
-                    <option value="Público General">Público General</option>
-                  </select>
-                </div>
-
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="color_favorito" className="text-[10px] tracking-widest text-mercu-muted uppercase font-semibold">Espacio Favorito</label>
-                  <select 
-                    id="color_favorito" 
-                    value={selectedSpace}
-                    onChange={(e) => setSelectedSpace(e.target.value)}
-                    className="bg-mercu-dark border border-mercu-border text-mercu-cream p-3 rounded focus:outline-none focus:border-mercu-accent text-sm"
-                  >
-                    {galleryItems.filter(item => item.slot_type === 'image').map(img => (
-                      <option key={img.slot_index} value={img.title}>{img.title}</option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              {(profesion === 'Arquitecto/a' || profesion === 'Diseñador/a de Interiores') && (
-                <div className="flex flex-col gap-2 animate-fade-in">
-                  <label htmlFor="matricula" className="text-[10px] tracking-widest text-mercu-muted uppercase font-semibold">Matrícula Profesional</label>
-                  <input 
-                    type="text" 
-                    id="matricula" 
-                    required
-                    value={matricula}
-                    onChange={(e) => setMatrícula(e.target.value)}
-                    placeholder="Ej: CAPC 12543"
-                    className="bg-mercu-dark border border-mercu-border text-mercu-cream p-3 rounded focus:outline-none focus:border-mercu-accent text-sm"
-                  />
-                </div>
-              )}
-
-              <button 
-                type="submit"
-                disabled={submitting}
-                className="w-full mt-4 bg-mercu-accent hover:bg-mercu-cream text-mercu-dark hover:text-mercu-dark py-4 rounded font-semibold text-xs tracking-widest uppercase transition-all duration-300 shadow-lg hover:scale-[1.02] flex items-center justify-center gap-2"
-              >
-                {submitting ? 'Procesando...' : 'Obtener Credencial Acreditada'}
-                <ArrowRight size={16} />
-              </button>
-            </form>
-          ) : (
-            /* Credencial Digital Generada */
-            <div className="bg-mercu-dark-card border border-mercu-border rounded-lg p-5 sm:p-8 flex flex-col items-center gap-8 shadow-2xl relative overflow-hidden animate-fade-in">
-              <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-mercu-accent to-mercu-accent2"></div>
-              
-              <CheckCircle size={48} className="text-emerald-400 animate-pulse" />
-              
-              <div className="text-center">
-                <h3 className="font-serif text-2xl text-mercu-cream mb-1">¡Acreditación Confirmada!</h3>
-                <p className="text-xs text-mercu-muted uppercase tracking-wider">Tu pase digital ha sido registrado en Supabase</p>
-              </div>
-
-              {/* Tarjeta de Acreditación (Visual) */}
-              <div className="w-full max-w-sm bg-neutral-900 border border-mercu-border p-4 sm:p-6 rounded-md flex flex-col gap-6 relative shadow-lg">
-                <div className="flex justify-between items-start border-b border-mercu-border pb-4">
-                  <div className="flex flex-col gap-1">
-                    <span className="text-[9px] tracking-widest text-mercu-accent uppercase font-bold">Invitado de Mercurio</span>
-                    <span className="font-serif text-lg text-mercu-cream leading-tight">{registeredUser?.nombre}</span>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-[8px] text-mercu-muted uppercase block">Credencial ID</span>
-                    <span className="font-mono text-xs text-mercu-warm">{registeredUser?.id ? registeredUser.id.substring(0, 8) : 'GUEST-26'}</span>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4 text-xs">
-                  <div>
-                    <span className="text-[8px] text-mercu-muted uppercase block">Profesión</span>
-                    <span className="font-medium text-mercu-cream">{registeredUser?.profesion}</span>
-                  </div>
-                  <div>
-                    <span className="text-[8px] text-mercu-muted uppercase block">Espacio Favorito</span>
-                    <span className="font-medium text-mercu-accent">{registeredUser?.color_favorito}</span>
-                  </div>
-                </div>
-
-                {registeredUser?.matricula && (
-                  <div className="text-xs">
-                    <span className="text-[8px] text-mercu-muted uppercase block">Matrícula</span>
-                    <span className="font-medium text-mercu-cream">{registeredUser.matricula}</span>
-                  </div>
-                )}
-
-                {/* QR Vectorial Simulado */}
-                <div className="flex justify-center border-t border-mercu-border pt-4">
-                  <svg className="w-24 h-24" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="100" height="100" fill="#181716" rx="4"/>
-                    {/* Marcos esquineros QR */}
-                    <rect x="10" y="10" width="20" height="20" stroke="var(--c-cream)" strokeWidth="2" fill="none"/>
-                    <rect x="15" y="15" width="10" height="10" fill="var(--c-cream)"/>
-                    
-                    <rect x="70" y="10" width="20" height="20" stroke="var(--c-cream)" strokeWidth="2" fill="none"/>
-                    <rect x="75" y="15" width="10" height="10" fill="var(--c-cream)"/>
-                    
-                    <rect x="10" y="70" width="20" height="20" stroke="var(--c-cream)" strokeWidth="2" fill="none"/>
-                    <rect x="15" y="75" width="10" height="10" fill="var(--c-cream)"/>
-                    
-                    {/* Patrón central de QR simulado */}
-                    <rect x="40" y="20" width="10" height="10" fill="var(--c-accent)"/>
-                    <rect x="55" y="35" width="10" height="10" fill="var(--c-warm)"/>
-                    <rect x="45" y="45" width="15" height="15" fill="var(--c-accent)"/>
-                    <rect x="70" y="70" width="20" height="20" fill="var(--c-cream)"/>
-                    <rect x="40" y="70" width="10" height="10" fill="var(--c-warm)"/>
-                  </svg>
-                </div>
-              </div>
-
-              <button 
-                onClick={() => {
-                  setSubmitSuccess(false);
-                  setNombre('');
-                  setEmail('');
-                  setMatrícula('');
-                }}
-                className="text-xs text-mercu-muted hover:text-mercu-cream underline transition-colors"
-              >
-                Registrar otra acreditación
-              </button>
-            </div>
-          )}
-        </div>
-      </section>
 
       {/* ── SECCIÓN CHARLAS ── */}
       <section id="charlas" className="py-24 px-8 max-w-4xl mx-auto">
